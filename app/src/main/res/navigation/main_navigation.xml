@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/test">
+    <fragment
+        android:id="@+id/test"
+        android:name="com.wit.homegrownapp.ui.test.Test"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" >
+        <action
+            android:id="@+id/action_test_to_productList"
+            app:destination="@id/productList" />
+    </fragment>
+    <fragment
+        android:id="@+id/productList"
+        android:name="com.wit.homegrownapp.ui.productList.ProductList"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" />
+</navigation>

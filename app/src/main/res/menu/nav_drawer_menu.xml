@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/productFragment"
+            android:title="" />
+        <item
+            android:id="@+id/productListFragment"
+            android:title="" />
+    </group>
+
+    <item android:title="@string/group_communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="@string/action_share" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="@string/action_send" />
+        </menu>
+    </item>
+
+    <item android:title="@string/accessControl">
+        <menu>
+            <item
+                android:id="@+id/nav_sign_out"
+                android:icon="@android:drawable/ic_menu_revert"
+                android:onClick="signOut"
+                android:title="@string/sign_out" />
+        </menu>
+    </item>
+</menu>
+
