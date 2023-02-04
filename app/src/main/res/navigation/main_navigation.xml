@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/test">
+    app:startDestination="@id/addProduct">
     <fragment
         android:id="@+id/test"
         android:name="com.wit.homegrownapp.ui.test.Test"
@@ -18,4 +18,8 @@
         android:name="com.wit.homegrownapp.ui.productList.ProductList"
         android:label="fragment_product_list"
         tools:layout="@layout/fragment_product_list" />
+    <fragment
+        android:id="@+id/addProduct"
+        android:name="com.wit.homegrownapp.ui.addProduct.AddProduct"
+        android:label="AddProduct" />
 </navigation>
