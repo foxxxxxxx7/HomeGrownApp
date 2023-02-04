@@ -2,11 +2,19 @@ package com.wit.homegrownapp.ui.addProduct
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wit.homegrownapp.R
+import com.wit.homegrownapp.databinding.FragmentAddProductBinding
+import com.wit.homegrownapp.firebase.FirebaseDBManager
+import com.wit.homegrownapp.model.ProductModel
+import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 
 class AddProduct : Fragment() {
 
@@ -14,18 +22,42 @@ class AddProduct : Fragment() {
         fun newInstance() = AddProduct()
     }
 
-    private lateinit var viewModel: AddProductViewModel
+    private var _fragBinding:   FragmentAddProductBinding? = null
+    private val fragBinding get() = _fragBinding!!
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
+    private val viewModel: AddProductViewModel by activityViewModels()
+    var state: Parcelable? = null
+    var day = 0
+    var searching: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_product, container, false)
+    ): View {
+        _fragBinding = FragmentAddProductBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+
+
+
+        fragBinding.addProductButton.setOnClickListener {
+            val title = fragBinding.editTitle.text.toString()
+            var prod = ProductModel()
+            prod.title = title
+            FirebaseDBManager.create(loggedInViewModel.liveFirebaseUser.value!!.uid, prod )
+
+        }
+        return root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

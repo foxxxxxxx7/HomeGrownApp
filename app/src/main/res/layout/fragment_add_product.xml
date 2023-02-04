@@ -13,7 +13,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.BookingDetailFragment">
+        tools:context=".ui.addProduct.AddProduct">
 
         <EditText
             android:id="@+id/editTitle"
@@ -27,46 +27,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/detailTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
-            android:text="@string/title"
-            android:textAlignment="textEnd"
-            android:textColor="@color/green_500"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editTitle"
-            app:layout_constraintHorizontal_bias="0.781"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <Button
-            android:id="@+id/editDonationButton"
+            android:id="@+id/addProductButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/deleteDonationButton"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/deleteDonationButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editDonationButton" />
-
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="297dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/categoryArray"
-            tools:layout_editor_absoluteX="28dp"
-            tools:layout_editor_absoluteY="568dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
