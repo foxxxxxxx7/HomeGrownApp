@@ -77,4 +77,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
 
+    //Used to display gif images in the app.
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
 }
