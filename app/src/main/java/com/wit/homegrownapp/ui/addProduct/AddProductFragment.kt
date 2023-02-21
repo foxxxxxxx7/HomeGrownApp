@@ -1,25 +1,20 @@
 package com.wit.homegrownapp.ui.addProduct
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentAddProductBinding
-import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 
-class AddProduct : Fragment() {
+class AddProductFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AddProduct()
+        fun newInstance() = AddProductFragment()
     }
 
     private var _fragBinding:   FragmentAddProductBinding? = null

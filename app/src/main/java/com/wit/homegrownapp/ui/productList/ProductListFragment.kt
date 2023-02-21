@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.MenuHost
-import androidx.lifecycle.Lifecycle
 import com.wit.homegrownapp.R
 
-class ProductList : Fragment() {
+class ProductListFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ProductList()
+        fun newInstance() = ProductListFragment()
     }
 
     private lateinit var viewModel: ProductListViewModel

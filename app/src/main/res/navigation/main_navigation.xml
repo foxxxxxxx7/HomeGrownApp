@@ -15,11 +15,11 @@
     </fragment>
     <fragment
         android:id="@+id/productList"
-        android:name="com.wit.homegrownapp.ui.productList.ProductList"
+        android:name="com.wit.homegrownapp.ui.productList.ProductListFragment"
         android:label="fragment_product_list"
         tools:layout="@layout/fragment_product_list" />
     <fragment
         android:id="@+id/addProduct"
-        android:name="com.wit.homegrownapp.ui.addProduct.AddProduct"
+        android:name="com.wit.homegrownapp.ui.addProduct.AddProductFragment"
         android:label="AddProduct" />
 </navigation>
