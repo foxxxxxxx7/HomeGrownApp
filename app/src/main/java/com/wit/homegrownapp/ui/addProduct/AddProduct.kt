@@ -47,9 +47,9 @@ class AddProduct : Fragment() {
 
         fragBinding.addProductButton.setOnClickListener {
             val title = fragBinding.editTitle.text.toString()
-            var prod = ProductModel()
+            val prod = ProductModel()
             prod.title = title
-            FirebaseDBManager.create(loggedInViewModel.liveFirebaseUser.value!!.uid, prod )
+            viewModel.addProduct(loggedInViewModel.liveFirebaseUser.value!!.uid, prod )
 
         }
         return root

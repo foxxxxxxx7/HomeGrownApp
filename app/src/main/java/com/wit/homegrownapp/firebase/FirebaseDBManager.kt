@@ -16,6 +16,11 @@ var database: DatabaseReference =
 
 object FirebaseDBManager : ProductStore {
 
+    /**
+     * It gets all the products from the database and adds them to a list
+     *
+     * @param productList MutableLiveData<List<ProductModel>>
+     */
     override fun findAll(productList: MutableLiveData<List<ProductModel>>) {
         val localList = mutableListOf<ProductModel>()
         var totallist = ArrayList<ProductModel>()
@@ -65,6 +70,13 @@ object FirebaseDBManager : ProductStore {
             })
     }
 
+    /**
+     * It gets the product from the database.
+     *
+     * @param userid The user id of the user who created the product.
+     * @param productid The id of the product to be retrieved
+     * @param product MutableLiveData<ProductModel>
+     */
     override fun findById(userid: String, productid: String, product: MutableLiveData<ProductModel> ) {
 
         database.child("user-products").child(userid)
@@ -76,6 +88,13 @@ object FirebaseDBManager : ProductStore {
             }
     }
 
+    /**
+     * We create a new product, assign it a unique ID, and then add it to the database
+     *
+     * @param uid The user ID of the user who created the product.
+     * @param product ProductModel - The product model that we want to add to the database.
+     * @return A Task<Void>
+     */
     override fun create(uid: String, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")
 
