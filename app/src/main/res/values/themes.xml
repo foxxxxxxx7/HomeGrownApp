@@ -54,4 +54,9 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="toggleStyle">
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/black</item>
+    </style>
+
 </resources>

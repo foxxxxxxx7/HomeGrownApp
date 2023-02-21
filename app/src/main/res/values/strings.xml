@@ -7,7 +7,6 @@
     <string name="phoneNo">Phone No.</string>
     <string name="email">Email</string>
     <string name="date">Date</string>
-    <string name="price">Price</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
 
@@ -47,4 +46,21 @@
     <string name="emailpassword_title_text">Please Login Below</string>
 
     <string name="accessControl">Access Control</string>
+
+
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="title">Title</string>
+    <string name="price">Price</string>
+    <string name="category">Category</string>
+    <string name="avgWeight">Avg Weight</string>
+    <string name="description">Description</string>
+    <string name="eircode">Eircode</string>
+
+    <string name="action_productlist">Product List</string>
+
+    <string name="productsNotFound">No Products Found</string>
+
+    <string name="messageLoading">Please Wait while the Bookings are Loading...</string>
+    <string name="select_profile_image">Select Profile Image</string>
 </resources>
