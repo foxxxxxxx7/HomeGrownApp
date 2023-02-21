@@ -59,4 +59,9 @@
         <item name="colorControlHighlight">@color/black</item>
     </style>
 
+    <style name="Theme.HomeGrownApp.Splash">
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+    </style>
+
 </resources>
