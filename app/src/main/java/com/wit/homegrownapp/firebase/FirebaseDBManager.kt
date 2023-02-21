@@ -46,7 +46,7 @@ object FirebaseDBManager : ProductStore {
             })
     }
 
-    /* This is a function that is used to find all the bookings that are associated with a user. */
+    /* This is a function that is used to find all the products that are associated with a user. */
     override fun findAll(userid: String, productList: MutableLiveData<List<ProductModel>>) {
         Timber.i(userid)
         database.child("user-products").child(userid)
