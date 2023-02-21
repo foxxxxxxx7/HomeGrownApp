@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/addProduct">
+    app:startDestination="@id/productListFragment">
     <fragment
-        android:id="@+id/test"
-        android:name="com.wit.homegrownapp.ui.test.Test"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" >
-        <action
-            android:id="@+id/action_test_to_productList"
-            app:destination="@id/productList" />
-    </fragment>
-    <fragment
-        android:id="@+id/productList"
+        android:id="@+id/productListFragment"
         android:name="com.wit.homegrownapp.ui.productList.ProductListFragment"
         android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productList_to_addProduct"
+            app:destination="@id/addProductFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/addProduct"
+        android:id="@+id/addProductFragment"
         android:name="com.wit.homegrownapp.ui.addProduct.AddProductFragment"
-        android:label="AddProduct" />
+        android:label="AddProduct" >
+        <action
+            android:id="@+id/action_addProduct_to_productList"
+            app:destination="@id/productListFragment" />
+    </fragment>
 </navigation>
