@@ -38,7 +38,7 @@
         <!--        android:inputType="text"-->
         <!--        android:textSize="24sp"-->
         <!--        android:text="@={``+ productvm.observableProduct.id}"-->
-        <!--        app:layout_constraintBottom_toTopOf="@+id/deleteDonationButton"-->
+        <!--        app:layout_constraintBottom_toTopOf="@+id/deleteProductButton"-->
         <!--        app:layout_constraintEnd_toEndOf="parent"-->
         <!--        app:layout_constraintTop_toBottomOf="@+id/editPrice"-->
         <!--        app:layout_constraintVertical_bias="0.971" />-->
@@ -115,13 +115,14 @@
             android:id="@+id/detailCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="40dp"
             android:text="@string/category"
             android:textAlignment="textEnd"
             android:textColor="@color/green_700"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="193dp" />
+            app:layout_constraintTop_toBottomOf="@+id/detailPrice" />
 
         <TextView
             android:id="@+id/detailAvgWeight"
@@ -142,12 +143,12 @@
             android:id="@+id/editAvgWeight"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="96dp"
             android:ems="10"
-            android:text="@={productvm.observableProduct.avgWeight}"
+            android:text="@={``+ productvm.observableProduct.avgWeight}"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="274dp" />
+            app:layout_constraintTop_toBottomOf="@+id/editPrice" />
 
         <EditText
             android:id="@+id/editTitle"
@@ -157,7 +158,7 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@={productvm.observableProduct.name}"
+            android:text="@={productvm.observableProduct.title}"
             android:textAlignment="viewStart"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,29 +174,29 @@
             android:textAlignment="textEnd"
             android:textColor="@color/green_700"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/addTitle"
+            app:layout_constraintEnd_toStartOf="@+id/editTitle"
             app:layout_constraintHorizontal_bias="0.831"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/editDonationButton"
+            android:id="@+id/editProductButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Edit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/deleteDonationButton"
+            app:layout_constraintEnd_toStartOf="@+id/deleteProductButton"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/deleteDonationButton"
+            android:id="@+id/deleteProductButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editDonationButton" />
+            app:layout_constraintStart_toEndOf="@+id/editProductButton" />
 
         <Spinner
             android:id="@+id/editCategory"
@@ -203,8 +204,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:entries="@array/categoryArray"
-            app:layout_constraintTop_toBottomOf="@+id/editPrice"
-            tools:layout_editor_absoluteX="170dp" />
+            app:layout_constraintBottom_toTopOf="@+id/editAvgWeight"
+            app:layout_constraintStart_toEndOf="@+id/detailCategory"
+            app:layout_constraintTop_toBottomOf="@+id/editPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
