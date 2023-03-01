@@ -41,7 +41,7 @@ class AddProductFragment : Fragment() {
 
 
         fragBinding.addProductButton.setOnClickListener {
-            val title = fragBinding.editTitle.text.toString()
+            val title = fragBinding.addTitle.text.toString()
             val prod = ProductModel()
             prod.title = title
             viewModel.addProduct(loggedInViewModel.liveFirebaseUser.value!!.uid, prod )

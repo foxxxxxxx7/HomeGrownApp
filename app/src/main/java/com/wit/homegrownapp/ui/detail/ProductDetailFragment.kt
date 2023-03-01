@@ -10,11 +10,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+
 import com.google.firebase.auth.FirebaseAuth
 import com.wit.homegrownapp.R
-import com.wit.homegrownapp.databinding.ProductDetailFragmentBinding
+import com.wit.homegrownapp.databinding.FragmentProductDetailBinding
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
+import com.wit.homegrownapp.ui.detail.ProductDetailViewModel
 import com.wit.homegrownapp.ui.productList.ProductListViewModel
 import timber.log.Timber
 
@@ -28,7 +30,7 @@ class ProductDetailFragment : Fragment() {
 
     private val args by navArgs<ProductDetailFragmentArgs>()
     private lateinit var detailViewModel: ProductDetailViewModel
-    private var _fragBinding: ProductDetailFragmentBinding? = null
+    private var _fragBinding: FragmentProductDetailBinding? = null
     private val fragBinding get() = _fragBinding!!
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
@@ -56,14 +58,14 @@ class ProductDetailFragment : Fragment() {
 //
 //        return view
 
-        _fragBinding = ProductDetailFragmentBinding.inflate(inflater, container, false)
+        _fragBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         activity?.title = getString(R.string.action_details)
 
         detailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         detailViewModel.observableProduct.observe(viewLifecycleOwner, Observer { render() })
 
-        fragBinding.editDonationButton.setOnClickListener {
+        fragBinding.editProductButton.setOnClickListener {
             Timber.i("RFOX")
             Timber.i(detailViewModel.observableProduct.value?.uid!!)
             Timber.i(fragBinding.productvm?.observableProduct!!.value!!.toString())
@@ -82,7 +84,7 @@ class ProductDetailFragment : Fragment() {
 
         }
 
-        fragBinding.deleteDonationButton.setOnClickListener {
+        fragBinding.deleteProductButton.setOnClickListener {
             productListViewModel.delete(
                 user?.uid!!,
                 detailViewModel.observableProduct.value?.uid!!

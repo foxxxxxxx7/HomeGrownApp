@@ -58,6 +58,7 @@
     <string name="eircode">Eircode</string>
 
     <string name="action_productlist">Product List</string>
+    <string name="action_details">Product Details</string>
 
     <string name="productsNotFound">No Products Found</string>
 

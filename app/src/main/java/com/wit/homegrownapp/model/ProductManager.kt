@@ -121,13 +121,12 @@ object ProductManager : ProductStore {
     override fun update(userid: String, productid: String, product: ProductModel) {
         val foundProduct: ProductModel? = products.find { p -> p.uid == product.uid }
         if (foundProduct != null) {
-            foundProduct.date = product.date
-            foundProduct.name = product.name
-            foundProduct.phoneNumber = product.phoneNumber
-            foundProduct.email = product.email
-            foundProduct.pickup = product.pickup
-            foundProduct.dropoff = product.dropoff
+            foundProduct.title = product.title
             foundProduct.price = product.price
+            foundProduct.category = product.category
+            foundProduct.avgWeight = product.avgWeight
+            foundProduct.description = product.description
+            foundProduct.eircode = product.eircode
             /*foundProduct.image = bike.image
             foundProduct.lat = bike.lat
             foundProduct.lng = bike.lng
