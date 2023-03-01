@@ -16,7 +16,7 @@
         tools:context=".ui.addProduct.AddProductFragment">
 
         <EditText
-            android:id="@+id/editTitle"
+            android:id="@+id/addTitle"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
