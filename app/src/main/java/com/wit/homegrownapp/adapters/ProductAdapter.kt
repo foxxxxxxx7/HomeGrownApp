@@ -87,7 +87,7 @@ class ProductAdapter constructor(
             binding.root.tag = product
             binding.product = product
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
-            Picasso.get().load(product.profilepic.toUri())
+            Picasso.get().load(product.productimage.toUri())
                 .resize(200, 200)
                 .transform(customTransformation())
                 .centerCrop()

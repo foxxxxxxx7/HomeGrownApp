@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-
 import com.google.firebase.auth.FirebaseAuth
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentProductDetailBinding

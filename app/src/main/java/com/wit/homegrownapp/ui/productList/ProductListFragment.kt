@@ -256,7 +256,7 @@ class ProductListFragment : Fragment(), ProductListener {
      */
     override fun onProductClick(product: ProductModel) {
         val action =
-            ProductListFragmentDirections.actionProductListToAddProduct()
+            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.uid!!)
         if (!productListViewModel.readOnly.value!!)
             findNavController().navigate(action)
     }
