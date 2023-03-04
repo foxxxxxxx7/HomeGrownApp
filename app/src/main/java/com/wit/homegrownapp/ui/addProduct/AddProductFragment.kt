@@ -20,10 +20,8 @@ import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-/* This is the code for the BookFragment. It is the fragment that is used to book a bike. */
 class AddProductFragment : Fragment() {
 
-    //  lateinit var app: BikeshopApp
     var product = ProductModel()
     var edit = false
     private var _fragBinding: FragmentAddProductBinding? = null
@@ -34,7 +32,6 @@ class AddProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //app = activity?.application as BikeshopApp
         setHasOptionsMenu(true)
 
 
@@ -57,13 +54,13 @@ class AddProductFragment : Fragment() {
         val root = fragBinding.root
         activity?.title = getString(R.string.action_add_product)
 
-        addProductViewModel = ViewModelProvider(this).get(addProductViewModel::class.java)
+        addProductViewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
         addProductViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let { render(status) }
         })
 
 
-//        setButtonListener(fragBinding)
+        setButtonListener(fragBinding)
 //        val selectDate = fragBinding.bookDate
 //        //https://stackoverflow.com/questions/16031314/how-can-i-get-selected-date-in-calenderview-in-android#:~:text=Set%20listener%20to%20set%20selected,date%20to%20get%20selected%20date.
 //        //I found this solution on StackOverflow after the date kept appearing as today's date
@@ -135,13 +132,15 @@ class AddProductFragment : Fragment() {
 //            val readableDate = SimpleDateFormat("dd/MM/yy").format(Date(layout.bookDate.date))
 //            product.date = readableDate
             product.title = layout.addTitle.text.toString()
-            product.price = layout.addPrice.text.toString()
-            product.category = layout.addCategory.text.toString()
+            product.price = layout.addPrice.text.toString().toDouble()
+            product.avgWeight = layout.addAvgWeight.text.toString().toDouble()
             product.description = layout.addDescription.text.toString()
             product.eircode = layout.addEircode.text.toString()
-            //var selInt = R.array.bikeArray.
-            product.bike = layout.addProduct.selectedItemPosition
-            if (product.title.isEmpty() || product.price.toString().isEmpty() || product.category.isEmpty() || product.description.isEmpty()) {
+            product.category = layout.addCategory.selectedItemPosition.toString()
+            if (product.title.isEmpty() || product.price.toString()
+                    .isEmpty() || product.avgWeight.toString()
+                    .isEmpty() || product.category.isEmpty() || product.description.isEmpty()
+            ) {
                 Toast.makeText(context, "Please complete ALL fields", Toast.LENGTH_LONG).show()
 //            } else {
 //                if (edit) {
@@ -149,7 +148,8 @@ class AddProductFragment : Fragment() {
             } else {
                 layout.addTitle.setText("")
                 layout.addPrice.setText("")
-                layout.addCategory.setText("")
+                layout.addAvgWeight.setText("")
+//                layout.addCategory.setText("")
                 layout.addDescription.setText("")
                 layout.addEircode.setText("")
                 Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
@@ -159,10 +159,11 @@ class AddProductFragment : Fragment() {
                     ProductModel(
                         title = product.title,
                         price = product.price,
+                        avgWeight = product.avgWeight,
                         category = product.category,
                         description = product.description,
                         eircode = product.eircode,
-                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+//                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
 //                        latitude = mapsViewModel.currentLocation.value!!.latitude,
 //                        longitude = mapsViewModel.currentLocation.value!!.longitude
                     )
@@ -182,7 +183,7 @@ class AddProductFragment : Fragment() {
      * object.
      */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_product, menu)
+        inflater.inflate(R.menu.menu_addproduct, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

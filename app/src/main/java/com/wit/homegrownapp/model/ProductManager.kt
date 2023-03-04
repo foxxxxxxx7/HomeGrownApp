@@ -78,24 +78,24 @@ object ProductManager : ProductStore {
         val foundProduct: ProductModel? = products.find { it.uid == userid }
         //return foundProduct
     }
-
-    override fun create(uid: String, product: ProductModel) {
-        product.uid = getId().toString()
-        products.add(product)
-        logAll()
-    }
-
-//    /**
-//     * It adds a product to the list of products.
-//     *
-//     * @param firebaseUser MutableLiveData<FirebaseUser>
-//     * @param product ProductModel - This is the product object that you want to create.
-//     */
-//    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
+//
+//    override fun create(uid: String, product: ProductModel) {
 //        product.uid = getId().toString()
 //        products.add(product)
 //        logAll()
 //    }
+
+    /**
+     * It adds a product to the list of products.
+     *
+     * @param firebaseUser MutableLiveData<FirebaseUser>
+     * @param product ProductModel - This is the product object that you want to create.
+     */
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
+        product.uid = getId().toString()
+        products.add(product)
+        logAll()
+    }
 
     /**
      * > The function `logAll()` iterates over the `products` list and logs each product

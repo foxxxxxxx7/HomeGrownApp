@@ -7,7 +7,7 @@ interface ProductStore {
     fun findAll(productList: MutableLiveData<List<ProductModel>>)
     fun findAll(userid: String, productList: MutableLiveData<List<ProductModel>>)
     fun findById(userid: String, productid: String, product: MutableLiveData<ProductModel> )
-    fun create(uid: String, product: ProductModel)
+    fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel)
     fun update(userid: String, productid: String, product: ProductModel)
     fun delete(userid: String, productid: String)
 }
