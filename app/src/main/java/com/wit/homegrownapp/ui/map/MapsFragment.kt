@@ -172,19 +172,19 @@ class MapsFragment : Fragment() {
                 MarkerOptions().position(dungarvanDepot).title("Viking Bike Hire Dungarvan Depot")
             )
 
-            productsList.forEach {
-                if (it.email.equals(this.productListViewModel.liveFirebaseUser.value!!.email))
-                    markerColour = BitmapDescriptorFactory.HUE_ORANGE
-                else
-                    markerColour = BitmapDescriptorFactory.HUE_AZURE + 5
-
-                mapsViewModel.map.addMarker(
-                    MarkerOptions().position(LatLng(it.latitude, it.longitude))
-                        .title("${it.name} €${it.phoneNumber}")
-                        .snippet(it.email)
-                        .icon(BitmapDescriptorFactory.defaultMarker(markerColour))
-                )
-            }
+//            productsList.forEach {
+//                if (it.email.equals(this.productListViewModel.liveFirebaseUser.value!!.email))
+//                    markerColour = BitmapDescriptorFactory.HUE_ORANGE
+//                else
+//                    markerColour = BitmapDescriptorFactory.HUE_AZURE + 5
+//
+//                mapsViewModel.map.addMarker(
+//                    MarkerOptions().position(LatLng(it.latitude, it.longitude))
+//                        .title("${it.name} €${it.phoneNumber}")
+//                        .snippet(it.email)
+//                        .icon(BitmapDescriptorFactory.defaultMarker(markerColour))
+//                )
+//            }
         }
     }
 
