@@ -57,10 +57,19 @@
     <string name="description">Description</string>
     <string name="eircode">Eircode</string>
 
+    <string name="action_add_product">Add A Product</string>
     <string name="action_productlist">Product List</string>
+    <string name="action_details">Product Details</string>
 
+    <string name="error_product">Error : Couldn\'t Add Product...</string>
     <string name="productsNotFound">No Products Found</string>
 
     <string name="messageLoading">Please Wait while the Bookings are Loading...</string>
     <string name="select_profile_image">Select Profile Image</string>
+
+    <string name="hint_title">Please Enter Product Title:</string>
+    <string name="hint_price">Please Enter Product Price:</string>
+    <string name="hint_avg_weight">Please Enter The Average Weight of 1 (in kg):</string>
+    <string name="hint_description">Please Enter Product Description:</string>
+    <string name="hint_eircode">Please Enter Eircode:</string>
 </resources>

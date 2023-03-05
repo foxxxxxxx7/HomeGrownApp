@@ -95,10 +95,10 @@ object FirebaseDBManager : ProductStore {
      * @param product ProductModel - The product model that we want to add to the database.
      * @return A Task<Void>
      */
-    override fun create(uid: String, product: ProductModel) {
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")
 
-        product.uid = uid
+        val uid = firebaseUser.value!!.uid
         val key = database.child("products").push().key
         if (key == null) {
             Timber.i("Firebase Error : Key Empty")
@@ -109,7 +109,7 @@ object FirebaseDBManager : ProductStore {
 
         val childAdd = HashMap<String, Any>()
         childAdd["/products/$key"] = productValues
-        childAdd["/user-products/${product.uid}/$key"] = productValues
+        childAdd["/user-products/$uid/$key"] = productValues
 
         database.updateChildren(childAdd)
     }

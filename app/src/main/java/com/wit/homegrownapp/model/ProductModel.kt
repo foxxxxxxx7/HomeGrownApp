@@ -11,7 +11,7 @@ data class ProductModel(var title:String = "",
                         var avgWeight: Double = 0.0,
                         var description: String = "",
                         var eircode: String = "",
-                        var profilepic: String = "",
+                        var productimage: String = "",
                         var uid: String = ""): Parcelable
 {
     @Exclude
@@ -24,7 +24,7 @@ data class ProductModel(var title:String = "",
             "avgWeight" to avgWeight,
             "description" to description,
             "eircode" to eircode,
-            "profilepic" to profilepic,
+            "productimage" to productimage,
             "uid" to uid
         )
     }
