@@ -136,7 +136,7 @@ class MapsFragment : Fragment() {
 
         val item = menu.findItem(R.id.toggleProducts) as MenuItem
         item.setActionView(R.layout.togglebutton_layout)
-        val toggleProducts: SwitchCompat = item.actionView.findViewById(R.id.toggleButton)
+        val toggleProducts: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
         toggleProducts.isChecked = false
 
         toggleProducts.setOnCheckedChangeListener { _, isChecked ->
