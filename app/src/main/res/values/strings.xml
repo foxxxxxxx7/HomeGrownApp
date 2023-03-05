@@ -60,6 +60,8 @@
     <string name="action_add_product">Add A Product</string>
     <string name="action_productlist">Product List</string>
     <string name="action_details">Product Details</string>
+    <string name="action_about">About Us</string>
+    <string name="action_maps">Maps</string>
 
     <string name="error_product">Error : Couldn\'t Add Product...</string>
     <string name="productsNotFound">No Products Found</string>
