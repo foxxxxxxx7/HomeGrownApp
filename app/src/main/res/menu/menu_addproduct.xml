@@ -9,10 +9,5 @@
         android:orderInCategory="100"
         android:title="@string/action_productlist"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/mapsFragment"
-        android:orderInCategory="100"
-        android:title="@string/action_maps"
-        app:showAsAction="never" />
 </menu>
 

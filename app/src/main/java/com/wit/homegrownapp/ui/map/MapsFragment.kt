@@ -42,7 +42,7 @@ class MapsFragment : Fragment() {
         mapsViewModel.map = googleMap
         mapsViewModel.map.isMyLocationEnabled = true
 
-        mapsViewModel.currentLocation.observe(viewLifecycleOwner, {
+        mapsViewModel.currentLocation.observe(viewLifecycleOwner) {
             val loc = LatLng(
                 mapsViewModel.currentLocation.value!!.latitude,
                 mapsViewModel.currentLocation.value!!.longitude
@@ -76,7 +76,7 @@ class MapsFragment : Fragment() {
                     }
                 })
 
-        })
+        }
     }
 
     /**

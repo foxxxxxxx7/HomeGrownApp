@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_map"
         android:orderInCategory="100"
         android:title="@string/action_maps"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/toggleBookings"
+        android:id="@+id/toggleProducts"
         android:title=""
         app:actionLayout="@layout/togglebutton_layout"
         app:showAsAction="always" />
