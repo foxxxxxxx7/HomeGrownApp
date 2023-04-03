@@ -138,42 +138,19 @@ class AddProductFragment : Fragment() {
             if (product.title.isEmpty() || product.price.toString().isEmpty() || product.avgWeight.toString().isEmpty() || product.category.isEmpty() || product.description.isEmpty()) {
                 Toast.makeText(context, "Please complete ALL fields", Toast.LENGTH_LONG).show()
             } else {
-                // Get coordinates from Eircode
                 lifecycleScope.launch {
-                    val coordinates = addProductViewModel.getCoordinatesFromEircode(product.eircode)
-                    if (coordinates != null) {
-                        // Pass the coordinates to your addProduct function or save it in the ProductModel
-                        product.latitude = coordinates.latitude
-                        product.longitude = coordinates.longitude
-                    } else {
-                        // Handle error
-                        Toast.makeText(context, "Unable to fetch coordinates for the given Eircode.", Toast.LENGTH_LONG).show()
-                    }
+                    addProductViewModel.addProduct(loggedInViewModel.liveFirebaseUser, product)
+                    layout.addTitle.setText("")
+                    layout.addPrice.setText("")
+                    layout.addAvgWeight.setText("")
+                    layout.addDescription.setText("")
+                    layout.addEircode.setText("")
+                    Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
                 }
-
-                layout.addTitle.setText("")
-                layout.addPrice.setText("")
-                layout.addAvgWeight.setText("")
-                layout.addDescription.setText("")
-                layout.addEircode.setText("")
-                Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
-
-                addProductViewModel.addProduct(
-                    loggedInViewModel.liveFirebaseUser,
-                    ProductModel(
-                        title = product.title,
-                        price = product.price,
-                        avgWeight = product.avgWeight,
-                        category = product.category,
-                        description = product.description,
-                        eircode = product.eircode,
-                        latitude = product.latitude,
-                        longitude = product.longitude
-                    )
-                )
             }
         }
     }
+
 
 
     /**

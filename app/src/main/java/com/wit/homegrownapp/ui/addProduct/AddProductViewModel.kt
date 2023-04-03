@@ -27,7 +27,9 @@ class AddProductViewModel : ViewModel() {
 
             if (response.status == "OK" && response.results.isNotEmpty()) {
                 val apiLatLng = response.results[0].geometry.location
-                Log.d("EircodeDebug", "Coordinates fetched: ${apiLatLng.lat}, ${apiLatLng.lng}") // Log coordinates
+                Log.d(
+                    "EircodeDebug", "Coordinates fetched: ${apiLatLng.lat}, ${apiLatLng.lng}"
+                ) // Log coordinates
                 GmsLatLng(apiLatLng.lat, apiLatLng.lng) // Convert to GmsLatLng
             } else {
                 Log.e("EircodeError", "Error fetching coordinates: ${response.status}")
@@ -39,13 +41,22 @@ class AddProductViewModel : ViewModel() {
         }
     }
 
-    fun addProduct(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
-        status.value = try {
-            Log.d("AddProductDebug", "Adding product with coordinates: ${product.latitude}, ${product.longitude}")
-            FirebaseDBManager.create(firebaseUser, product)
-            true
-        } catch (e: IllegalArgumentException) {
-            false
+
+    suspend fun addProduct(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
+        try {
+            val coordinates = getCoordinatesFromEircode(product.eircode)
+            if (coordinates != null) {
+                product.latitude = coordinates.latitude
+                product.longitude = coordinates.longitude
+                FirebaseDBManager.create(firebaseUser, product)
+                status.postValue(true)
+            } else {
+                status.postValue(false)
+            }
+        } catch (e: Exception) {
+            Log.e("EircodeError", "Error adding product: ${e.message}")
+            status.postValue(false)
         }
     }
+
 }
