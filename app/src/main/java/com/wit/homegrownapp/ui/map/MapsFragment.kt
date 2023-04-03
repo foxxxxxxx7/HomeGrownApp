@@ -47,20 +47,11 @@ class MapsFragment : Fragment() {
                 mapsViewModel.currentLocation.value!!.latitude,
                 mapsViewModel.currentLocation.value!!.longitude
             )
-            val waterfordDepot = LatLng(52.260791, -7.105922)
-            val kilmacthomasDepot = LatLng(52.204365250330284, -7.425864411634394)
-            val dungarvanDepot = LatLng(52.08538860777265, -7.623179554066156)
+            val ardkeenStores = LatLng(52.260791, -7.105922)
 
 
             googleMap.addMarker(
-                MarkerOptions().position(waterfordDepot).title("Waterford Shop")
-            )
-            googleMap.addMarker(
-                MarkerOptions().position(kilmacthomasDepot)
-                    .title("Kilmacthomas Market")
-            )
-            googleMap.addMarker(
-                MarkerOptions().position(dungarvanDepot).title("Dungarvan Depot")
+                MarkerOptions().position(ardkeenStores).title("Ardkeen Stores")
             )
 
             mapsViewModel.map.uiSettings.isZoomControlsEnabled = true
@@ -101,9 +92,7 @@ class MapsFragment : Fragment() {
      * @return The view of the fragment
      */
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 //        mapsViewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
         loader = createLoader(requireActivity())
@@ -153,40 +142,25 @@ class MapsFragment : Fragment() {
      * on the map.
      */
     private fun render(productsList: ArrayList<ProductModel>) {
-        var markerColour: Float
-        if (!productsList.isEmpty()) {
+        if (productsList.isNotEmpty()) {
             mapsViewModel.map.clear()
 
-            val waterfordDepot = LatLng(52.260791, -7.105922)
-            val kilmacthomasDepot = LatLng(52.204365250330284, -7.425864411634394)
-            val dungarvanDepot = LatLng(52.08538860777265, -7.623179554066156)
+            productsList.forEach { product ->
+                val producerLocation = LatLng(product.latitude, product.longitude)
+                val markerTitle = "${product.title} - ${product.price}"
+                val markerSnippet = product.description
 
-            mapsViewModel.map.addMarker(
-                MarkerOptions().position(waterfordDepot).title("Viking Bike Hire Waterford Depot")
-            )
-            mapsViewModel.map.addMarker(
-                MarkerOptions().position(kilmacthomasDepot)
-                    .title("Viking Bike Hire Kilmacthomas Depot")
-            )
-            mapsViewModel.map.addMarker(
-                MarkerOptions().position(dungarvanDepot).title("Viking Bike Hire Dungarvan Depot")
-            )
-
-//            productsList.forEach {
-//                if (it.email.equals(this.productListViewModel.liveFirebaseUser.value!!.email))
-//                    markerColour = BitmapDescriptorFactory.HUE_ORANGE
-//                else
-//                    markerColour = BitmapDescriptorFactory.HUE_AZURE + 5
-//
-//                mapsViewModel.map.addMarker(
-//                    MarkerOptions().position(LatLng(it.latitude, it.longitude))
-//                        .title("${it.name} €${it.phoneNumber}")
-//                        .snippet(it.email)
-//                        .icon(BitmapDescriptorFactory.defaultMarker(markerColour))
-//                )
-//            }
+                mapsViewModel.map.addMarker(
+                    MarkerOptions().position(producerLocation)
+                        .title(markerTitle)
+                        .snippet(markerSnippet)
+                )
+            }
         }
     }
+
+
+
 
     /**
      * The function is called when the fragment is resumed. It shows a loader, and then observes the
