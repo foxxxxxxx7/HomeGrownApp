@@ -10,12 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentAddProductBinding
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
+import kotlinx.coroutines.launch
 //import com.wit.homegrownapp.ui.map.MapsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -125,35 +127,37 @@ class AddProductFragment : Fragment() {
      * is created.
      */
     fun setButtonListener(layout: FragmentAddProductBinding) {
-
-
         layout.addProductButton.setOnClickListener {
-
-//            val readableDate = SimpleDateFormat("dd/MM/yy").format(Date(layout.bookDate.date))
-//            product.date = readableDate
             product.title = layout.addTitle.text.toString()
             product.price = layout.addPrice.text.toString().toDouble()
             product.avgWeight = layout.addAvgWeight.text.toString().toDouble()
             product.description = layout.addDescription.text.toString()
             product.eircode = layout.addEircode.text.toString()
             product.category = layout.addCategory.selectedItemPosition.toString()
-            if (product.title.isEmpty() || product.price.toString()
-                    .isEmpty() || product.avgWeight.toString()
-                    .isEmpty() || product.category.isEmpty() || product.description.isEmpty()
-            ) {
+
+            if (product.title.isEmpty() || product.price.toString().isEmpty() || product.avgWeight.toString().isEmpty() || product.category.isEmpty() || product.description.isEmpty()) {
                 Toast.makeText(context, "Please complete ALL fields", Toast.LENGTH_LONG).show()
-//            } else {
-//                if (edit) {
-//                   // addProductViewModel.updateBook(product.copy())
             } else {
+                // Get coordinates from Eircode
+                lifecycleScope.launch {
+                    val coordinates = addProductViewModel.getCoordinatesFromEircode(product.eircode)
+                    if (coordinates != null) {
+                        // Pass the coordinates to your addProduct function or save it in the ProductModel
+                        product.latitude = coordinates.latitude
+                        product.longitude = coordinates.longitude
+                    } else {
+                        // Handle error
+                        Toast.makeText(context, "Unable to fetch coordinates for the given Eircode.", Toast.LENGTH_LONG).show()
+                    }
+                }
+
                 layout.addTitle.setText("")
                 layout.addPrice.setText("")
                 layout.addAvgWeight.setText("")
-//                layout.addCategory.setText("")
                 layout.addDescription.setText("")
                 layout.addEircode.setText("")
                 Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
-//                    addProductViewModel.addBook(product.copy())
+
                 addProductViewModel.addProduct(
                     loggedInViewModel.liveFirebaseUser,
                     ProductModel(
@@ -163,13 +167,10 @@ class AddProductFragment : Fragment() {
                         category = product.category,
                         description = product.description,
                         eircode = product.eircode,
-//                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
-//                        latitude = mapsViewModel.currentLocation.value!!.latitude,
-//                        longitude = mapsViewModel.currentLocation.value!!.longitude
+                        latitude = product.latitude,
+                        longitude = product.longitude
                     )
                 )
-                print("Add Button Pressed: $layout.addTitle, $layout.addPrice, $layout.addDes")
-                /*setResult(AppCompatActivity.RESULT_OK)*/
             }
         }
     }
