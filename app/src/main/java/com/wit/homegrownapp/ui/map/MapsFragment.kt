@@ -20,6 +20,7 @@ import timber.log.Timber
 
 import android.app.AlertDialog
 import androidx.lifecycle.Observer
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
@@ -35,6 +36,15 @@ class MapsFragment : Fragment() {
     private val mapsViewModel: MapsViewModel by activityViewModels()
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     lateinit var loader: AlertDialog
+
+    private fun greenMarker(): BitmapDescriptor {
+        return BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+    }
+
+    private fun orangeMarker(): BitmapDescriptor {
+        return BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
+    }
+
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
@@ -58,8 +68,7 @@ class MapsFragment : Fragment() {
             mapsViewModel.map.uiSettings.isMyLocationButtonEnabled = true
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 9f))
 
-            productListViewModel.observableProductList.observe(
-                viewLifecycleOwner,
+            productListViewModel.observableProductList.observe(viewLifecycleOwner,
                 Observer { products ->
                     products?.let {
                         render(products as ArrayList<ProductModel>)
@@ -70,27 +79,12 @@ class MapsFragment : Fragment() {
         }
     }
 
-    /**
-     * It sets the menu for the activity.
-     *
-     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this
-     * is the state.
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    /**
-     * This function is called when the fragment is created. It creates a loader and returns the layout
-     * for the fragment
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment,
-     * @param container The parent view that the fragment's UI should be attached to.
-     * @param savedInstanceState A Bundle object containing the activity's previously saved state. If
-     * the activity has never existed before, the value of the Bundle object is null.
-     * @return The view of the fragment
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -100,26 +94,14 @@ class MapsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
-    /**
-     * A callback function that is called when the map is ready to be used.
-     *
-     * @param view View - The view returned by onCreateView(LayoutInflater, ViewGroup, Bundle)
-     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this
-     * is the state.
-     */
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
-    /**
-     * We're inflating the menu, finding the toggle button, setting the checked state, and setting the
-     * onCheckedChangeListener
-     *
-     * @param menu The menu object that you want to inflate.
-     * @param inflater MenuInflater
-     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_map, menu)
 
@@ -134,26 +116,24 @@ class MapsFragment : Fragment() {
         }
     }
 
-    /**
-     * The function takes an ArrayList of ProductModel objects as a parameter, clears the map, adds
-     * markers for the three depots, then adds a marker for each ProductModel object in the ArrayList
-     *
-     * @param productsList ArrayList<ProductModel> - This is the list of products that we want to display
-     * on the map.
-     */
+
     private fun render(productsList: ArrayList<ProductModel>) {
         if (productsList.isNotEmpty()) {
             mapsViewModel.map.clear()
+
+            val currentUserId = loggedInViewModel.liveFirebaseUser.value?.uid
 
             productsList.forEach { product ->
                 val producerLocation = LatLng(product.latitude, product.longitude)
                 val markerTitle = "${product.title} - ${product.price}"
                 val markerSnippet = product.description
+                val markerIcon = if (product.uid == currentUserId) greenMarker() else orangeMarker()
 
                 mapsViewModel.map.addMarker(
                     MarkerOptions().position(producerLocation)
                         .title(markerTitle)
                         .snippet(markerSnippet)
+                        .icon(markerIcon)
                 )
             }
         }
@@ -161,13 +141,6 @@ class MapsFragment : Fragment() {
 
 
 
-
-    /**
-     * The function is called when the fragment is resumed. It shows a loader, and then observes the
-     * loggedInViewModel.liveFirebaseUser. If the user is logged in, it sets the
-     * productListViewModel.liveFirebaseUser to the logged in user, and then calls the
-     * productListViewModel.load() function
-     */
     override fun onResume() {
         super.onResume()
         showLoader(loader, "Downloading Products")

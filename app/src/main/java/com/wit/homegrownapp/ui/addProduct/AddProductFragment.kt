@@ -39,15 +39,7 @@ class AddProductFragment : Fragment() {
 
     }
 
-    /**
-     * The function sets the button listener for the book button, and sets the date change listener for
-     * the calendar view
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment,
-     * @param container The parent that this fragment's UI should be attached to.
-     * @param savedInstanceState Bundle?
-     * @return The root view is being returned.
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,12 +73,7 @@ class AddProductFragment : Fragment() {
         return root
     }
 
-    /**
-     * It renders the result of the book request.
-     *
-     * @param status Boolean - This is the status of the book. If the book is successfully added, it
-     * will return true. If it fails, it will return false.
-     */
+
     private fun render(status: Boolean) {
         when (status) {
             true -> {
@@ -110,22 +97,13 @@ class AddProductFragment : Fragment() {
     }
 
 
-    /**
-     * It sets the binding variable to null.
-     */
+
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
     }
 
-    /**
-     * This function is called when the user clicks the "Book" button. It takes the data from the user
-     * input fields and creates a new BookModel object, which is then passed to the addProductViewModel to be
-     * added to the database
-     *
-     * @param layout FragmentBookBinding - This is the binding object that is created when the fragment
-     * is created.
-     */
+
     fun setButtonListener(layout: FragmentAddProductBinding) {
         layout.addProductButton.setOnClickListener {
             product.title = layout.addTitle.text.toString()
@@ -153,25 +131,13 @@ class AddProductFragment : Fragment() {
 
 
 
-    /**
-     * > This function inflates the menu_product.xml file into the menu object
-     *
-     * @param menu The menu object that you want to inflate.
-     * @param inflater The MenuInflater that you use to inflate your menu resource into the Menu
-     * object.
-     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_addproduct, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    /**
-     * If the user clicks on an item in the menu, and that item has an associated action, then perform
-     * that action
-     *
-     * @param item The menu item that was selected.
-     * @return The return value is a boolean.
-     */
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
             item,

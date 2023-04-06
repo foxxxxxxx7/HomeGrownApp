@@ -35,9 +35,7 @@ class ProductListViewModel : ViewModel() {
     //     return BookManager.products
     // }
 
-    /**
-     * It loads the products from the Firebase database.
-     */
+
     fun load() {
         try {
             readOnly.value = false
@@ -58,12 +56,7 @@ class ProductListViewModel : ViewModel() {
         }
     }
 
-    /**
-     * It deletes a product from the database.
-     *
-     * @param userid The userid of the user who is logged in.
-     * @param id The id of the product
-     */
+
     fun delete(userid: String, id: String) {
         try {
             //DonationManager.delete(userid,id)
@@ -90,10 +83,7 @@ class ProductListViewModel : ViewModel() {
         }
     }
 
-    /**
-     * The function is called loadAll() and it's a public function that takes no parameters and returns
-     * nothing
-     */
+
     fun loadAll() {
         try {
             readOnly.value = true

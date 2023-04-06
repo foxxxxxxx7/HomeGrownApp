@@ -37,26 +37,14 @@ class ProductListFragment : Fragment(), ProductListener {
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
 
-    /**
-     * The function is called when the activity is created
-     *
-     * @param savedInstanceState This is a Bundle object that contains the activity's previously saved
-     * state. If the activity has never existed before, the value of the Bundle object is null.
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // app = activity?.application as BikeshopApp
         setHasOptionsMenu(true)
     }
 
-    /**
-     * It creates the view for the fragment.
-     *
-     * @param inflater LayoutInflater
-     * @param container The parent that the fragment's UI should be attached to.
-     * @param savedInstanceState A Bundle object containing the activity's previously saved state.
-     * @return The root view of the fragment.
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -122,13 +110,7 @@ class ProductListFragment : Fragment(), ProductListener {
         return root
     }
 
-    /**
-     * We're inflating the menu, finding the toggle button, setting the checked state, and setting the
-     * listener
-     *
-     * @param menu The menu object that you want to inflate.
-     * @param inflater The MenuInflater that you use to inflate the menu resource into the given menu.
-     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_product_list, menu)
 
@@ -138,13 +120,7 @@ class ProductListFragment : Fragment(), ProductListener {
         toggleproducts.isChecked = false
 
         toggleproducts.setOnCheckedChangeListener { buttonView, isChecked ->
-            /**
-             * If the user clicks on an item in the menu, and that item has an associated action, then perform
-             * that action
-             *
-             * @param item The menu item that was selected.
-             * @return The return value is a boolean.
-             */
+
             if (isChecked) productListViewModel.loadAll()
             else productListViewModel.load()
         }
@@ -159,11 +135,7 @@ class ProductListFragment : Fragment(), ProductListener {
         ) || super.onOptionsItemSelected(item)
     }
 
-    /**
-     * The function renders the recycler view with the list of products
-     *
-     * @param productList ArrayList<ProductModel> - The list of products to be displayed
-     */
+
     private fun render(productList: ArrayList<ProductModel>) {
         fragBinding.recyclerView.adapter = ProductAdapter(
             productList, this, productListViewModel.readOnly.value!!
@@ -183,9 +155,7 @@ class ProductListFragment : Fragment(), ProductListener {
         }
     }
 
-    /**
-     * It sets the swipe refresh listener.
-     */
+
     fun setSwipeRefresh() {
         fragBinding.swiperefresh.setOnRefreshListener {
             fragBinding.swiperefresh.isRefreshing = true
@@ -198,17 +168,13 @@ class ProductListFragment : Fragment(), ProductListener {
         }
     }
 
-    /**
-     * It checks if the swipe refresh is refreshing and if it is, it sets it to false.
-     */
+
     private fun checkSwipeRefresh() {
         if (fragBinding.swiperefresh.isRefreshing)
             fragBinding.swiperefresh.isRefreshing = false
     }
 
-    /**
-     * The function is called when the activity is resumed
-     */
+
     override fun onResume() {
         super.onResume()
         productListViewModel.load()
@@ -223,9 +189,7 @@ class ProductListFragment : Fragment(), ProductListener {
             }
     }
 
-    /**
-     * It sets the binding variable to null.
-     */
+
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
@@ -249,11 +213,7 @@ class ProductListFragment : Fragment(), ProductListener {
 //     //   showproducts(ProductListViewModel.findAll())
 //    }
 
-    /**
-     * If the user is not in read-only mode, navigate to the product detail fragment.
-     *
-     * @param product ProductModel - The product object that was clicked
-     */
+
     override fun onProductClick(product: ProductModel) {
         val action =
             ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.uid!!)
