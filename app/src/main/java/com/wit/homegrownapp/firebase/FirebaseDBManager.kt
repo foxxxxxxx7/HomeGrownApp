@@ -94,8 +94,16 @@ object FirebaseDBManager : ProductStore {
         childAdd["/products/$key"] = productValues
         childAdd["/user-products/$uid/$key"] = productValues
 
-        database.updateChildren(childAdd)
+        database.updateChildren(childAdd).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val imageURL = FirebaseImageManager.imageUri.value.toString()
+                saveProducerImageToProduct(key, imageURL)
+            } else {
+                Timber.e("Failed to save product: ${it.exception}")
+            }
+        }
     }
+
 
 
 
@@ -140,5 +148,10 @@ object FirebaseDBManager : ProductStore {
                 }
             })
     }
+    fun saveProducerImageToProduct(productID: String, imageURL: String) {
+        val productRef = database.child("products").child(productID)
+        productRef.child("producerimage").setValue(imageURL)
+    }
+
 
 }
