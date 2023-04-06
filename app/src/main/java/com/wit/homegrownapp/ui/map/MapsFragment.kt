@@ -19,7 +19,11 @@ import com.wit.homegrownapp.ui.productList.ProductListViewModel
 import timber.log.Timber
 
 import android.app.AlertDialog
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.wit.homegrownapp.model.ProductModel
@@ -59,7 +63,6 @@ class MapsFragment : Fragment() {
             )
             val ardkeenStores = LatLng(52.260791, -7.105922)
 
-
             googleMap.addMarker(
                 MarkerOptions().position(ardkeenStores).title("Ardkeen Stores")
             )
@@ -77,6 +80,21 @@ class MapsFragment : Fragment() {
                 })
 
         }
+
+        // Set an OnMarkerClickListener
+        mapsViewModel.map.setOnMarkerClickListener { marker ->
+            val selectedProduct = productListViewModel.observableProductList.value?.firstOrNull { product ->
+                val productLatLng = LatLng(product.latitude, product.longitude)
+                marker.position == productLatLng
+            }
+            selectedProduct?.let { product ->
+                mapsViewModel.selectedProduct.value = product
+            }
+            true
+        }
+        mapsViewModel.map.setOnMapClickListener {
+            mapsViewModel.selectedProduct.value = null
+        }
     }
 
 
@@ -85,21 +103,51 @@ class MapsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-//        mapsViewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         loader = createLoader(requireActivity())
 
-        return inflater.inflate(R.layout.fragment_maps, container, false)
-    }
+        // Inflate the main layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_maps, container, false)
 
+        // Inflate the card view layout
+        val cardView = inflater.inflate(R.layout.map_product_card_view, container, false) as CardView
+
+        // Add the card view to the main layout
+        (view as ViewGroup).addView(cardView)
+
+        // Initially, hide the card view
+        cardView.visibility = View.GONE
+
+        return view
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        // Find the views in the card view
+        val producerImageView: ImageView = view.findViewById(R.id.producer_image)
+        val productTitleView: TextView = view.findViewById(R.id.product_title)
+        val productPriceView: TextView = view.findViewById(R.id.product_price)
+        val cardView: CardView = view.findViewById(R.id.product_card)
+
+        // Observe the selectedProduct LiveData
+        mapsViewModel.selectedProduct.observe(viewLifecycleOwner, Observer { product ->
+            if (product != null) {
+                // Update the card view content
+                Glide.with(this).load(product.producerimage).into(producerImageView)
+                productTitleView.text = product.title
+                productPriceView.text = getString(R.string.product_price_format, product.price)
+
+                // Show the card view
+                cardView.visibility = View.VISIBLE
+            } else {
+                // Hide the card view
+                cardView.visibility = View.GONE
+            }
+        })
     }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

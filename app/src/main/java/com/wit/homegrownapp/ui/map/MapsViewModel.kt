@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
+import com.wit.homegrownapp.model.ProductModel
 import timber.log.Timber
 
 /* This is the ViewModel for the MapFragment. It is responsible for getting the current location of the
@@ -29,6 +30,8 @@ class MapsViewModel(application: Application) : AndroidViewModel(application) {
             currentLocation.value = locationResult.locations.last()
         }
     }
+
+    val selectedProduct = MutableLiveData<ProductModel?>()
 
     /* This is the initializer block of the ViewModel. It is responsible for getting the current
     location of the user. */

@@ -74,4 +74,6 @@
     <string name="hint_avg_weight">Please Enter The Average Weight of 1 (in kg):</string>
     <string name="hint_description">Please Enter Product Description:</string>
     <string name="hint_eircode">Please Enter Eircode:</string>
+
+    <string name="product_price_format">$%.2f</string>
 </resources>
