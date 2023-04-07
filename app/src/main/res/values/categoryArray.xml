@@ -4,4 +4,105 @@
         <item>Fruit</item>
         <item>Vegetable</item>
     </array>
+
+    <array name="fruitArray">
+        <item>Apple</item>
+        <item>Apricot</item>
+        <item>Avocado</item>
+        <item>Banana</item>
+        <item>Blackberry</item>
+        <item>Blueberry</item>
+        <item>Boysenberry</item>
+        <item>Cantaloupe</item>
+        <item>Cherry</item>
+        <item>Coconut</item>
+        <item>Cranberry</item>
+        <item>Currant</item>
+        <item>Date</item>
+        <item>Durian</item>
+        <item>Elderberry</item>
+        <item>Fig</item>
+        <item>Grape</item>
+        <item>Grapefruit</item>
+        <item>Guava</item>
+        <item>Honeydew</item>
+        <item>Jackfruit</item>
+        <item>Kiwi</item>
+        <item>Kumquat</item>
+        <item>Lemon</item>
+        <item>Lime</item>
+        <item>Lychee</item>
+        <item>Mango</item>
+        <item>Mulberry</item>
+        <item>Nectarine</item>
+        <item>Orange</item>
+        <item>Papaya</item>
+        <item>Passion Fruit</item>
+        <item>Peach</item>
+        <item>Pear</item>
+        <item>Persimmon</item>
+        <item>Pineapple</item>
+        <item>Plum</item>
+        <item>Pomegranate</item>
+        <item>Raspberry</item>
+        <item>Redcurrant</item>
+        <item>Salmonberry</item>
+        <item>Strawberry</item>
+        <item>Tangerine</item>
+        <item>Ugli Fruit</item>
+        <item>Watermelon</item>
+    </array>
+
+    <array name="vegArray">
+        <item>Artichoke</item>
+        <item>Arugula</item>
+        <item>Asparagus</item>
+        <item>Beet</item>
+        <item>Broccoli</item>
+        <item>Brussels Sprout</item>
+        <item>Cabbage</item>
+        <item>Carrot</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Chard</item>
+        <item>Chickpea</item>
+        <item>Collard Greens</item>
+        <item>Corn</item>
+        <item>Cucumber</item>
+        <item>Eggplant</item>
+        <item>Endive</item>
+        <item>Fennel</item>
+        <item>Garlic</item>
+        <item>Green Bean</item>
+        <item>Green Onion</item>
+        <item>Kale</item>
+        <item>Leek</item>
+        <item>Lettuce</item>
+        <item>Lima Bean</item>
+        <item>Mushroom</item>
+        <item>Mustard Greens</item>
+        <item>Okra</item>
+        <item>Onion</item>
+        <item>Parsnip</item>
+        <item>Pea</item>
+        <item>Pepper</item>
+        <item>Potato</item>
+        <item>Pumpkin</item>
+        <item>Radish</item>
+        <item>Rhubarb</item>
+        <item>Rutabaga</item>
+        <item>Shallot</item>
+        <item>Spinach</item>
+        <item>Squash</item>
+        <item>Sweet Potato</item>
+        <item>Swiss Chard</item>
+        <item>Tomatillo</item>
+        <item>Tomato</item>
+        <item>Turnip</item>
+        <item>Watercress</item>
+        <item>Yam</item>
+        <item>Zucchini</item>
+    </array>
+
+
 </resources>
