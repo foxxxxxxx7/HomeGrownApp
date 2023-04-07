@@ -76,4 +76,12 @@
     <string name="hint_eircode">Please Enter Eircode:</string>
 
     <string name="product_price_format">\u20AC%.2f</string>
+
+    <string name="title_empty_error">Title cannot be empty</string>
+    <string name="price_invalid_error">Price must be a positive number</string>
+    <string name="average_weight_invalid_error">Average Weight must be a positive number</string>
+    <string name="description_empty_error">Description cannot be empty</string>
+    <string name="eircode_empty_error">Eircode cannot be empty</string>
+    <string name="category_empty_error">Category cannot be empty</string>
+
 </resources>

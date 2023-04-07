@@ -12,6 +12,7 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentAddProductBinding
@@ -107,15 +108,13 @@ class AddProductFragment : Fragment() {
     fun setButtonListener(layout: FragmentAddProductBinding) {
         layout.addProductButton.setOnClickListener {
             product.title = layout.addTitle.text.toString()
-            product.price = layout.addPrice.text.toString().toDouble()
-            product.avgWeight = layout.addAvgWeight.text.toString().toDouble()
+            product.price = layout.addPrice.text.toString().toDoubleOrNull() ?: 0.0
+            product.avgWeight = layout.addAvgWeight.text.toString().toDoubleOrNull() ?: 0.0
             product.description = layout.addDescription.text.toString()
             product.eircode = layout.addEircode.text.toString()
             product.category = layout.addCategory.selectedItemPosition.toString()
 
-            if (product.title.isEmpty() || product.price.toString().isEmpty() || product.avgWeight.toString().isEmpty() || product.category.isEmpty() || product.description.isEmpty()) {
-                Toast.makeText(context, "Please complete ALL fields", Toast.LENGTH_LONG).show()
-            } else {
+            if (addProductViewModel.validateProduct(product)) {
                 lifecycleScope.launch {
                     addProductViewModel.addProduct(loggedInViewModel.liveFirebaseUser, product)
                     layout.addTitle.setText("")
@@ -124,7 +123,43 @@ class AddProductFragment : Fragment() {
                     layout.addDescription.setText("")
                     layout.addEircode.setText("")
                     Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_addProduct_to_productList)
                 }
+            }
+        }
+
+        addProductViewModel.validationStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                AddProductViewModel.ValidationStatus.TitleEmpty -> Toast.makeText(
+                    context,
+                    R.string.title_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddProductViewModel.ValidationStatus.PriceInvalid -> Toast.makeText(
+                    context,
+                    R.string.price_invalid_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddProductViewModel.ValidationStatus.AvgWeightInvalid -> Toast.makeText(
+                    context,
+                    R.string.average_weight_invalid_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddProductViewModel.ValidationStatus.DescriptionEmpty -> Toast.makeText(
+                    context,
+                    R.string.description_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddProductViewModel.ValidationStatus.EircodeEmpty -> Toast.makeText(
+                    context,
+                    R.string.eircode_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddProductViewModel.ValidationStatus.CategoryEmpty -> Toast.makeText(
+                    context,
+                    R.string.category_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
