@@ -135,7 +135,7 @@ class MapsFragment : Fragment() {
         mapsViewModel.selectedProduct.observe(viewLifecycleOwner, Observer { product ->
             if (product != null) {
                 // Update the card view content
-                Glide.with(this).load(product.producerimage).into(producerImageView)
+                Glide.with(this).load(product.icon).into(producerImageView)
                 productTitleView.text = product.title
                 productPriceView.text = getString(R.string.product_price_format, product.price)
 

@@ -147,6 +147,11 @@ class AddProductFragment : Fragment() {
         }
     }
 
+    private fun getIconResource(type: String): Int {
+        val resourceName = type.replace(" ", "").toLowerCase(Locale.ROOT)
+        return resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
+    }
+
 
 
     private fun render(status: Boolean) {
@@ -190,7 +195,8 @@ class AddProductFragment : Fragment() {
             // Add the selected type to the product model
             product.type = layout.addType.selectedItem?.toString() ?: ""
             product.variety = layout.addVariety.selectedItem?.toString() ?: ""
-
+            // Set icon based on category and type
+            product.icon = getIconResource(product.type)
 
             if (addProductViewModel.validateProduct(product)) {
                 lifecycleScope.launch {

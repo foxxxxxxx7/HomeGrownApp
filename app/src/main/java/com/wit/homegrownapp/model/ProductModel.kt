@@ -15,6 +15,7 @@ data class ProductModel(
     var eircode: String = "",
     var producerimage: String = "" ,
     var productimage: String = "",
+    var icon: Int = 0,
     var pid: String = "",
     var uid: String = "",
     var latitude: Double = 0.0, // Add this
@@ -33,6 +34,7 @@ data class ProductModel(
             "eircode" to eircode,
             "producerimage" to producerimage,
             "productimage" to productimage,
+            "icon" to icon,
             "pid" to pid,
             "uid" to uid,
             "latitude" to latitude, // Add this
