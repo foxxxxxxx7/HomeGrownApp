@@ -104,5 +104,473 @@
         <item>Zucchini</item>
     </string-array>
 
+    <!-- Subcategories for fruits -->
+    <string-array name="appleArray">
+        <item>Red Delicious</item>
+        <item>Granny Smith</item>
+        <item>Golden Delicious</item>
+        <item>Gala</item>
+        <item>Fuji</item>
+        <item>Honeycrisp</item>
+        <item>McIntosh</item>
+        <item>Braeburn</item>
+        <item>Jonathan</item>
+        <item>Pink Lady</item>
+   </string-array>
+
+    <string-array name="apricotArray">
+        <item>Goldcot</item>
+        <item>Moorpark</item>
+        <item>Blenheim</item>
+   </string-array>
+
+    <string-array name="avocadoArray">
+        <item>Hass</item>
+        <item>Fuerte</item>
+        <item>Reed</item>
+   </string-array>
+
+    <string-array name="bananaArray">
+        <item>Cavendish</item>
+        <item>Red</item>
+        <item>Plantain</item>
+        <item>Manzano</item>
+        <item>Burro</item>
+        <item>Blue Java</item>
+   </string-array>
+
+    <string-array name="blackberryArray">
+        <item>Navaho</item>
+        <item>Prime-Ark Freedom</item>
+        <item>Ouachita</item>
+   </string-array>
+
+    <string-array name="blueberryArray">
+        <item>Bluecrop</item>
+        <item>Chandler</item>
+        <item>Legacy</item>
+   </string-array>
+
+    <string-array name="cherryArray">
+        <item>Bing</item>
+        <item>Rainier</item>
+        <item>Lapins</item>
+        <item>Montmorency</item>
+        <item>Sweetheart</item>
+   </string-array>
+
+    <string-array name="coconutArray">
+        <item>Green</item>
+        <item>Brown</item>
+   </string-array>
+
+    <string-array name="cranberryArray">
+        <item>Early Black</item>
+        <item>Stevens</item>
+   </string-array>
+
+    <string-array name="currantArray">
+        <item>Red</item>
+        <item>Black</item>
+        <item>White</item>
+   </string-array>
+
+    <string-array name="dateArray">
+        <item>Medjool</item>
+        <item>Deglet Noor</item>
+        <item>Barhi</item>
+   </string-array>
+
+    <string-array name="figArray">
+        <item>Black Mission</item>
+        <item>Calimyrna</item>
+        <item>Kadota</item>
+        <item>Brown Turkey</item>
+   </string-array>
+
+
+    <string-array name="grapeArray">
+        <item>Thompson Seedless</item>
+        <item>Flame Seedless</item>
+        <item>Concord</item>
+        <item>Red Globe</item>
+        <item>Black Corinth</item>
+   </string-array>
+
+    <string-array name="grapefruitArray">
+        <item>Ruby Red</item>
+        <item>White</item>
+        <item>Pink</item>
+   </string-array>
+
+    <string-array name="guavaArray">
+        <item>Pink</item>
+        <item>White</item>
+   </string-array>
+
+    <string-array name="kiwiArray">
+        <item>Green</item>
+        <item>Gold</item>
+   </string-array>
+
+    <string-array name="lemonArray">
+        <item>Eureka</item>
+        <item>Meyer</item>
+        <item>Ponderosa</item>
+   </string-array>
+
+    <string-array name="limeArray">
+        <item>Persian</item>
+        <item>Key</item>
+        <item>Kaffir</item>
+   </string-array>
+
+    <string-array name="mangoArray">
+        <item>Alphonso</item>
+        <item>Ataulfo</item>
+        <item>Tommy Atkins</item>
+   </string-array>
+
+    <string-array name="nectarineArray">
+        <item>Yellow</item>
+        <item>White</item>
+   </string-array>
+
+    <string-array name="orangeArray">
+        <item>Navel</item>
+        <item>Valencia</item>
+        <item>Blood Orange</item>
+        <item>Mandarin</item>
+        <item>Tangelo</item>
+   </string-array>
+
+    <string-array name="papayaArray">
+        <item>Maradol</item>
+        <item>Caribbean Red</item>
+   </string-array>
+
+    <string-array name="peachArray">
+        <item>White</item>
+        <item>Yellow</item>
+        <item>Donut</item>
+        <item>Nectar</item>
+        <item>Elberta</item>
+        <item>Contender</item>
+   </string-array>
+
+    <string-array name="pineappleArray">
+        <item>Smooth Cayenne</item>
+        <item>Red Spanish</item>
+   </string-array>
+
+    <string-array name="plumArray">
+        <item>Black Amber</item>
+        <item>Elephant Heart</item>
+        <item>Green Gage</item>
+        <item>Mirabelle</item>
+        <item>Satsuma</item>
+        <item>Victoria</item>
+   </string-array>
+
+    <string-array name="pomegranateArray">
+        <item>Wonderful</item>
+        <item>Angel Red</item>
+   </string-array>
+
+
+    <string-array name="raspberryArray">
+        <item>Heritage</item>
+        <item>Caroline</item>
+        <item>Autumn Bliss</item>
+   </string-array>
+
+    <string-array name="strawberryArray">
+        <item>June-bearing</item>
+        <item>Ever-bearing</item>
+        <item>Day-neutral</item>
+   </string-array>
+
+    <string-array name="tangerineArray">
+        <item>Clementine</item>
+        <item>Murcott</item>
+        <item>Dancy</item>
+   </string-array>
+
+    <!-- Subcategories for vegetables -->
+
+    <string-array name="arugulaArray">
+        <item>Common</item>
+        <item>Wild</item>
+   </string-array>
+
+    <string-array name="asparagusArray">
+        <item>Jersey Knight</item>
+        <item>Martha Washington</item>
+        <item>Purple Passion</item>
+   </string-array>
+
+    <string-array name="beanArray">
+        <item>Green Bean</item>
+        <item>Yellow Bean</item>
+        <item>Romano</item>
+        <item>Kidney</item>
+        <item>Black</item>
+        <item>Pinto</item>
+        <item>Navy</item>
+   </string-array>
+
+    <string-array name="beetArray">
+        <item>Red</item>
+        <item>Golden</item>
+        <item>Chioggia</item>
+   </string-array>
+
+    <string-array name="bokChoyArray">
+        <item>White Stem</item>
+        <item>Green Stem</item>
+   </string-array>
+
+    <string-array name="broccoliArray">
+        <item>Calabrese</item>
+        <item>Romanesco</item>
+        <item>Broccolini</item>
+   </string-array>
+
+    <string-array name="brusselsSproutArray">
+        <item>Long Island Improved</item>
+        <item>Churchill</item>
+        <item>Jade Cross</item>
+   </string-array>
+
+    <string-array name="cabbageArray">
+        <item>Green</item>
+        <item>Red</item>
+        <item>Savoy</item>
+        <item>Napa</item>
+        <item>Choy Sum</item>
+        <item>Bok Choy</item>
+   </string-array>
+
+    <string-array name="carrotArray">
+        <item>Nantes</item>
+        <item>Imperator</item>
+        <item>Danvers</item>
+        <item>Chantenay</item>
+        <item>Parisienne</item>
+        <item>Ball</item>
+   </string-array>
+
+    <string-array name="cauliflowerArray">
+        <item>White</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Purple</item>
+   </string-array>
+
+    <string-array name="celeryArray">
+        <item>Pascal</item>
+        <item>Golden</item>
+   </string-array>
+
+    <string-array name="chardArray">
+        <item>Swiss Chard</item>
+        <item>Ruby Red</item>
+        <item>Golden</item>
+   </string-array>
+
+    <string-array name="collardArray">
+        <item>Georgia Southern</item>
+        <item>Morris Heading</item>
+   </string-array>
+
+    <string-array name="cornArray">
+        <item>Sweet</item>
+        <item>Flint</item>
+        <item>Dent</item>
+        <item>Popcorn</item>
+   </string-array>
+
+    <string-array name="cucumberArray">
+        <item>English</item>
+        <item>Pickling</item>
+        <item>Armenian</item>
+   </string-array>
+
+    <string-array name="eggplantArray">
+        <item>American</item>
+        <item>Japanese</item>
+        <item>Chinese</item>
+   </string-array>
+
+    <string-array name="endiveArray">
+        <item>Curly</item>
+        <item>Belgian</item>
+   </string-array>
+
+    <string-array name="fennelArray">
+        <item>Florence</item>
+        <item>Sweet</item>
+   </string-array>
+
+    <string-array name="garlicArray">
+        <item>Hardneck</item>
+        <item>Softneck</item>
+   </string-array>
+
+    <string-array name="kaleArray">
+        <item>Curly</item>
+        <item>Lacinato</item>
+        <item>Red Russian</item>
+   </string-array>
+
+    <string-array name="leekArray">
+        <item>American Flag</item>
+        <item>King Richard</item>
+   </string-array>
+
+
+    <string-array name="lettuceArray">
+        <item>Romaine</item>
+        <item>Butterhead</item>
+        <item>Iceberg</item>
+        <item>Green Leaf</item>
+        <item>Red Leaf</item>
+        <item>Oak Leaf</item>
+   </string-array>
+
+    <string-array name="mushroomArray">
+        <item>White Button</item>
+        <item>Cremini</item>
+        <item>Shiitake</item>
+        <item>Portobello</item>
+   </string-array>
+
+    <string-array name="okraArray">
+        <item>Clemson Spineless</item>
+        <item>Red Burgundy</item>
+        <item>Emerald</item>
+   </string-array>
+
+    <string-array name="onionArray">
+        <item>Yellow</item>
+        <item>Red</item>
+        <item>White</item>
+        <item>Sweet</item>
+        <item>Shallot</item>
+   </string-array>
+
+    <string-array name="parsnipArray">
+        <item>Harris Model</item>
+        <item>Lancer</item>
+   </string-array>
+
+    <string-array name="peaArray">
+        <item>Green Arrow</item>
+        <item>Wando</item>
+        <item>Little Marvel</item>
+   </string-array>
+
+    <string-array name="pepperArray">
+        <item>Bell Pepper</item>
+        <item>Jalapeno</item>
+        <item>Serrano</item>
+        <item>Thai Birds Eye</item>
+        <item>Cayenne</item>
+        <item>Ghost Pepper</item>
+        <item>Habanero</item>
+   </string-array>
+
+
+    <string-array name="potatoArray">
+        <item>Red Rooster</item>
+        <item>Maris Piper</item>
+        <item>Baby</item>
+        <item>Russet</item>
+        <item>Yukon Gold</item>
+        <item>Desiree</item>
+        <item>King Edward</item>
+   </string-array>
+
+
+
+    <string-array name="radishArray">
+        <item>Cherry Belle</item>
+        <item>French Breakfast</item>
+        <item>Daikon</item>
+   </string-array>
+
+    <string-array name="rhubarbArray">
+        <item>Victoria</item>
+        <item>Canada Red</item>
+        <item>MacDonald</item>
+   </string-array>
+
+    <string-array name="rutabagaArray">
+        <item>American Purple Top</item>
+        <item>Laurentian</item>
+   </string-array>
+
+    <string-array name="shallotArray">
+        <item>Dutch Yellow</item>
+        <item>French Red</item>
+   </string-array>
+
+    <string-array name="spinachArray">
+        <item>Savoy</item>
+        <item>Flat-Leaf</item>
+        <item>Semi-Savoy</item>
+   </string-array>
+
+    <string-array name="squashArray">
+        <item>Butternut</item>
+        <item>Spaghetti</item>
+        <item>Acorn</item>
+   </string-array>
+
+    <string-array name="stringBeanArray">
+        <item>Blue Lake</item>
+        <item>Contender</item>
+   </string-array>
+
+    <string-array name="sweetPotatoArray">
+        <item>Beauregard</item>
+        <item>Jewel</item>
+   </string-array>
+
+    <string-array name="swedeArray">
+        <item>Marian</item>
+        <item>Best of All</item>
+   </string-array>
+
+    <string-array name="tomatoArray">
+        <item>Beefsteak</item>
+        <item>Roma</item>
+        <item>Cherry</item>
+        <item>San Marzano</item>
+        <item>Green</item>
+        <item>Heirloom</item>
+   </string-array>
+
+    <string-array name="turnipArray">
+        <item>Purple Top White Globe</item>
+        <item>Golden Ball</item>
+        <item>Tokyo Cross</item>
+   </string-array>
+
+    <string-array name="watercressArray">
+        <item>Upland</item>
+        <item>Common</item>
+   </string-array>
+
+    <string-array name="yamArray">
+        <item>Puerto Rican</item>
+        <item>White</item>
+   </string-array>
+
+    <string-array name="zucchiniArray">
+        <item>Green</item>
+        <item>Yellow</item>
+   </string-array>
+
 
 </resources>
