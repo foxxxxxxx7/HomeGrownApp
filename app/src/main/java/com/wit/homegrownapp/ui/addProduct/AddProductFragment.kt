@@ -3,6 +3,8 @@ package com.wit.homegrownapp.ui.addProduct
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CalendarView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -54,8 +56,21 @@ class AddProductFragment : Fragment() {
             status?.let { render(status) }
         })
 
-
         setButtonListener(fragBinding)
+
+        fragBinding.addCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedCategory = parent.getItemAtPosition(position).toString()
+                updateTypeDropdown(selectedCategory)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                updateTypeDropdown("")
+            }
+        }
+
+        return root
+    }
 //        val selectDate = fragBinding.bookDate
 //        //https://stackoverflow.com/questions/16031314/how-can-i-get-selected-date-in-calenderview-in-android#:~:text=Set%20listener%20to%20set%20selected,date%20to%20get%20selected%20date.
 //        //I found this solution on StackOverflow after the date kept appearing as today's date
@@ -71,8 +86,27 @@ class AddProductFragment : Fragment() {
 //            Log.d("SelectedDate", "$dayOfMonth/${month + 1}/$year")
 //
 //        }
-        return root
+
+    private fun updateTypeDropdown(category: String) {
+        val typeArray = when (category) {
+            "Fruit" -> R.array.fruitArray
+            "Vegetable" -> R.array.vegArray
+            else -> 0
+        }
+
+        if (typeArray != 0) {
+            val typeAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                typeArray,
+                android.R.layout.simple_spinner_item
+            )
+            typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            fragBinding.addType.adapter = typeAdapter
+        } else {
+            fragBinding.addType.adapter = null
+        }
     }
+
 
 
     private fun render(status: Boolean) {
@@ -112,7 +146,9 @@ class AddProductFragment : Fragment() {
             product.avgWeight = layout.addAvgWeight.text.toString().toDoubleOrNull() ?: 0.0
             product.description = layout.addDescription.text.toString()
             product.eircode = layout.addEircode.text.toString()
-            product.category = layout.addCategory.selectedItemPosition.toString()
+            product.category = layout.addCategory.selectedItem.toString()
+            // Add the selected type to the product model
+            product.type = layout.addType.selectedItem?.toString() ?: ""
 
             if (addProductViewModel.validateProduct(product)) {
                 lifecycleScope.launch {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="categoryArray">
+    <string-array name="categoryArray">
         <item>Fruit</item>
         <item>Vegetable</item>
-    </array>
+    </string-array>
 
-    <array name="fruitArray">
+    <string-array name="fruitArray">
         <item>Apple</item>
         <item>Apricot</item>
         <item>Avocado</item>
@@ -51,9 +51,9 @@
         <item>Tangerine</item>
         <item>Ugli Fruit</item>
         <item>Watermelon</item>
-    </array>
+    </string-array>
 
-    <array name="vegArray">
+    <string-array name="vegArray">
         <item>Artichoke</item>
         <item>Arugula</item>
         <item>Asparagus</item>
@@ -102,7 +102,7 @@
         <item>Watercress</item>
         <item>Yam</item>
         <item>Zucchini</item>
-    </array>
+    </string-array>
 
 
 </resources>
