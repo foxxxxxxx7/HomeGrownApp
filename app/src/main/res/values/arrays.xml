@@ -12,7 +12,6 @@
         <item>Banana</item>
         <item>Blackberry</item>
         <item>Blueberry</item>
-        <item>Boysenberry</item>
         <item>Cantaloupe</item>
         <item>Cherry</item>
         <item>Coconut</item>
@@ -25,7 +24,6 @@
         <item>Grape</item>
         <item>Grapefruit</item>
         <item>Guava</item>
-        <item>Honeydew</item>
         <item>Jackfruit</item>
         <item>Kiwi</item>
         <item>Kumquat</item>
@@ -45,11 +43,8 @@
         <item>Plum</item>
         <item>Pomegranate</item>
         <item>Raspberry</item>
-        <item>Redcurrant</item>
-        <item>Salmonberry</item>
         <item>Strawberry</item>
         <item>Tangerine</item>
-        <item>Ugli Fruit</item>
         <item>Watermelon</item>
     </string-array>
 
@@ -66,7 +61,6 @@
         <item>Celery</item>
         <item>Chard</item>
         <item>Chickpea</item>
-        <item>Collard Greens</item>
         <item>Corn</item>
         <item>Cucumber</item>
         <item>Eggplant</item>
@@ -78,9 +72,7 @@
         <item>Kale</item>
         <item>Leek</item>
         <item>Lettuce</item>
-        <item>Lima Bean</item>
         <item>Mushroom</item>
-        <item>Mustard Greens</item>
         <item>Okra</item>
         <item>Onion</item>
         <item>Parsnip</item>
@@ -90,13 +82,10 @@
         <item>Pumpkin</item>
         <item>Radish</item>
         <item>Rhubarb</item>
-        <item>Rutabaga</item>
         <item>Shallot</item>
         <item>Spinach</item>
         <item>Squash</item>
         <item>Sweet Potato</item>
-        <item>Swiss Chard</item>
-        <item>Tomatillo</item>
         <item>Tomato</item>
         <item>Turnip</item>
         <item>Watercress</item>
@@ -378,11 +367,6 @@
         <item>Golden</item>
    </string-array>
 
-    <string-array name="collardArray">
-        <item>Georgia Southern</item>
-        <item>Morris Heading</item>
-   </string-array>
-
     <string-array name="cornArray">
         <item>Sweet</item>
         <item>Flint</item>
@@ -505,10 +489,6 @@
         <item>MacDonald</item>
    </string-array>
 
-    <string-array name="rutabagaArray">
-        <item>American Purple Top</item>
-        <item>Laurentian</item>
-   </string-array>
 
     <string-array name="shallotArray">
         <item>Dutch Yellow</item>
@@ -537,10 +517,6 @@
         <item>Jewel</item>
    </string-array>
 
-    <string-array name="swedeArray">
-        <item>Marian</item>
-        <item>Best of All</item>
-   </string-array>
 
     <string-array name="tomatoArray">
         <item>Beefsteak</item>
