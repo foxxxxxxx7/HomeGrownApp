@@ -102,8 +102,48 @@ class AddProductFragment : Fragment() {
             )
             typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             fragBinding.addType.adapter = typeAdapter
+
+            fragBinding.addType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val selectedType = parent?.getItemAtPosition(position).toString()
+                    Log.d("onItemSelected", "Selected type: $selectedType")
+                    updateVarietyDropdown(selectedType)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Log.d("onNothingSelected", "No type selected")
+                    updateVarietyDropdown("")
+                }
+            }
+
         } else {
             fragBinding.addType.adapter = null
+        }
+    }
+    fun getTypeArrayName(type: String): String {
+        val camelCase = type.split(" ").joinToString(separator = "") { it.capitalize() }
+        val arrayName = camelCase.decapitalize() + "Array"
+        Log.d("getTypeArrayName", "Array name: $arrayName")
+        return arrayName
+    }
+
+
+    fun updateVarietyDropdown(selectedType: String) {
+        val arrayName = getTypeArrayName(selectedType)
+        val resourceId = resources.getIdentifier(arrayName, "array", requireContext().packageName)
+
+        if (resourceId != 0) {
+            val varietyAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                resourceId,
+                android.R.layout.simple_spinner_item
+            )
+            varietyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            fragBinding.addVariety.adapter = varietyAdapter
+            Log.d("updateVarietyDropdown", "Updated variety dropdown with resource ID: $resourceId")
+        } else {
+            fragBinding.addVariety.adapter = null
+            Log.d("updateVarietyDropdown", "No resource found for array name: $arrayName")
         }
     }
 
@@ -149,6 +189,8 @@ class AddProductFragment : Fragment() {
             product.category = layout.addCategory.selectedItem.toString()
             // Add the selected type to the product model
             product.type = layout.addType.selectedItem?.toString() ?: ""
+            product.variety = layout.addVariety.selectedItem?.toString() ?: ""
+
 
             if (addProductViewModel.validateProduct(product)) {
                 lifecycleScope.launch {
