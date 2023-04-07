@@ -21,14 +21,9 @@ object FirebaseImageManager {
     var storage = FirebaseStorage.getInstance().reference
     var imageUri = MutableLiveData<Uri>()
 
-    /**
-     * If the user has a profile picture, download it from Firebase Storage and set the imageUri to the
-     * download URL. If the user doesn't have a profile picture, set the imageUri to an empty Uri
-     *
-     * @param userid The user's id
-     */
+
     fun checkStorageForExistingProfilePic(userid: String) {
-        val imageRef = storage.child("photos").child("${userid}.jpg")
+        val imageRef = storage.child("profilePics").child("${userid}.jpg")
         val defaultImageRef = storage.child("ic_book_nav_header.png")
 
         imageRef.metadata.addOnSuccessListener { //File Exists
@@ -41,17 +36,10 @@ object FirebaseImageManager {
         }
     }
 
-    /**
-     * If the image exists, update it. If it doesn't, upload it
-     *
-     * @param userid The user's id
-     * @param bitmap The bitmap of the image you want to upload
-     * @param updating Boolean - This is a boolean that tells the function whether or not the user is
-     * updating their profile picture.
-     */
+
     fun uploadImageToFirebase(userid: String, bitmap: Bitmap, updating: Boolean) {
         // Get the data from an ImageView as bytes
-        val imageRef = storage.child("photos").child("${userid}.jpg")
+        val imageRef = storage.child("profilePics").child("${userid}.jpg")
         //val bitmap = (imageView as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         lateinit var uploadTask: UploadTask
@@ -80,16 +68,7 @@ object FirebaseImageManager {
         }
     }
 
-    /**
-     * `updateUserImage` is a function that takes a userid, imageUri, imageView, and a boolean value.
-     * It then uses Picasso to load the imageUri into the imageView, and uploads the image to Firebase
-     *
-     * @param userid The user's id
-     * @param imageUri The Uri of the image you want to upload.
-     * @param imageView ImageView - The imageView that will be updated with the image
-     * @param updating Boolean - This is a flag to determine if the user is updating their profile or
-     * not.
-     */
+
     fun updateUserImage(userid: String, imageUri: Uri?, imageView: ImageView, updating: Boolean) {
         Picasso.get().load(imageUri)
             .resize(200, 200)
@@ -117,14 +96,7 @@ object FirebaseImageManager {
             })
     }
 
-    /**
-     * > This function takes a userid, a resource, and an imageview. It then loads the resource into
-     * the imageview, and uploads the resource to firebase
-     *
-     * @param userid The user's id
-     * @param resource The resource ID of the image to be loaded.
-     * @param imageView ImageView - the imageView that will be updated with the image
-     */
+
     fun updateDefaultImage(userid: String, resource: Int, imageView: ImageView) {
         Picasso.get().load(resource)
             .resize(200, 200)

@@ -16,11 +16,7 @@ var database: DatabaseReference =
 
 object FirebaseDBManager : ProductStore {
 
-    /**
-     * It gets all the products from the database and adds them to a list
-     *
-     * @param productList MutableLiveData<List<ProductModel>>
-     */
+
     override fun findAll(productList: MutableLiveData<List<ProductModel>>) {
         val localList = mutableListOf<ProductModel>()
         var totallist = ArrayList<ProductModel>()
@@ -70,13 +66,6 @@ object FirebaseDBManager : ProductStore {
             })
     }
 
-    /**
-     * It gets the product from the database.
-     *
-     * @param userid The user id of the user who created the product.
-     * @param productid The id of the product to be retrieved
-     * @param product MutableLiveData<ProductModel>
-     */
     override fun findById(userid: String, productid: String, product: MutableLiveData<ProductModel> ) {
 
         database.child("user-products").child(userid)
@@ -88,13 +77,6 @@ object FirebaseDBManager : ProductStore {
             }
     }
 
-    /**
-     * We create a new product, assign it a unique ID, and then add it to the database
-     *
-     * @param uid The user ID of the user who created the product.
-     * @param product ProductModel - The product model that we want to add to the database.
-     * @return A Task<Void>
-     */
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")
 
@@ -104,15 +86,25 @@ object FirebaseDBManager : ProductStore {
             Timber.i("Firebase Error : Key Empty")
             return
         }
-        product.uid = key
+        product.uid = uid // Set uid as the user's uid
+        product.pid = key // Set pid as the generated key
         val productValues = product.toMap()
 
         val childAdd = HashMap<String, Any>()
         childAdd["/products/$key"] = productValues
         childAdd["/user-products/$uid/$key"] = productValues
 
-        database.updateChildren(childAdd)
+        database.updateChildren(childAdd).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val imageURL = FirebaseImageManager.imageUri.value.toString()
+                saveProducerImageToProduct(key, imageURL)
+            } else {
+                Timber.e("Failed to save product: ${it.exception}")
+            }
+        }
     }
+
+
 
 
     override fun delete(userid: String, productid: String) {
@@ -123,7 +115,6 @@ object FirebaseDBManager : ProductStore {
 
         database.updateChildren(childDelete)
     }
-
 
     override fun update(userid: String, productid: String, product: ProductModel) {
 
@@ -157,5 +148,10 @@ object FirebaseDBManager : ProductStore {
                 }
             })
     }
+    fun saveProducerImageToProduct(productID: String, imageURL: String) {
+        val productRef = database.child("products").child(productID)
+        productRef.child("producerimage").setValue(imageURL)
+    }
+
 
 }

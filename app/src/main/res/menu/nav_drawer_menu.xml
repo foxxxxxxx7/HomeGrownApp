@@ -13,16 +13,29 @@
             android:id="@+id/productListFragment"
             android:title="@string/action_productlist"
             android:icon="@drawable/ic_menu_list" />
+
+        <item
+            android:id="@+id/mapsFragment"
+            android:title="@string/action_maps"
+            android:icon="@drawable/ic_menu_location" />
+
+        <item
+            android:id="@+id/aboutFragment"
+            android:title="@string/action_about"
+            android:icon="@drawable/ic_menu_about" />
+
     </group>
 
     <item android:title="@string/group_communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:title="@string/action_share" />
+                android:title="@string/action_share"
+                android:icon="@drawable/ic_menu_share" />
             <item
                 android:id="@+id/nav_send"
-                android:title="@string/action_send" />
+                android:title="@string/action_send"
+                android:icon="@drawable/ic_menu_send" />
         </menu>
     </item>
 

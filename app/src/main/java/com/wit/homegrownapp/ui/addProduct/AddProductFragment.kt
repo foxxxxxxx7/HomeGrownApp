@@ -10,12 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentAddProductBinding
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
+import kotlinx.coroutines.launch
 //import com.wit.homegrownapp.ui.map.MapsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,15 +39,7 @@ class AddProductFragment : Fragment() {
 
     }
 
-    /**
-     * The function sets the button listener for the book button, and sets the date change listener for
-     * the calendar view
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment,
-     * @param container The parent that this fragment's UI should be attached to.
-     * @param savedInstanceState Bundle?
-     * @return The root view is being returned.
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,12 +73,7 @@ class AddProductFragment : Fragment() {
         return root
     }
 
-    /**
-     * It renders the result of the book request.
-     *
-     * @param status Boolean - This is the status of the book. If the book is successfully added, it
-     * will return true. If it fails, it will return false.
-     */
+
     private fun render(status: Boolean) {
         when (status) {
             true -> {
@@ -108,92 +97,47 @@ class AddProductFragment : Fragment() {
     }
 
 
-    /**
-     * It sets the binding variable to null.
-     */
+
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
     }
 
-    /**
-     * This function is called when the user clicks the "Book" button. It takes the data from the user
-     * input fields and creates a new BookModel object, which is then passed to the addProductViewModel to be
-     * added to the database
-     *
-     * @param layout FragmentBookBinding - This is the binding object that is created when the fragment
-     * is created.
-     */
+
     fun setButtonListener(layout: FragmentAddProductBinding) {
-
-
         layout.addProductButton.setOnClickListener {
-
-//            val readableDate = SimpleDateFormat("dd/MM/yy").format(Date(layout.bookDate.date))
-//            product.date = readableDate
             product.title = layout.addTitle.text.toString()
             product.price = layout.addPrice.text.toString().toDouble()
             product.avgWeight = layout.addAvgWeight.text.toString().toDouble()
             product.description = layout.addDescription.text.toString()
             product.eircode = layout.addEircode.text.toString()
             product.category = layout.addCategory.selectedItemPosition.toString()
-            if (product.title.isEmpty() || product.price.toString()
-                    .isEmpty() || product.avgWeight.toString()
-                    .isEmpty() || product.category.isEmpty() || product.description.isEmpty()
-            ) {
+
+            if (product.title.isEmpty() || product.price.toString().isEmpty() || product.avgWeight.toString().isEmpty() || product.category.isEmpty() || product.description.isEmpty()) {
                 Toast.makeText(context, "Please complete ALL fields", Toast.LENGTH_LONG).show()
-//            } else {
-//                if (edit) {
-//                   // addProductViewModel.updateBook(product.copy())
             } else {
-                layout.addTitle.setText("")
-                layout.addPrice.setText("")
-                layout.addAvgWeight.setText("")
-//                layout.addCategory.setText("")
-                layout.addDescription.setText("")
-                layout.addEircode.setText("")
-                Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
-//                    addProductViewModel.addBook(product.copy())
-                addProductViewModel.addProduct(
-                    loggedInViewModel.liveFirebaseUser,
-                    ProductModel(
-                        title = product.title,
-                        price = product.price,
-                        avgWeight = product.avgWeight,
-                        category = product.category,
-                        description = product.description,
-                        eircode = product.eircode,
-//                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
-//                        latitude = mapsViewModel.currentLocation.value!!.latitude,
-//                        longitude = mapsViewModel.currentLocation.value!!.longitude
-                    )
-                )
-                print("Add Button Pressed: $layout.addTitle, $layout.addPrice, $layout.addDes")
-                /*setResult(AppCompatActivity.RESULT_OK)*/
+                lifecycleScope.launch {
+                    addProductViewModel.addProduct(loggedInViewModel.liveFirebaseUser, product)
+                    layout.addTitle.setText("")
+                    layout.addPrice.setText("")
+                    layout.addAvgWeight.setText("")
+                    layout.addDescription.setText("")
+                    layout.addEircode.setText("")
+                    Toast.makeText(context, "Product Added!", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
 
 
-    /**
-     * > This function inflates the menu_product.xml file into the menu object
-     *
-     * @param menu The menu object that you want to inflate.
-     * @param inflater The MenuInflater that you use to inflate your menu resource into the Menu
-     * object.
-     */
+
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_addproduct, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    /**
-     * If the user clicks on an item in the menu, and that item has an associated action, then perform
-     * that action
-     *
-     * @param item The menu item that was selected.
-     * @return The return value is a boolean.
-     */
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
             item,
