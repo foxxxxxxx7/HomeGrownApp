@@ -75,5 +75,5 @@
     <string name="hint_description">Please Enter Product Description:</string>
     <string name="hint_eircode">Please Enter Eircode:</string>
 
-    <string name="product_price_format">$%.2f</string>
+    <string name="product_price_format">\u20AC%.2f</string>
 </resources>
