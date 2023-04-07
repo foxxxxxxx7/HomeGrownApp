@@ -38,10 +38,7 @@ class AddProductFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,6 +105,7 @@ class AddProductFragment : Fragment() {
                     val selectedType = parent?.getItemAtPosition(position).toString()
                     Log.d("onItemSelected", "Selected type: $selectedType")
                     updateVarietyDropdown(selectedType)
+                    updateTypeIcon(selectedType) // Add this line to update the ImageView
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -152,6 +150,10 @@ class AddProductFragment : Fragment() {
         return resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
     }
 
+    private fun updateTypeIcon(type: String) {
+        val iconResource = getIconResource(type)
+        fragBinding.typeIcon.setImageResource(iconResource)
+    }
 
 
     private fun render(status: Boolean) {
@@ -247,9 +249,6 @@ class AddProductFragment : Fragment() {
             }
         }
     }
-
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_addproduct, menu)
