@@ -26,9 +26,9 @@
                 android:layout_height="350dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/apple"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/apple" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
@@ -68,6 +68,7 @@
                 android:id="@+id/addTitleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/hint_title">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -101,7 +102,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/addAvgWeight"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -17,13 +17,21 @@
         android:elevation="24dp">
 
         <RelativeLayout
-            android:id="@+id/cardBook"
+            android:id="@+id/cardProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-
-            //android:text="@string/date"
+            <ImageView
+                android:id="@+id/imageProducer"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
             <ImageView
                 android:id="@+id/imageIcon"
@@ -34,38 +42,11 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="15dp"
                 android:contentDescription="@string/app_name"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:src="@mipmap/ic_launcher_round" />
 
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/eircode"
-                android:layout_marginTop="2dp"
-                android:text="@{String.valueOf(product.price)}"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="2dp"
-                android:text="@{product.title}"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/eircode"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_marginTop="2dp"
-                android:text="@{product.eircode}"
-                android:textSize="24sp" />
-            //android:text="@string/phoneNumber"
 
 
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 </layout>
