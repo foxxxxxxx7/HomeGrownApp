@@ -57,6 +57,7 @@ object FirebaseDBManager : ProductStore {
                     val children = snapshot.children
                     children.forEach {
                         val product = it.getValue(ProductModel::class.java)
+                        Timber.i("Fetched product: $product")
                         localList.add(product!!)
                     }
                     database.child("user-products").child(userid)

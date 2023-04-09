@@ -195,23 +195,7 @@ class ProductListFragment : Fragment(), ProductListener {
         _fragBinding = null
     }
 
-//    private fun showproducts(products: List<ProductModel>) {
-//        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter =
-//            ProductAdapter(products, this@ProductListFragment)
-//        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter?.notifyDataSetChanged()
-//    }
-//
-//    override fun onDeleteproduct(product: ProductModel) {
-//        //ProductListViewModel.del(product)
-//        ProductListViewModel.load()
-//     //   showproducts(ProductListViewModel.findAll())
-//        Toast.makeText(context, "product Deleted!", Toast.LENGTH_LONG).show()
-//
-//    }
-//
-//    override fun onUpdateproduct(product: ProductModel) {
-//     //   showproducts(ProductListViewModel.findAll())
-//    }
+
 
 
     override fun onProductClick(product: ProductModel) {

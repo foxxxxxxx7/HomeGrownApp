@@ -5,6 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -50,6 +55,7 @@ class ProductAdapter constructor(
         val readOnlyRow = readOnly
 
         fun bind(product: ProductModel, listener: ProductListener) {
+            Log.d("ProductAdapter", "Product: $product")
             Log.d("ProductAdapter", "Product icon: ${product.icon}")
             Log.d("ProductAdapter", "Producer image URL: ${product.producerimage}")
             binding.root.tag = product
@@ -57,23 +63,21 @@ class ProductAdapter constructor(
             binding.imageIcon.setImageResource(product.icon)
 
             if (!product.producerimage.isNullOrEmpty()) {
-                Picasso.get().load(product.producerimage)
-                    .resize(200, 200)
-                    .transform(customTransformation())
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .into(binding.imageProducer, object : Callback {
-                        override fun onSuccess() {
-                            Log.d("Picasso", "Image loaded successfully")
-                        }
-
-                        override fun onError(e: Exception) {
-                            Log.e("Picasso", "Error loading image", e)
-                        }
-                    })
+                Log.d("ProductAdapter", "Attempting to load producer image: ${product.producerimage}")
+                Glide.with(binding.imageProducer.context)
+                    .load(product.producerimage)
+                    .apply(
+                        RequestOptions()
+                        .transform(CenterCrop(), CircleCrop())
+                        .placeholder(R.mipmap.ic_launcher_round)
+                        .override(200, 200)
+                    )
+                    .into(binding.imageProducer)
             } else {
+                Log.d("ProductAdapter", "Producer image URL is empty or null")
                 binding.imageProducer.setImageResource(R.mipmap.ic_launcher_round)
             }
+
 
             binding.root.setOnClickListener { listener.onProductClick(product) }
             binding.executePendingBindings()

@@ -47,7 +47,7 @@ fun hideLoader(loader: AlertDialog) {
 fun serviceUnavailableMessage(activity: FragmentActivity) {
     Toast.makeText(
         activity,
-        "Booking Service Unavailable. Try again later",
+        "Product Service Unavailable. Try again later",
         Toast.LENGTH_LONG
     ).show()
 }
@@ -56,7 +56,7 @@ fun serviceUnavailableMessage(activity: FragmentActivity) {
 fun serviceAvailableMessage(activity: FragmentActivity) {
     Toast.makeText(
         activity,
-        "Bookinig Contacted Successfully",
+        "Product Contacted Successfully",
         Toast.LENGTH_LONG
     ).show()
 }

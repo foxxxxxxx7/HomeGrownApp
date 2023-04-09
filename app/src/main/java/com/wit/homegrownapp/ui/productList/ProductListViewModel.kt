@@ -31,21 +31,13 @@ class ProductListViewModel : ViewModel() {
         load()
     }
 
-    // fun findAll(): List<ProductModel> {
-    //     return BookManager.products
-    // }
-
 
     fun load() {
         try {
             readOnly.value = false
-            //DonationManager.findAll(liveFirebaseUser.value?.email!!, donationsList)
             Timber.i("Product List 1")
-            //Timber.i(liveFirebaseUser.value?.uid!!)
             Timber.i(user?.uid!!)
-            //Timber.i(productsList.toString())
             FirebaseDBManager.findAll(
-//                liveFirebaseUser.value?.uid!!,
                 user?.uid!!,
                 // "3kl1HSOCtVa7gLexgdnDgmzhRun1",
                 productsList
@@ -67,12 +59,6 @@ class ProductListViewModel : ViewModel() {
         }
     }
 
-    /**
-     * It deletes a product from the database.
-     *
-     * @param userid The user's ID.
-     * @param uid The unique id of the product list
-     */
     fun del(userid: String, uid: String) {
         try {
             //DonationManager.delete(userid,id)
