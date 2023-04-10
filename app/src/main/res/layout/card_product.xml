@@ -35,14 +35,45 @@
 
             <ImageView
                 android:id="@+id/imageIcon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="2dp"
                 android:layout_marginEnd="15dp"
                 android:contentDescription="@string/app_name"
                 android:src="@mipmap/ic_launcher_round" />
+
+            <TextView
+                android:id="@+id/tvProductVariety"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageProducer"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{product.variety}"
+                android:textSize="14.5sp" />
+
+            <TextView
+                android:id="@+id/tvProductType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProductVariety"
+                android:layout_toEndOf="@+id/imageProducer"
+                android:layout_marginStart="16dp"
+                android:text="@{product.type.concat(`s`)}"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProductType"
+                android:layout_toEndOf="@+id/imageProducer"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@{String.format(`\u20AC%.2f ea`, product.price)}"
+                android:textSize="14sp" />
 
 
 
