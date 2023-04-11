@@ -38,9 +38,7 @@ class ProductListViewModel : ViewModel() {
             Timber.i("Product List 1")
             Timber.i(user?.uid!!)
             FirebaseDBManager.findAll(
-                user?.uid!!,
-                // "3kl1HSOCtVa7gLexgdnDgmzhRun1",
-                productsList
+                user?.uid!!, productsList
             )
             Timber.i("productsList List Load Success : ${productsList.value.toString()}")
         } catch (e: Exception) {
@@ -51,7 +49,6 @@ class ProductListViewModel : ViewModel() {
 
     fun delete(userid: String, id: String) {
         try {
-            //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid, id)
             Timber.i("Product Deleted ")
         } catch (e: Exception) {
@@ -61,7 +58,6 @@ class ProductListViewModel : ViewModel() {
 
     fun del(userid: String, uid: String) {
         try {
-            //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid, uid)
             Timber.i("Product List Delete Success")
         } catch (e: Exception) {

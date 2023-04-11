@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,55 +18,71 @@
 
         <EditText
             android:id="@+id/editEircode"
-            android:layout_width="220dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
+            android:layout_marginEnd="16dp"
             android:inputType="text"
+            android:padding="10dp"
             android:text="@={productvm.observableProduct.eircode}"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editDescription" />
-
 
         <EditText
             android:id="@+id/editPrice"
-            android:layout_width="220dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
+            android:layout_marginEnd="16dp"
             android:inputType="number"
+            android:padding="10dp"
             android:text="@={``+ productvm.observableProduct.price}"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTitle" />
 
         <EditText
             android:id="@+id/editDescription"
-            android:layout_width="220dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="22dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
+            android:layout_marginEnd="16dp"
             android:inputType="text"
+            android:padding="10dp"
             android:text="@={productvm.observableProduct.description}"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editAvgWeight" />
+
+        <TextView
+            android:id="@+id/detailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="68dp"
+            android:text="@string/title"
+            android:textColor="@color/green_700"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/detailDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:text="@string/description"
-            android:textAlignment="textEnd"
             android:textColor="@color/green_700"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editDescription"
-            app:layout_constraintHorizontal_bias="0.754"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailAvgWeight" />
 
@@ -74,13 +90,11 @@
             android:id="@+id/detailEircode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:text="@string/eircode"
-            android:textAlignment="textEnd"
             android:textColor="@color/green_700"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editEircode"
-            app:layout_constraintHorizontal_bias="0.731"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailDescription" />
 
@@ -88,13 +102,11 @@
             android:id="@+id/detailPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:text="@string/price"
-            android:textAlignment="textEnd"
             android:textColor="@color/green_700"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editPrice"
-            app:layout_constraintHorizontal_bias="0.806"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailTitle" />
 
@@ -102,12 +114,11 @@
             android:id="@+id/detailCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:text="@string/category"
-            android:textAlignment="textEnd"
             android:textColor="@color/green_700"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailPrice" />
 
@@ -115,62 +126,51 @@
             android:id="@+id/detailAvgWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="1dp"
             android:text="@string/avgWeight"
-            android:textAlignment="textEnd"
             android:textColor="@color/green_700"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editAvgWeight"
-            app:layout_constraintHorizontal_bias="0.804"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailCategory" />
 
         <EditText
             android:id="@+id/editAvgWeight"
-            android:layout_width="220dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="96dp"
-            android:ems="10"
+            android:layout_marginEnd="16dp"
+            android:padding="10dp"
             android:text="@={``+ productvm.observableProduct.avgWeight}"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editPrice" />
 
         <EditText
             android:id="@+id/editTitle"
-            android:layout_width="220dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
+            android:layout_marginEnd="16dp"
             android:inputType="textPersonName"
+            android:padding="10dp"
             android:text="@={productvm.observableProduct.title}"
-            android:textAlignment="viewStart"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/detailTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="68dp"
-            android:text="@string/title"
-            android:textAlignment="textEnd"
-            android:textColor="@color/green_700"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/editTitle"
-            app:layout_constraintHorizontal_bias="0.831"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/editProductButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Edit"
+            app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteProductButton"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -178,21 +178,28 @@
 
         <Button
             android:id="@+id/deleteProductButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Delete"
+            app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editProductButton" />
 
         <Spinner
             android:id="@+id/editCategory"
-            android:layout_width="297dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:entries="@array/categoryArray"
+            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/editAvgWeight"
-            app:layout_constraintStart_toEndOf="@+id/detailCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
