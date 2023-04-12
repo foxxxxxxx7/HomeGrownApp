@@ -60,7 +60,7 @@ class ProductDetailFragment : Fragment() {
             Timber.i(fragBinding.productvm?.observableProduct!!.value!!.toString())
             detailViewModel.updateProduct(
                 user?.uid!!,
-                detailViewModel.observableProduct.value?.uid!!,
+                detailViewModel.observableProduct.value?.pid!!,
                 fragBinding.productvm?.observableProduct!!.value!!
             )
 
@@ -76,7 +76,7 @@ class ProductDetailFragment : Fragment() {
         fragBinding.deleteProductButton.setOnClickListener {
             productListViewModel.delete(
                 user?.uid!!,
-                detailViewModel.observableProduct.value?.uid!!
+                detailViewModel.observableProduct.value?.pid!!
             )
             findNavController().navigateUp()
         }

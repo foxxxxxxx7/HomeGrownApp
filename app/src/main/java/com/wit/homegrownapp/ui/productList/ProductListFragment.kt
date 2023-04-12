@@ -87,7 +87,7 @@ class ProductListFragment : Fragment(), ProductListener {
                 adapter.removeAt(viewHolder.adapterPosition)
                 productListViewModel.delete(
                     user?.uid!!,
-                    (viewHolder.itemView.tag as ProductModel).uid!!
+                    (viewHolder.itemView.tag as ProductModel).pid!!
                 )
                 Timber.i(productListViewModel.liveFirebaseUser.value.toString())
                 Timber.i("hello123")
