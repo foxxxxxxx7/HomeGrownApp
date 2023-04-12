@@ -36,16 +36,6 @@ class ProductDetailFragment : Fragment() {
     val user = FirebaseAuth.getInstance().currentUser
 
 
-    /**
-     * The function inflates the layout, sets the title, sets up the view model, and sets up the
-     * onClickListeners for the buttons
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment,
-     * @param container The ViewGroup into which the new View will be added after it is bound to an
-     * adapter position.
-     * @param savedInstanceState A Bundle object containing the activity's previously saved state.
-     * @return The root view of the fragment.
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -93,35 +83,13 @@ class ProductDetailFragment : Fragment() {
         return root
     }
 
-    /**
-     * `fragBinding.productvm = detailViewModel`
-     *
-     * This is the line that binds the data to the UI
-     */
     private fun render() {
-////        fragBinding.editMessage.setText("A Message")
-////        fragBinding.editUpvotes.setText("0")
-//        fragBinding.editName.setText(product.name)
-//        fragBinding.editPhoneNumber.setText(product.phoneNumber)
-//        fragBinding.editDate.setText(product.date)
-//        fragBinding.editEmail.setText(product.email)
-//        fragBinding.editPickup.setText(product.pickup)
-//        fragBinding.editDropoff.setText(product.dropoff)
-//        fragBinding.editPrice.setText(product.price.toString())
-//
-//        fragBinding.spinner2.setSelection(product.bike)
-//        fragBinding.editID.setText(product.id.toString())
-////        fragBinding.spinner2. /////// TODO!!! set value from order to spinner
-
         fragBinding.productvm = detailViewModel
         Timber.i("Retrofit fragBinding.productvm == $fragBinding.productvm")
+        fragBinding.typeIcon.setImageResource(detailViewModel.observableProduct.value?.icon ?: 0)
     }
 
-    /**
-     * The function is called when the activity is resumed. It calls the getProduct function in the
-     * detailViewModel, which is a ViewModel class. The getProduct function is called with the user's
-     * uid and the productid passed in as arguments
-     */
+
     override fun onResume() {
         super.onResume()
         detailViewModel.getProduct(
@@ -130,9 +98,7 @@ class ProductDetailFragment : Fragment() {
         )
     }
 
-    /**
-     * It sets the binding variable to null.
-     */
+
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null

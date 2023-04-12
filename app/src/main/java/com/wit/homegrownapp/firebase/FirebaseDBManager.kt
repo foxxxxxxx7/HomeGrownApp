@@ -67,6 +67,7 @@ object FirebaseDBManager : ProductStore {
     override fun findById(
         userid: String, productid: String, product: MutableLiveData<ProductModel>
     ) {
+        Timber.i("FirebaseDBManager.findById() called with userid: $userid and productid: $productid")
 
         database.child("user-products").child(userid).child(productid).get().addOnSuccessListener {
             product.value = it.getValue(ProductModel::class.java)
@@ -75,6 +76,7 @@ object FirebaseDBManager : ProductStore {
             Timber.e("firebase Error getting data $it")
         }
     }
+
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")

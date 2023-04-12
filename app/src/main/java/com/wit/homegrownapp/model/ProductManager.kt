@@ -74,10 +74,12 @@ object ProductManager : ProductStore {
      * @param productid The id of the product to be found
      * @param product MutableLiveData<ProductModel>
      */
+    //from ProductManager
     override fun findById(userid: String, productid: String, product: MutableLiveData<ProductModel>) {
         val foundProduct: ProductModel? = products.find { it.uid == userid }
-        //return foundProduct
+        product.value = foundProduct
     }
+
 //
 //    override fun create(uid: String, product: ProductModel) {
 //        product.uid = getId().toString()
