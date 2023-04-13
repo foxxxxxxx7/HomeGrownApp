@@ -40,7 +40,6 @@ class ProductListFragment : Fragment(), ProductListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // app = activity?.application as BikeshopApp
         setHasOptionsMenu(true)
     }
 

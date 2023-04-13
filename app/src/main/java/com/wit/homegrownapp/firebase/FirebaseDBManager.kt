@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.model.ProductStore
+import com.wit.homegrownapp.model.UserModel
+import com.wit.homegrownapp.model.UserStore
 import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
@@ -14,7 +16,7 @@ var database: DatabaseReference =
         .reference
 
 
-object FirebaseDBManager : ProductStore {
+object FirebaseDBManager : ProductStore, UserStore {
 
 
     override fun findAll(productList: MutableLiveData<List<ProductModel>>) {
@@ -159,6 +161,23 @@ object FirebaseDBManager : ProductStore {
         val userProductRef = database.child("user-products").child(userId).child(productId)
         userProductRef.child("producerimage").setValue(imageUrl)
     }
+
+    override fun createUser(firebaseUser: MutableLiveData<FirebaseUser>, user: UserModel) {
+        val uid = firebaseUser.value!!.uid
+        val userValues = user.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/users/$uid"] = userValues
+
+        database.updateChildren(childUpdates).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Timber.i("User created successfully")
+            } else {
+                Timber.e("Failed to create user: ${it.exception}")
+            }
+        }
+    }
+
 
 
 }
