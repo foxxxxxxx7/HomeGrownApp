@@ -109,14 +109,7 @@ class MapsFragment : Fragment() {
         // Inflate the main layout for this fragment
         val view = inflater.inflate(R.layout.fragment_maps, container, false)
 
-        // Inflate the card view layout
-        val cardView = inflater.inflate(R.layout.map_product_card_view, container, false) as CardView
 
-        // Add the card view to the main layout
-        (view as ViewGroup).addView(cardView)
-
-        // Initially, hide the card view
-        cardView.visibility = View.GONE
 
         return view
     }
@@ -126,8 +119,9 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
         // Find the views in the card view
-        val producerImageView: ImageView = view.findViewById(R.id.producer_image)
-        val productTitleView: TextView = view.findViewById(R.id.product_title)
+        val productIconView: ImageView = view.findViewById(R.id.product_icon)
+        val productVarietyView: TextView = view.findViewById(R.id.product_variety)
+        val productTypeView: TextView = view.findViewById(R.id.product_type)
         val productPriceView: TextView = view.findViewById(R.id.product_price)
         val cardView: CardView = view.findViewById(R.id.product_card)
 
@@ -135,9 +129,15 @@ class MapsFragment : Fragment() {
         mapsViewModel.selectedProduct.observe(viewLifecycleOwner, Observer { product ->
             if (product != null) {
                 // Update the card view content
-                Glide.with(this).load(product.producerimage).into(producerImageView)
-                productTitleView.text = product.title
-                productPriceView.text = getString(R.string.product_price_format, product.price)
+                Glide.with(this).load(product.icon).into(productIconView)
+                productVarietyView.text = product.variety
+                val formattedType = if (product.type.endsWith("y")) {
+                    product.type.dropLast(1) + "ies"
+                } else {
+                    product.type + "s"
+                }
+                productTypeView.text = formattedType
+                productPriceView.text = getString(R.string.product_price_format, product.price) + " ea"
 
                 // Show the card view
                 cardView.visibility = View.VISIBLE
@@ -146,6 +146,7 @@ class MapsFragment : Fragment() {
                 cardView.visibility = View.GONE
             }
         })
+
     }
 
 

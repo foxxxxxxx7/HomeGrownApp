@@ -1,5 +1,6 @@
 package com.wit.homegrownapp.ui.detail
 
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -68,6 +69,19 @@ class ProductDetailViewModel : ViewModel() {
             Timber.i("Detail update() Success : $product")
         } catch (e: Exception) {
             Timber.i("Detail update() Error : $e.message")
+        }
+    }
+
+    @InverseMethod("stringToDouble")
+    fun doubleToString(value: Double): String {
+        return value.toString()
+    }
+
+    fun stringToDouble(value: String): Double {
+        return try {
+            value.toDouble()
+        } catch (e: NumberFormatException) {
+            0.0
         }
     }
 }

@@ -87,7 +87,7 @@ class ProductListFragment : Fragment(), ProductListener {
                 adapter.removeAt(viewHolder.adapterPosition)
                 productListViewModel.delete(
                     user?.uid!!,
-                    (viewHolder.itemView.tag as ProductModel).uid!!
+                    (viewHolder.itemView.tag as ProductModel).pid!!
                 )
                 Timber.i(productListViewModel.liveFirebaseUser.value.toString())
                 Timber.i("hello123")
@@ -195,30 +195,11 @@ class ProductListFragment : Fragment(), ProductListener {
         _fragBinding = null
     }
 
-//    private fun showproducts(products: List<ProductModel>) {
-//        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter =
-//            ProductAdapter(products, this@ProductListFragment)
-//        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter?.notifyDataSetChanged()
-//    }
-//
-//    override fun onDeleteproduct(product: ProductModel) {
-//        //ProductListViewModel.del(product)
-//        ProductListViewModel.load()
-//     //   showproducts(ProductListViewModel.findAll())
-//        Toast.makeText(context, "product Deleted!", Toast.LENGTH_LONG).show()
-//
-//    }
-//
-//    override fun onUpdateproduct(product: ProductModel) {
-//     //   showproducts(ProductListViewModel.findAll())
-//    }
-
 
     override fun onProductClick(product: ProductModel) {
         val action =
-            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.uid!!)
+            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.pid)
         if (!productListViewModel.readOnly.value!!)
             findNavController().navigate(action)
     }
-
 }

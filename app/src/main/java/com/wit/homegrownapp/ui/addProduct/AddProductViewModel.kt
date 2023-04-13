@@ -20,6 +20,10 @@ class AddProductViewModel : ViewModel() {
 
     private val eircodeApiService = EircodeApiService.create()
 
+    private val _validationStatus = MutableLiveData<ValidationStatus>()
+    val validationStatus: LiveData<ValidationStatus> get() = _validationStatus
+
+
     suspend fun getCoordinatesFromEircode(eircode: String): GmsLatLng? {
         return try {
             val API_KEY = "AIzaSyDKf7OJJ4dJgaNFN5cBm1sWIj6RnGk_a4s"
@@ -42,6 +46,7 @@ class AddProductViewModel : ViewModel() {
     }
 
 
+
     suspend fun addProduct(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         try {
             val coordinates = getCoordinatesFromEircode(product.eircode)
@@ -58,5 +63,47 @@ class AddProductViewModel : ViewModel() {
             status.postValue(false)
         }
     }
+    fun validateProduct(product: ProductModel): Boolean {
+        if (product.title.isBlank()) {
+            _validationStatus.value = ValidationStatus.TitleEmpty
+            return false
+        }
 
+        if (product.price <= 0) {
+            _validationStatus.value = ValidationStatus.PriceInvalid
+            return false
+        }
+
+        if (product.avgWeight <= 0) {
+            _validationStatus.value = ValidationStatus.AvgWeightInvalid
+            return false
+        }
+
+        if (product.description.isBlank()) {
+            _validationStatus.value = ValidationStatus.DescriptionEmpty
+            return false
+        }
+
+        if (product.eircode.isBlank()) {
+            _validationStatus.value = ValidationStatus.EircodeEmpty
+            return false
+        }
+
+        if (product.category.isEmpty()) {
+            _validationStatus.value = ValidationStatus.CategoryEmpty
+            return false
+        }
+
+        return true
+    }
+
+    enum class ValidationStatus {
+        TitleEmpty,
+        PriceInvalid,
+        AvgWeightInvalid,
+        DescriptionEmpty,
+        EircodeEmpty,
+        CategoryEmpty
+    }
 }
+

@@ -11,7 +11,7 @@ import timber.log.Timber
 /* This is the database reference to the Firebase Realtime Database. */
 var database: DatabaseReference =
     FirebaseDatabase.getInstance("https://homegrown-c0ca9-default-rtdb.firebaseio.com/")
-        .getReference()
+        .reference
 
 
 object FirebaseDBManager : ProductStore {
@@ -20,26 +20,24 @@ object FirebaseDBManager : ProductStore {
     override fun findAll(productList: MutableLiveData<List<ProductModel>>) {
         val localList = mutableListOf<ProductModel>()
         var totallist = ArrayList<ProductModel>()
-        database.child("products")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    Timber.i("Firebase Product error : ${error.message}")
+        database.child("products").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                Timber.i("Firebase Product error : ${error.message}")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                val children = snapshot.children
+                children.forEach {
+                    val product = it.getValue(ProductModel::class.java)
+                    localList.add(product!!)
                 }
+                database.child("products").removeEventListener(this)
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    val children = snapshot.children
-                    children.forEach {
-                        val product = it.getValue(ProductModel::class.java)
-                        localList.add(product!!)
-                    }
-                    database.child("products")
-                        .removeEventListener(this)
-
-                    totallist.addAll(localList)
-                    productList.value = totallist
-                }
-            })
+                totallist.addAll(localList)
+                productList.value = totallist
+            }
+        })
     }
 
     /* This is a function that is used to find all the products that are associated with a user. */
@@ -57,25 +55,28 @@ object FirebaseDBManager : ProductStore {
                     val children = snapshot.children
                     children.forEach {
                         val product = it.getValue(ProductModel::class.java)
+                        Timber.i("Fetched product: $product")
                         localList.add(product!!)
                     }
-                    database.child("user-products").child(userid)
-                        .removeEventListener(this)
+                    database.child("user-products").child(userid).removeEventListener(this)
                     productList.value = localList
                 }
             })
     }
 
-    override fun findById(userid: String, productid: String, product: MutableLiveData<ProductModel> ) {
+    override fun findById(
+        userid: String, productid: String, product: MutableLiveData<ProductModel>
+    ) {
+        Timber.i("FirebaseDBManager.findById() called with userid: $userid and productid: $productid")
 
-        database.child("user-products").child(userid)
-            .child(productid).get().addOnSuccessListener {
-                product.value = it.getValue(ProductModel::class.java)
-                Timber.i("firebase Got value ${it.value}")
-            }.addOnFailureListener {
-                Timber.e("firebase Error getting data $it")
-            }
+        database.child("user-products").child(userid).child(productid).get().addOnSuccessListener {
+            product.value = it.getValue(ProductModel::class.java)
+            Timber.i("firebase Got value ${it.value}")
+        }.addOnFailureListener {
+            Timber.e("firebase Error getting data $it")
+        }
     }
+
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")
@@ -98,13 +99,14 @@ object FirebaseDBManager : ProductStore {
             if (it.isSuccessful) {
                 val imageURL = FirebaseImageManager.imageUri.value.toString()
                 saveProducerImageToProduct(key, imageURL)
+                saveProducerImageToUserProduct(
+                    uid, key, imageURL
+                ) // Save image to user-products as well
             } else {
                 Timber.e("Failed to save product: ${it.exception}")
             }
         }
     }
-
-
 
 
     override fun delete(userid: String, productid: String) {
@@ -133,24 +135,29 @@ object FirebaseDBManager : ProductStore {
         val userProducts = database.child("user-products").child(userid)
         val allProducts = database.child("products")
 
-        userProducts.addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {}
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach {
-                        //Update Users imageUri
-                        it.ref.child("profilepic").setValue(imageUri)
-                        //Update all products that match 'it'
-                        val product = it.getValue(ProductModel::class.java)
-                        allProducts.child(product!!.uid!!)
-                            .child("profilepic").setValue(imageUri)
-                    }
+        userProducts.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    //Update Users imageUri
+                    it.ref.child("profilePics").setValue(imageUri)
+                    //Update all products that match 'it'
+                    val product = it.getValue(ProductModel::class.java)
+                    allProducts.child(product!!.uid).child("profilePics").setValue(imageUri)
                 }
-            })
+            }
+        })
     }
+
+
     fun saveProducerImageToProduct(productID: String, imageURL: String) {
         val productRef = database.child("products").child(productID)
         productRef.child("producerimage").setValue(imageURL)
+    }
+
+    fun saveProducerImageToUserProduct(userId: String, productId: String, imageUrl: String) {
+        val userProductRef = database.child("user-products").child(userId).child(productId)
+        userProductRef.child("producerimage").setValue(imageUrl)
     }
 
 
