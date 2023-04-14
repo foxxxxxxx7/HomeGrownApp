@@ -161,20 +161,32 @@ class ProductListFragment : Fragment(), ProductListener {
         fragBinding.recyclerView.adapter = ProductAdapter(
             productList, this, productListViewModel.readOnly.value!!
         )
-        /* If the product list is empty, then the recycler view is set to gone, the products not found
-        text view is set to visible, and the John Travolta image view is set to visible. If the product list
-        is not empty, then the recycler view is set to visible, the products not found text view is
-        set to gone, and the John Travolta image view is set to gone. */
+
         if (productList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
             fragBinding.productsNotFound.visibility = View.VISIBLE
             fragBinding.John.visibility = View.VISIBLE
+
+            userRole.observe(viewLifecycleOwner, Observer { role ->
+                if (role == "user") {
+                    fragBinding.BecomeProducerBtn.visibility = View.VISIBLE
+                    fragBinding.recyclerView.visibility = View.GONE
+                    fragBinding.productsNotFound.visibility = View.GONE
+                    fragBinding.John.visibility = View.GONE
+                    fragBinding.fab.visibility = View.GONE
+                } else {
+                    fragBinding.BecomeProducerBtn.visibility = View.GONE
+                }
+            })
+
         } else {
             fragBinding.recyclerView.visibility = View.VISIBLE
             fragBinding.productsNotFound.visibility = View.GONE
             fragBinding.John.visibility = View.GONE
+            fragBinding.BecomeProducerBtn.visibility = View.GONE
         }
     }
+
 
 
     fun setSwipeRefresh() {
