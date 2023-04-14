@@ -197,6 +197,17 @@ object FirebaseDBManager : ProductStore, UserStore {
         }
     }
 
+    fun getUserRole(uid: String, userRole: MutableLiveData<String>) {
+        database.child("users").child(uid).child("role")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase User Role error : ${error.message}")
+                }
 
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    userRole.value = snapshot.getValue(String::class.java)
+                }
+            })
+    }
 
 }

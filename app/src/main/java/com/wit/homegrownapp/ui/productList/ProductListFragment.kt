@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -21,6 +22,7 @@ import com.wit.homegrownapp.R
 import com.wit.homegrownapp.adapters.ProductAdapter
 import com.wit.homegrownapp.adapters.ProductListener
 import com.wit.homegrownapp.databinding.FragmentProductListBinding
+import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import com.wit.homegrownapp.utils.*
@@ -36,11 +38,13 @@ class ProductListFragment : Fragment(), ProductListener {
     val user = FirebaseAuth.getInstance().currentUser
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
+    private val userRole: MutableLiveData<String> = MutableLiveData()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        FirebaseDBManager.getUserRole(user?.uid!!, userRole)
     }
 
 
@@ -116,16 +120,34 @@ class ProductListFragment : Fragment(), ProductListener {
         val item = menu.findItem(R.id.toggleProducts) as MenuItem
         item.setActionView(R.layout.togglebutton_layout)
         val toggleproducts: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
-        toggleproducts.isChecked = false
+
+        userRole.observe(viewLifecycleOwner, Observer { role ->
+            when (role) {
+                "producer" -> {
+                    toggleproducts.isChecked = false
+                }
+                "user" -> {
+                    toggleproducts.isChecked = true
+                }
+                else -> toggleproducts.isChecked = false
+            }
+            // Trigger the checked change listener after setting the initial state based on the user role
+            toggleproducts.setOnCheckedChangeListener(null)
+            toggleproducts.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) productListViewModel.loadAll()
+                else productListViewModel.load()
+            }
+        })
 
         toggleproducts.setOnCheckedChangeListener { buttonView, isChecked ->
-
             if (isChecked) productListViewModel.loadAll()
             else productListViewModel.load()
         }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
