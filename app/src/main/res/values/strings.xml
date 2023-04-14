@@ -84,5 +84,8 @@
     <string name="eircode_empty_error">Eircode cannot be empty</string>
     <string name="category_empty_error">Category cannot be empty</string>
 
+    <string name= "action_become_producer">Become A Producer</string>
+    <string name = "invalid_input_error">Invalid Input</string>
+
 
 </resources>

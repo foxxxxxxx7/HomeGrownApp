@@ -179,5 +179,24 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
 
+    // Add this method to FirebaseDBManager
+    fun updateUser(firebaseUser: MutableLiveData<FirebaseUser>, updatedUser: UserModel) {
+        val uid = firebaseUser.value!!.uid
+        val updatedUserValues = updatedUser.toMap()
+
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/users/$uid"] = updatedUserValues
+
+        database.updateChildren(childUpdates).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Timber.i("User updated successfully")
+            } else {
+                Timber.e("Failed to update user: ${it.exception}")
+            }
+        }
+    }
+
+
 
 }

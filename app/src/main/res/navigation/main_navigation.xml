@@ -45,4 +45,13 @@
             android:id="@+id/action_mapsFragment_to_productListFragment"
             app:destination="@id/productListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/becomeProducerFragment"
+        android:name="com.wit.homegrownapp.ui.becomeProducer.BecomeProducerFragment"
+        android:label="fragment_become_producer"
+        tools:layout="@layout/fragment_become_producer" >
+        <action
+            android:id="@+id/action_becomeProducerFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+    </fragment>
 </navigation>

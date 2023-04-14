@@ -10,7 +10,7 @@ data class UserModel(
     var username: String? = null,
     var eircode: String? = null,
     var bio: String? = null,
-    var phoneNumber: Number? = null,
+    var phoneNumber: String? = null,
     var businessEmail: String? = null,
     var uid: String = "",
     var email: String = "",

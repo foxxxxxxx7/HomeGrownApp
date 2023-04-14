@@ -12,6 +12,8 @@ class LoggedInViewModel(app: Application) : AndroidViewModel(app) {
     var liveFirebaseUser : MutableLiveData<FirebaseUser> = firebaseAuthManager.liveFirebaseUser
     var loggedOut : MutableLiveData<Boolean> = firebaseAuthManager.loggedOut
 
+
+
     fun logOut() {
         firebaseAuthManager.logOut()
     }
