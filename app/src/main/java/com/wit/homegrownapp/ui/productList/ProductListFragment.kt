@@ -68,6 +68,11 @@ class ProductListFragment : Fragment(), ProductListener {
             findNavController().navigate(action)
         }
 
+        fragBinding.BecomeProducerBtn.setOnClickListener {
+            navigateToBecomeProducer()
+        }
+
+
 
         // ProductListViewModel.load()
         productListViewModel.observableProductList.observe(
@@ -235,4 +240,10 @@ class ProductListFragment : Fragment(), ProductListener {
         if (!productListViewModel.readOnly.value!!)
             findNavController().navigate(action)
     }
+
+    private fun navigateToBecomeProducer() {
+        val action = ProductListFragmentDirections.actionProductListFragmentToBecomeProducerFragment()
+        findNavController().navigate(action)
+    }
+
 }
