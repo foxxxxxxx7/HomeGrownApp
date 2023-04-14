@@ -5,8 +5,8 @@ import com.google.firebase.database.Exclude
 import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserModel(
-//    var fName: String = "",
-//    var sName: String = "",
+    var fName: String? = null,
+    var sName: String? = null,
     var uid: String = "",
     var email: String = "",
     var role: String = ""
@@ -14,8 +14,8 @@ data class UserModel(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-//            "fName" to fName,
-//            "sName" to sName,
+            "fName" to fName,
+            "sName" to sName,
             "uid" to uid,
             "email" to email,
             "role" to role,

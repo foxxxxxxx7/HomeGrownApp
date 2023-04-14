@@ -66,7 +66,7 @@ class FirebaseAuthManager(application: Application) {
                     liveFirebaseUser.postValue(firebaseUser!!)
                     val uid = firebaseUser.uid
                     errorStatus.postValue(false)
-                    createUser(MutableLiveData(firebaseUser), UserModel(uid, email, "user"))
+                    createUser(MutableLiveData(firebaseUser), UserModel(uid = uid, email = email, role = "user"))
                 } else {
                     Timber.i("Registration Failure: FirebaseUser is null")
                     errorStatus.postValue(true)
