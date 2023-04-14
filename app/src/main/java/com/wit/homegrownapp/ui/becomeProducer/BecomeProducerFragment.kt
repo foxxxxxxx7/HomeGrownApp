@@ -40,13 +40,16 @@ class BecomeProducerFragment : Fragment() {
     private fun setButtonListener(layout: FragmentBecomeProducerBinding) {
         layout.becomeProducerButton.setOnClickListener {
             val user = UserModel(
+                uid = loggedInViewModel.liveFirebaseUser.value!!.uid, // Add this line
+                email = loggedInViewModel.liveFirebaseUser.value!!.email, // Add this line
                 fName = layout.fName.text.toString(),
                 sName = layout.sName.text.toString(),
                 username = layout.username.text.toString(),
                 eircode = layout.eircode.text.toString(),
                 bio = layout.bio.text.toString(),
                 phoneNumber = layout.phoneNumber.text.toString(),
-                businessEmail = layout.businessEmail.text.toString()
+                businessEmail = layout.businessEmail.text.toString(),
+                role = "producer"
             )
 
             if (becomeProducerViewModel.validateUser(user)) {
@@ -66,6 +69,7 @@ class BecomeProducerFragment : Fragment() {
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

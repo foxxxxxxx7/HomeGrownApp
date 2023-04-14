@@ -13,7 +13,7 @@ data class UserModel(
     var phoneNumber: String? = null,
     var businessEmail: String? = null,
     var uid: String = "",
-    var email: String = "",
+    var email: String? = "",
     var role: String = ""
 ) : Parcelable {
     @Exclude
