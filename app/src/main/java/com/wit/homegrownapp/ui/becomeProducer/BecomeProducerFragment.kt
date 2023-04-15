@@ -61,9 +61,34 @@ class BecomeProducerFragment : Fragment() {
 
         becomeProducerViewModel.validationStatus.observe(viewLifecycleOwner) { status ->
             when (status) {
-                BecomeProducerViewModel.ValidationStatus.InvalidInput -> Toast.makeText(
+                BecomeProducerViewModel.ValidationStatus.FirstNameEmpty -> Toast.makeText(
                     context,
-                    R.string.invalid_input_error,
+                    R.string.first_name_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                BecomeProducerViewModel.ValidationStatus.SurnameEmpty -> Toast.makeText(
+                    context,
+                    R.string.surname_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                BecomeProducerViewModel.ValidationStatus.UsernameEmpty -> Toast.makeText(
+                    context,
+                    R.string.username_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                BecomeProducerViewModel.ValidationStatus.EircodeEmpty -> Toast.makeText(
+                    context,
+                    R.string.eircode_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                BecomeProducerViewModel.ValidationStatus.PhoneNumberEmpty -> Toast.makeText(
+                    context,
+                    R.string.phone_number_empty_error,
+                    Toast.LENGTH_LONG
+                ).show()
+                BecomeProducerViewModel.ValidationStatus.BusinessEmailInvalid -> Toast.makeText(
+                    context,
+                    R.string.business_email_invalid_error,
                     Toast.LENGTH_LONG
                 ).show()
             }

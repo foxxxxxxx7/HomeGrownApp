@@ -11,14 +11,45 @@ class BecomeProducerViewModel : ViewModel() {
     val validationStatus: LiveData<ValidationStatus> get() = _validationStatus
 
     fun validateUser(user: UserModel): Boolean {
-        if (user.fName.isNullOrBlank() || user.sName.isNullOrBlank() || user.username.isNullOrBlank() || user.eircode.isNullOrBlank() || user.phoneNumber.toString().isNullOrBlank() || user.businessEmail.isNullOrBlank()) {
-            _validationStatus.value = ValidationStatus.InvalidInput
+        if (user.fName.isNullOrBlank()) {
+            _validationStatus.value = ValidationStatus.FirstNameEmpty
             return false
         }
+
+        if (user.sName.isNullOrBlank()) {
+            _validationStatus.value = ValidationStatus.SurnameEmpty
+            return false
+        }
+
+        if (user.username.isNullOrBlank()) {
+            _validationStatus.value = ValidationStatus.UsernameEmpty
+            return false
+        }
+
+        if (user.eircode.isNullOrBlank()) {
+            _validationStatus.value = ValidationStatus.EircodeEmpty
+            return false
+        }
+
+        if (user.phoneNumber.isNullOrBlank()) {
+            _validationStatus.value = ValidationStatus.PhoneNumberEmpty
+            return false
+        }
+
+        if (user.businessEmail.isNullOrBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(user.businessEmail).matches()) {
+            _validationStatus.value = ValidationStatus.BusinessEmailInvalid
+            return false
+        }
+
         return true
     }
 
     enum class ValidationStatus {
-        InvalidInput
+        FirstNameEmpty,
+        SurnameEmpty,
+        UsernameEmpty,
+        EircodeEmpty,
+        PhoneNumberEmpty,
+        BusinessEmailInvalid
     }
 }
