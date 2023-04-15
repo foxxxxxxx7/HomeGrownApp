@@ -12,6 +12,7 @@ data class UserModel(
     var bio: String? = null,
     var phoneNumber: String? = null,
     var businessEmail: String? = null,
+    var producerimage: String? = null ,
     var uid: String = "",
     var email: String? = "",
     var role: String = ""
@@ -26,6 +27,7 @@ data class UserModel(
             "bio" to bio,
             "phoneNumber" to phoneNumber,
             "businessEmail" to businessEmail,
+            "producerimage" to producerimage,
             "uid" to uid,
             "email" to email,
             "role" to role,

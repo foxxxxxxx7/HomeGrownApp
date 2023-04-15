@@ -162,6 +162,12 @@ object FirebaseDBManager : ProductStore, UserStore {
         userProductRef.child("producerimage").setValue(imageUrl)
     }
 
+    fun saveProducerImageToUser(userId: String, imageUrl: String) {
+        val userRef = database.child("users").child(userId)
+        userRef.child("producerimage").setValue(imageUrl)
+    }
+
+
     override fun createUser(firebaseUser: MutableLiveData<FirebaseUser>, user: UserModel) {
         val uid = firebaseUser.value!!.uid
         val userValues = user.toMap()
@@ -180,10 +186,9 @@ object FirebaseDBManager : ProductStore, UserStore {
 
 
     // Add this method to FirebaseDBManager
-    fun updateUser(firebaseUser: MutableLiveData<FirebaseUser>, updatedUser: UserModel) {
+    override fun updateUser(firebaseUser: MutableLiveData<FirebaseUser>, updatedUser: UserModel) {
         val uid = firebaseUser.value!!.uid
         val updatedUserValues = updatedUser.toMap()
-
 
         val childUpdates = HashMap<String, Any>()
         childUpdates["/users/$uid"] = updatedUserValues
@@ -191,6 +196,8 @@ object FirebaseDBManager : ProductStore, UserStore {
         database.updateChildren(childUpdates).addOnCompleteListener {
             if (it.isSuccessful) {
                 Timber.i("User updated successfully")
+                val imageURL = FirebaseImageManager.imageUri.value.toString()
+                saveProducerImageToUser(uid, imageURL) // Update the producer image in the user collection
             } else {
                 Timber.e("Failed to update user: ${it.exception}")
             }

@@ -5,4 +5,6 @@ import com.google.firebase.auth.FirebaseUser
 
 interface UserStore {
     fun createUser(firebaseUser: MutableLiveData<FirebaseUser>, user: UserModel)
+    fun updateUser(firebaseUser: MutableLiveData<FirebaseUser>, updatedUser: UserModel)
+
 }
