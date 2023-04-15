@@ -41,6 +41,7 @@ class ProductListFragment : Fragment(), ProductListener {
     private val userRole: MutableLiveData<String> = MutableLiveData()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -175,12 +176,15 @@ class ProductListFragment : Fragment(), ProductListener {
             userRole.observe(viewLifecycleOwner, Observer { role ->
                 if (role == "user") {
                     fragBinding.BecomeProducerBtn.visibility = View.VISIBLE
+                    fragBinding.backgroundImageView.visibility = View.VISIBLE
                     fragBinding.recyclerView.visibility = View.GONE
                     fragBinding.productsNotFound.visibility = View.GONE
                     fragBinding.John.visibility = View.GONE
                     fragBinding.fab.visibility = View.GONE
                 } else {
                     fragBinding.BecomeProducerBtn.visibility = View.GONE
+                    fragBinding.backgroundImageView.visibility = View.GONE
+
                 }
             })
 
@@ -189,6 +193,8 @@ class ProductListFragment : Fragment(), ProductListener {
             fragBinding.productsNotFound.visibility = View.GONE
             fragBinding.John.visibility = View.GONE
             fragBinding.BecomeProducerBtn.visibility = View.GONE
+            fragBinding.backgroundImageView.visibility = View.GONE
+
         }
     }
 
