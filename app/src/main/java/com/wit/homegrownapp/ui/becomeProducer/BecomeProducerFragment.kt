@@ -1,6 +1,8 @@
 package com.wit.homegrownapp.ui.becomeProducer
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.FragmentBecomeProducerBinding
 import com.wit.homegrownapp.firebase.FirebaseDBManager
+import com.wit.homegrownapp.firebase.FirebaseImageManager
 import com.wit.homegrownapp.model.UserModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 
@@ -31,6 +35,8 @@ class BecomeProducerFragment : Fragment() {
         activity?.title = getString(R.string.action_become_producer)
 
         becomeProducerViewModel = ViewModelProvider(this).get(BecomeProducerViewModel::class.java)
+
+        loadProfileImage()
 
         setButtonListener(binding)
 
@@ -94,6 +100,30 @@ class BecomeProducerFragment : Fragment() {
             }
         }
     }
+
+    private fun loadProfileImage() {
+        val userId = loggedInViewModel.liveFirebaseUser.value?.uid
+        if (userId != null) {
+            FirebaseImageManager.checkStorageForExistingProfilePic(userId)
+            FirebaseImageManager.imageUri.observe(viewLifecycleOwner) { imageUrl ->
+                if (imageUrl != Uri.EMPTY && imageUrl != null) {
+                    Log.d("BecomeProducerFragment", "Image URL: $imageUrl")
+                    Glide.with(this)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.apple)
+                        .error(R.drawable.cherry)
+                        .into(binding.profilePicture)
+                } else {
+                    Log.d("BecomeProducerFragment", "Image URL is null")
+                }
+            }
+        } else {
+            Log.d("BecomeProducerFragment", "User ID is null")
+        }
+    }
+
+
+
 
 
     override fun onDestroyView() {
