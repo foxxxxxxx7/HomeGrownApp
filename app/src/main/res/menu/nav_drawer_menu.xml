@@ -20,6 +20,11 @@
             android:icon="@drawable/ic_menu_location" />
 
         <item
+            android:id="@+id/becomeProducerFragment"
+            android:title="@string/action_become_producer"
+            android:icon="@drawable/apple" />
+
+        <item
             android:id="@+id/aboutFragment"
             android:title="@string/action_about"
             android:icon="@drawable/ic_menu_about" />

@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.wit.homegrownapp.model.ProductModel
 import com.wit.homegrownapp.model.ProductStore
+import com.wit.homegrownapp.model.UserModel
+import com.wit.homegrownapp.model.UserStore
 import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
@@ -14,7 +16,7 @@ var database: DatabaseReference =
         .reference
 
 
-object FirebaseDBManager : ProductStore {
+object FirebaseDBManager : ProductStore, UserStore {
 
 
     override fun findAll(productList: MutableLiveData<List<ProductModel>>) {
@@ -160,5 +162,59 @@ object FirebaseDBManager : ProductStore {
         userProductRef.child("producerimage").setValue(imageUrl)
     }
 
+    fun saveProducerImageToUser(userId: String, imageUrl: String) {
+        val userRef = database.child("users").child(userId)
+        userRef.child("producerimage").setValue(imageUrl)
+    }
+
+
+    override fun createUser(firebaseUser: MutableLiveData<FirebaseUser>, user: UserModel) {
+        val uid = firebaseUser.value!!.uid
+        val userValues = user.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/users/$uid"] = userValues
+
+        database.updateChildren(childUpdates).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Timber.i("User created successfully")
+            } else {
+                Timber.e("Failed to create user: ${it.exception}")
+            }
+        }
+    }
+
+
+    // Add this method to FirebaseDBManager
+    override fun updateUser(firebaseUser: MutableLiveData<FirebaseUser>, updatedUser: UserModel) {
+        val uid = firebaseUser.value!!.uid
+        val updatedUserValues = updatedUser.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/users/$uid"] = updatedUserValues
+
+        database.updateChildren(childUpdates).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Timber.i("User updated successfully")
+                val imageURL = FirebaseImageManager.imageUri.value.toString()
+                saveProducerImageToUser(uid, imageURL) // Update the producer image in the user collection
+            } else {
+                Timber.e("Failed to update user: ${it.exception}")
+            }
+        }
+    }
+
+    fun getUserRole(uid: String, userRole: MutableLiveData<String>) {
+        database.child("users").child(uid).child("role")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase User Role error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    userRole.value = snapshot.getValue(String::class.java)
+                }
+            })
+    }
 
 }
