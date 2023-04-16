@@ -20,6 +20,11 @@
             android:icon="@drawable/ic_menu_location" />
 
         <item
+            android:id="@+id/basketFragment"
+            android:title="@string/action_my_basket"
+            android:icon="@drawable/baseline_shopping_basket_24" />
+
+        <item
             android:id="@+id/becomeProducerFragment"
             android:title="@string/action_become_producer"
             android:icon="@drawable/apple" />

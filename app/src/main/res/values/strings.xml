@@ -98,5 +98,7 @@
     <string name="item_quantity">Quantity: %1$d</string>
     <string name="item_price">Price: %1$.2f</string>
 
+    <string name="action_my_basket">My Basket</string>
+
 
 </resources>

@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_productListFragment_to_becomeProducerFragment"
             app:destination="@id/becomeProducerFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -55,6 +58,14 @@
         tools:layout="@layout/fragment_become_producer" >
         <action
             android:id="@+id/action_becomeProducerFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.wit.homegrownapp.ui.BasketFragment"
+        android:label="BasketFragment" >
+        <action
+            android:id="@+id/action_basketFragment_to_productListFragment"
             app:destination="@id/productListFragment" />
     </fragment>
 </navigation>
