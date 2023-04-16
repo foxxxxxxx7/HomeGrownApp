@@ -27,6 +27,7 @@ import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.HomeBinding
 import com.wit.homegrownapp.databinding.NavHeaderBinding
 import com.wit.homegrownapp.firebase.FirebaseImageManager
+import com.wit.homegrownapp.ui.BasketViewModel
 import com.wit.homegrownapp.ui.auth.Login
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import com.wit.homegrownapp.ui.map.MapsViewModel
@@ -46,6 +47,7 @@ class Home : AppCompatActivity() {
     private lateinit var headerView: View
     private lateinit var intentLauncher: ActivityResultLauncher<Intent>
     private val mapsViewModel: MapsViewModel by viewModels()
+    private val basketViewModel: BasketViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

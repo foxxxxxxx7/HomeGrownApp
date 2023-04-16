@@ -93,6 +93,10 @@
     <string name="phone_number_empty_error">Phone number cannot be empty</string>
     <string name="business_email_invalid_error">Business email is invalid</string>
 
+    <string name="removeFromBasket">Remove From Basket</string>
+    <string name="total_price">Total: $%.2f</string>
+    <string name="item_quantity">Quantity: %1$d</string>
+    <string name="item_price">Price: %1$.2f</string>
 
 
 </resources>
