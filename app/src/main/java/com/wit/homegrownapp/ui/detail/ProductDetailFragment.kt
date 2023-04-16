@@ -37,16 +37,8 @@ class ProductDetailFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        //return inflater.inflate(R.layout.product_detail_fragment, container, false)
-//        val view = inflater.inflate(R.layout.product_detail_fragment, container, false)
-//
-//        Toast.makeText(context,"Product ID: ${args.productid}",Toast.LENGTH_LONG).show()
-//
-//        return view
-
         _fragBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         activity?.title = getString(R.string.action_details)
@@ -64,19 +56,14 @@ class ProductDetailFragment : Fragment() {
                 fragBinding.productvm?.observableProduct!!.value!!
             )
 
-//            (viewHolder.itemView.tag as ProductModel).uid!!)
-
-            //Force Reload of list to guarantee refresh
             productListViewModel.load()
             findNavController().navigateUp()
-            //findNavController().popBackStack()
 
         }
 
         fragBinding.deleteProductButton.setOnClickListener {
             productListViewModel.delete(
-                user?.uid!!,
-                detailViewModel.observableProduct.value?.pid!!
+                user?.uid!!, detailViewModel.observableProduct.value?.pid!!
             )
             findNavController().navigateUp()
         }
@@ -85,29 +72,34 @@ class ProductDetailFragment : Fragment() {
 
     private fun render() {
         fragBinding.productvm = detailViewModel
-        Timber.i("Retrofit fragBinding.productvm == $fragBinding.productvm")
         fragBinding.typeIcon.setImageResource(detailViewModel.observableProduct.value?.icon ?: 0)
+
+        val productUid = detailViewModel.observableProduct.value?.uid
+        val isEditable = productUid != null && productUid == user?.uid
+
+        fragBinding.editTitle.isEnabled = isEditable
+        fragBinding.editPrice.isEnabled = isEditable
+        fragBinding.editAvgWeight.isEnabled = isEditable
+        fragBinding.editDescription.isEnabled = isEditable
+        fragBinding.editEirCode.isEnabled = isEditable
+
+        fragBinding.editProductButton.visibility = if (isEditable) View.VISIBLE else View.GONE
+        fragBinding.deleteProductButton.visibility = if (isEditable) View.VISIBLE else View.GONE
+        fragBinding.addToBasketButton.visibility = if (isEditable) View.GONE else View.VISIBLE
     }
+
 
 
     override fun onResume() {
         super.onResume()
         detailViewModel.getProduct(
-            user?.uid!!,
-            args.productid
+            user?.uid!!, args.productid
         )
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
     }
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        detailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
 
 }

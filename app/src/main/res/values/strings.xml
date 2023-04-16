@@ -99,6 +99,7 @@
     <string name="item_price">Price: %1$.2f</string>
 
     <string name="action_my_basket">My Basket</string>
+    <string name="action_add_to_basket">Add To Basket</string>
 
 
 </resources>

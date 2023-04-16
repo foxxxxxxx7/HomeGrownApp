@@ -4,6 +4,7 @@ import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.ProductManager
 import com.wit.homegrownapp.model.ProductModel
@@ -14,6 +15,9 @@ import java.lang.Exception
 ProductModel */
 class ProductDetailViewModel : ViewModel() {
     private val product = MutableLiveData<ProductModel>()
+    val isCurrentUserProduct = MutableLiveData<Boolean>(true)
+    val user = FirebaseAuth.getInstance().currentUser
+
 
     var observableProduct: LiveData<ProductModel>
         get() = product
@@ -21,25 +25,17 @@ class ProductDetailViewModel : ViewModel() {
             product.value = value.value
         }
 
-    /**
-     * It gets the product details from the database.
-     *
-     * @param userid The user's id
-     * @param id The id of the product you want to retrieve
-     */
+
     fun getProduct(userid: String, id: String) {
         try {
-            //ProductManager.findById(email, id, donation)
             FirebaseDBManager.findById(userid, id, product)
-            Timber.i(
-                "Detail getProduct() Success : ${
-                    product.value.toString()
-                }"
-            )
+            isCurrentUserProduct.value = (user?.uid == product.value?.uid)
+            Timber.i("Detail getProduct() Success : ${product.value.toString()}")
         } catch (e: Exception) {
             Timber.i("Detail getProduct() Error : $e.message")
         }
     }
+
 
     /**
      * It deletes a product from the database.

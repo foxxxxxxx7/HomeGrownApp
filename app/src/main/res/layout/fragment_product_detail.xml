@@ -216,6 +216,20 @@
             app:layout_constraintStart_toEndOf="@+id/editProductButton"
             app:layout_constraintTop_toBottomOf="@+id/editEirCodeLayout" />
 
+        <Button
+            android:id="@+id/addToBasketButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/action_add_to_basket"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/deleteProductButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editEirCodeLayout" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
