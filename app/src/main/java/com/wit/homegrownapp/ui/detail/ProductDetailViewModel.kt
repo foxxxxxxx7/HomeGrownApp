@@ -28,21 +28,17 @@ class ProductDetailViewModel : ViewModel() {
 
     fun getProduct(userid: String, id: String) {
         try {
+            product.observeForever { updatedProduct ->
+                Timber.i("Detail getProduct() Updated product: $updatedProduct")
+                isCurrentUserProduct.value = (user?.uid == updatedProduct?.uid)
+            }
             FirebaseDBManager.findById(userid, id, product)
-            isCurrentUserProduct.value = (user?.uid == product.value?.uid)
-            Timber.i("Detail getProduct() Success : ${product.value.toString()}")
         } catch (e: Exception) {
             Timber.i("Detail getProduct() Error : $e.message")
         }
     }
 
 
-    /**
-     * It deletes a product from the database.
-     *
-     * @param userid The userid of the user who created the product.
-     * @param id The id of the product you want to delete.
-     */
     fun delete(userid: String, id: String) {
         try {
             FirebaseDBManager.delete(userid, id)
@@ -52,13 +48,7 @@ class ProductDetailViewModel : ViewModel() {
         }
     }
 
-    /**
-     * It updates the product with the given id.
-     *
-     * @param userid The user's ID.
-     * @param id The id of the product you want to update.
-     * @param product ProductModel
-     */
+
     fun updateProduct(userid: String, id: String, product: ProductModel) {
         try {
             FirebaseDBManager.update(userid, id, product)

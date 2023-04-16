@@ -12,8 +12,7 @@ import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
 var database: DatabaseReference =
-    FirebaseDatabase.getInstance("https://homegrown-c0ca9-default-rtdb.firebaseio.com/")
-        .reference
+    FirebaseDatabase.getInstance("https://homegrown-c0ca9-default-rtdb.firebaseio.com/").reference
 
 
 object FirebaseDBManager : ProductStore, UserStore {
@@ -72,10 +71,17 @@ object FirebaseDBManager : ProductStore, UserStore {
         Timber.i("FirebaseDBManager.findById() called with userid: $userid and productid: $productid")
 
         database.child("user-products").child(userid).child(productid).get().addOnSuccessListener {
-            product.value = it.getValue(ProductModel::class.java)
-            Timber.i("firebase Got value ${it.value}")
+            val fetchedProduct = it.getValue(ProductModel::class.java)
+            if (fetchedProduct != null) {
+                product.postValue(fetchedProduct)
+                Timber.i("firebase Got value ${it.value}")
+            } else {
+                product.postValue(null)
+                Timber.i("firebase Product not found")
+            }
         }.addOnFailureListener {
             Timber.e("firebase Error getting data $it")
+            product.postValue(null)
         }
     }
 
@@ -197,7 +203,9 @@ object FirebaseDBManager : ProductStore, UserStore {
             if (it.isSuccessful) {
                 Timber.i("User updated successfully")
                 val imageURL = FirebaseImageManager.imageUri.value.toString()
-                saveProducerImageToUser(uid, imageURL) // Update the producer image in the user collection
+                saveProducerImageToUser(
+                    uid, imageURL
+                ) // Update the producer image in the user collection
             } else {
                 Timber.e("Failed to update user: ${it.exception}")
             }
@@ -216,5 +224,29 @@ object FirebaseDBManager : ProductStore, UserStore {
                 }
             })
     }
+
+    fun getProductByProperties(
+        properties: Map<String, Any>, product: MutableLiveData<ProductModel>
+    ) {
+        database.child("products").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                Timber.i("Firebase getProductByProperties error: ${error.message}")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    val currentProduct = it.getValue(ProductModel::class.java)
+                    if (currentProduct != null && properties.all { prop -> currentProduct.toMap()[prop.key] == prop.value }) {
+                        Timber.i("Product found: $currentProduct")
+                        product.value = currentProduct
+                        return
+                    }
+                }
+                Timber.i("No matching product found")
+                product.value = null
+            }
+        })
+    }
+
 
 }

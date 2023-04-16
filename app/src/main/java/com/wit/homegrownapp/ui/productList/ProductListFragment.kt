@@ -41,7 +41,6 @@ class ProductListFragment : Fragment(), ProductListener {
     private val userRole: MutableLiveData<String> = MutableLiveData()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -50,8 +49,7 @@ class ProductListFragment : Fragment(), ProductListener {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _fragBinding = FragmentProductListBinding.inflate(inflater, container, false)
         val root = fragBinding.root
@@ -60,9 +58,6 @@ class ProductListFragment : Fragment(), ProductListener {
 
         fragBinding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
-
-//        fragBinding.recyclerView.adapter =
-//           ProductAdapter(ProductListViewModel.findAll(), this@ProductListFragment)
         val fab: FloatingActionButton = fragBinding.fab
         fab.setOnClickListener {
             val action = ProductListFragmentDirections.actionProductListToAddProduct()
@@ -74,10 +69,8 @@ class ProductListFragment : Fragment(), ProductListener {
         }
 
 
-
         // ProductListViewModel.load()
-        productListViewModel.observableProductList.observe(
-            viewLifecycleOwner,
+        productListViewModel.observableProductList.observe(viewLifecycleOwner,
             Observer { products ->
                 products?.let {
                     render(products as ArrayList<ProductModel>)
@@ -95,8 +88,7 @@ class ProductListFragment : Fragment(), ProductListener {
                 val adapter = fragBinding.recyclerView.adapter as ProductAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
                 productListViewModel.delete(
-                    user?.uid!!,
-                    (viewHolder.itemView.tag as ProductModel).pid!!
+                    user?.uid!!, (viewHolder.itemView.tag as ProductModel).pid!!
                 )
                 Timber.i(productListViewModel.liveFirebaseUser.value.toString())
                 Timber.i("hello123")
@@ -154,11 +146,9 @@ class ProductListFragment : Fragment(), ProductListener {
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
-            item,
-            requireView().findNavController()
+            item, requireView().findNavController()
         ) || super.onOptionsItemSelected(item)
     }
 
@@ -199,23 +189,19 @@ class ProductListFragment : Fragment(), ProductListener {
     }
 
 
-
     fun setSwipeRefresh() {
         fragBinding.swiperefresh.setOnRefreshListener {
             fragBinding.swiperefresh.isRefreshing = true
             showLoader(loader, "Downloading Product")
-            if (productListViewModel.readOnly.value!!)
-                productListViewModel.loadAll()
-            else
-                productListViewModel.load()
+            if (productListViewModel.readOnly.value!!) productListViewModel.loadAll()
+            else productListViewModel.load()
 
         }
     }
 
 
     private fun checkSwipeRefresh() {
-        if (fragBinding.swiperefresh.isRefreshing)
-            fragBinding.swiperefresh.isRefreshing = false
+        if (fragBinding.swiperefresh.isRefreshing) fragBinding.swiperefresh.isRefreshing = false
     }
 
 
@@ -227,10 +213,9 @@ class ProductListFragment : Fragment(), ProductListener {
     /* A static method that returns a new instance of the fragment. */
     companion object {
         @JvmStatic
-        fun newInstance() =
-            ProductListFragment().apply {
-                arguments = Bundle().apply { }
-            }
+        fun newInstance() = ProductListFragment().apply {
+            arguments = Bundle().apply { }
+        }
     }
 
 
@@ -241,14 +226,29 @@ class ProductListFragment : Fragment(), ProductListener {
 
 
     override fun onProductClick(product: ProductModel) {
-        val action =
-            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.pid)
-        if (!productListViewModel.readOnly.value!!)
+        if (product.pid != null) {
+            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.pid)
             findNavController().navigate(action)
+        } else {
+            val productLiveData = MutableLiveData<ProductModel>()
+            FirebaseDBManager.getProductByProperties(product.toMap() as Map<String, Any>, productLiveData)
+            productLiveData.observe(viewLifecycleOwner, Observer { matchedProduct ->
+                if (matchedProduct != null && matchedProduct.pid != null) {
+                    Timber.i("Navigating to product detail with pid: ${matchedProduct.pid}")
+                    val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(matchedProduct.pid)
+                    findNavController().navigate(action)
+                } else {
+                    Timber.i("No matching product found in ProductListFragment")
+                }
+            })
+        }
     }
 
+
+
     private fun navigateToBecomeProducer() {
-        val action = ProductListFragmentDirections.actionProductListFragmentToBecomeProducerFragment()
+        val action =
+            ProductListFragmentDirections.actionProductListFragmentToBecomeProducerFragment()
         findNavController().navigate(action)
     }
 

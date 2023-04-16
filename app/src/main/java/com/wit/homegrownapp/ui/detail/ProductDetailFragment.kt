@@ -36,6 +36,7 @@ class ProductDetailFragment : Fragment() {
     val user = FirebaseAuth.getInstance().currentUser
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -92,10 +93,20 @@ class ProductDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getProduct(
-            user?.uid!!, args.productid
-        )
+        val pid = args.productid
+        Timber.i("ProductDetailFragment: Received productid: $pid")
+
+        detailViewModel.getProduct(user?.uid!!, pid)
+        detailViewModel.observableProduct.observe(viewLifecycleOwner, Observer { fetchedProduct ->
+            if (fetchedProduct != null) {
+                Timber.i("ProductDetailFragment: Fetched product: $fetchedProduct")
+            } else {
+                Timber.i("ProductDetailFragment: No product found with productid: $pid")
+            }
+        })
+
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
