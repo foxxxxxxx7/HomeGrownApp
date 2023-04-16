@@ -42,17 +42,23 @@ class BecomeProducerFragment : Fragment() {
 
         becomeProducerViewModel = ViewModelProvider(this).get(BecomeProducerViewModel::class.java)
 
-        intentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val imageUri = result.data?.data
-                if (imageUri != null) {
-                    val userId = loggedInViewModel.liveFirebaseUser.value?.uid
-                    if (userId != null) {
-                        FirebaseImageManager.updateUserImage(userId, imageUri, binding.profilePicture, true)
+        intentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val imageUri = result.data?.data
+                    if (imageUri != null) {
+                        val userId = loggedInViewModel.liveFirebaseUser.value?.uid
+                        if (userId != null) {
+                            FirebaseImageManager.updateUserImage(
+                                userId,
+                                imageUri,
+                                binding.profilePicture,
+                                true
+                            )
+                        }
                     }
                 }
             }
-        }
 
         loadProfileImage()
         initProfileImageClickListener()
@@ -90,7 +96,11 @@ class BecomeProducerFragment : Fragment() {
 
             if (becomeProducerViewModel.validateUser(user)) {
                 FirebaseDBManager.updateUser(loggedInViewModel.liveFirebaseUser, user)
-                Toast.makeText(context, "Congratulations! You are now a producer!", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Congratulations! You are now a producer!",
+                    Toast.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.action_becomeProducerFragment_to_productListFragment)
             }
         }
@@ -151,9 +161,6 @@ class BecomeProducerFragment : Fragment() {
             Log.d("BecomeProducerFragment", "User ID is null")
         }
     }
-
-
-
 
 
     override fun onDestroyView() {
