@@ -26,13 +26,14 @@ class ProductDetailViewModel : ViewModel() {
         }
 
 
-    fun getProduct(userid: String, id: String) {
+    fun getProduct(id: String) {
         try {
             product.observeForever { updatedProduct ->
                 Timber.i("Detail getProduct() Updated product: $updatedProduct")
                 isCurrentUserProduct.value = (user?.uid == updatedProduct?.uid)
             }
-            FirebaseDBManager.findById(userid, id, product)
+            // Remove the userid parameter when calling findById
+            ProductManager.findById(id, product)
         } catch (e: Exception) {
             Timber.i("Detail getProduct() Error : $e.message")
         }

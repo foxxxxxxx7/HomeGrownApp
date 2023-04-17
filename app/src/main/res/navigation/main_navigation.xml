@@ -15,12 +15,6 @@
         <action
             android:id="@+id/action_productListFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment">
-            <argument
-                android:name="uid"
-                app:argType="string" />
-            <argument
-                android:name="pid"
-                app:argType="string" />
         </action>
         <action
             android:id="@+id/action_productListFragment_to_mapsFragment"

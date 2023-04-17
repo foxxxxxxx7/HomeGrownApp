@@ -66,11 +66,11 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
     override fun findById(
-        userid: String, productid: String, product: MutableLiveData<ProductModel>
+        productid: String, product: MutableLiveData<ProductModel>
     ) {
-        Timber.i("FirebaseDBManager.findById() called with userid: $userid and productid: $productid")
+        Timber.i("FirebaseDBManager.findById() called with productid: $productid")
 
-        database.child("user-products").child(userid).child(productid).get().addOnSuccessListener {
+        database.child("products").child(productid).get().addOnSuccessListener {
             val fetchedProduct = it.getValue(ProductModel::class.java)
             if (fetchedProduct != null) {
                 product.postValue(fetchedProduct)
@@ -84,6 +84,7 @@ object FirebaseDBManager : ProductStore, UserStore {
             product.postValue(null)
         }
     }
+
 
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {

@@ -96,7 +96,8 @@ class ProductDetailFragment : Fragment() {
         val pid = args.productid
         Timber.i("ProductDetailFragment: Received productid: $pid")
 
-        detailViewModel.getProduct(user?.uid!!, pid)
+        // Remove the user?.uid!! parameter when calling getProduct
+        detailViewModel.getProduct(pid)
         detailViewModel.observableProduct.observe(viewLifecycleOwner, Observer { fetchedProduct ->
             if (fetchedProduct != null) {
                 Timber.i("ProductDetailFragment: Fetched product: $fetchedProduct")
@@ -104,7 +105,6 @@ class ProductDetailFragment : Fragment() {
                 Timber.i("ProductDetailFragment: No product found with productid: $pid")
             }
         })
-
     }
 
 

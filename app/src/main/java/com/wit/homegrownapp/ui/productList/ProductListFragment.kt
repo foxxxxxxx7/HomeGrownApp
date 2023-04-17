@@ -226,22 +226,8 @@ class ProductListFragment : Fragment(), ProductListener {
 
 
     override fun onProductClick(product: ProductModel) {
-        if (product.pid != null) {
-            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.pid)
-            findNavController().navigate(action)
-        } else {
-            val productLiveData = MutableLiveData<ProductModel>()
-            FirebaseDBManager.getProductByProperties(product.toMap() as Map<String, Any>, productLiveData)
-            productLiveData.observe(viewLifecycleOwner, Observer { matchedProduct ->
-                if (matchedProduct != null && matchedProduct.pid != null) {
-                    Timber.i("Navigating to product detail with pid: ${matchedProduct.pid}")
-                    val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(matchedProduct.pid)
-                    findNavController().navigate(action)
-                } else {
-                    Timber.i("No matching product found in ProductListFragment")
-                }
-            })
-        }
+        val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.pid)
+        findNavController().navigate(action)
     }
 
 
