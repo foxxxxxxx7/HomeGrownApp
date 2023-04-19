@@ -8,8 +8,11 @@ import kotlinx.android.parcel.Parcelize
 data class BasketItemModel(
     val biid: String,
     val pid: String,
-    val productName: String,
+    val uid: String,
+    var type: String = "",
+    var variety: String = "",
     val price: Double,
+    var icon: Int = 0,
     var quantity: Int
 ) : Parcelable {
     @Exclude
@@ -17,8 +20,11 @@ data class BasketItemModel(
         return mapOf(
             "biid" to biid,
             "pid" to pid,
-            "productName" to productName,
+            "uid" to uid,
+            "type" to type,
+            "variety" to variety,
             "price" to price,
+            "icon" to icon,
             "quantity" to quantity,
             )
     }
