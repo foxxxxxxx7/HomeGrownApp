@@ -28,7 +28,6 @@ import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import com.wit.homegrownapp.utils.*
 import timber.log.Timber
 
-/*  */
 class ProductListFragment : Fragment(), ProductListener {
 
     //  lateinit var app: BikeshopApp
@@ -177,7 +176,6 @@ class ProductListFragment : Fragment(), ProductListener {
 
                 }
             })
-
         } else {
             fragBinding.recyclerView.visibility = View.VISIBLE
             fragBinding.productsNotFound.visibility = View.GONE

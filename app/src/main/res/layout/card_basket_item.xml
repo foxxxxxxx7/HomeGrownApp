@@ -24,11 +24,11 @@
 
             <ImageView
                 android:id="@+id/imageIcon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="2dp"
                 android:contentDescription="@string/app_name"
                 app:srcCompat="@mipmap/ic_launcher_round" />
@@ -65,6 +65,43 @@
                 android:layout_marginTop="8dp"
                 android:text="@{String.format(`\u20AC%.2f ea`, basketItem.price)}"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/quantity_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="0dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/minus_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/circular_button"
+                    android:src="@drawable/ic_menu_remove" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{String.valueOf(basketItem.quantity)}"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/plus_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/circular_button"
+                    android:src="@drawable/ic_menu_add" />
+
+            </LinearLayout>
+
+
 
 
 
