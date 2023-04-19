@@ -18,7 +18,7 @@ class BasketFragment : Fragment() {
     private var _binding: FragmentBasketBinding? = null
     private val binding get() = _binding!!
 
-    private val basketViewModel: BasketViewModel by viewModels()
+    private val basketViewModel: BasketViewModel by activityViewModels()
     private lateinit var basketAdapter: BasketAdapter
 
     override fun onCreateView(

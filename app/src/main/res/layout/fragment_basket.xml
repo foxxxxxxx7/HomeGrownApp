@@ -9,6 +9,7 @@
         android:id="@+id/basketRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintBottom_toTopOf="@id/totalPriceTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
