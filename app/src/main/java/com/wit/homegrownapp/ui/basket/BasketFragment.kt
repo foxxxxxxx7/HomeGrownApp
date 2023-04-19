@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wit.homegrownapp.R
-import com.wit.homegrownapp.adapter.BasketAdapter
+import com.wit.homegrownapp.adapters.BasketAdapter
 import androidx.fragment.app.viewModels
 import com.wit.homegrownapp.databinding.FragmentBasketBinding
 import com.wit.homegrownapp.model.BasketItemModel
@@ -22,8 +22,7 @@ class BasketFragment : Fragment() {
     private lateinit var basketAdapter: BasketAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBasketBinding.inflate(inflater, container, false)
         return binding.root
@@ -36,7 +35,7 @@ class BasketFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        basketAdapter = BasketAdapter { itemId -> basketViewModel.removeBasketItem(itemId) }
+        basketAdapter = BasketAdapter()
         binding.basketRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = basketAdapter
@@ -44,12 +43,12 @@ class BasketFragment : Fragment() {
     }
 
     private fun observeBasketItems() {
-        basketViewModel.basketItems.observe(viewLifecycleOwner, { basketItems: List<BasketItemModel> ->
-            basketAdapter.submitList(basketItems)
-            updateTotalPrice(basketItems)
-        })
+        basketViewModel.basketItems.observe(viewLifecycleOwner,
+            { basketItems: List<BasketItemModel> ->
+                basketAdapter.submitList(basketItems)
+                updateTotalPrice(basketItems)
+            })
     }
-
 
     private fun updateTotalPrice(basketItems: List<BasketItemModel>) {
         val totalPrice = basketItems.sumOf { it.price * it.quantity }

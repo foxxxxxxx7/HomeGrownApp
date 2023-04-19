@@ -19,7 +19,16 @@ class BasketViewModel : ViewModel() {
 
     fun addToBasket(product: ProductModel) {
         val biid = UUID.randomUUID().toString()
-        val basketItem = BasketItemModel(biid, product.pid, product.uid, product.type, product.variety, product.price, product.icon, product.quantity)
+        val basketItem = BasketItemModel(
+            biid,
+            product.pid,
+            product.uid,
+            product.type,
+            product.variety,
+            product.price,
+            product.icon,
+            product.quantity
+        )
         _basketItems.value = _basketItems.value?.toMutableList()?.apply { add(basketItem) }
     }
 
