@@ -226,28 +226,5 @@ object FirebaseDBManager : ProductStore, UserStore {
             })
     }
 
-    fun getProductByProperties(
-        properties: Map<String, Any>, product: MutableLiveData<ProductModel>
-    ) {
-        database.child("products").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Timber.i("Firebase getProductByProperties error: ${error.message}")
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach {
-                    val currentProduct = it.getValue(ProductModel::class.java)
-                    if (currentProduct != null && properties.all { prop -> currentProduct.toMap()[prop.key] == prop.value }) {
-                        Timber.i("Product found: $currentProduct")
-                        product.value = currentProduct
-                        return
-                    }
-                }
-                Timber.i("No matching product found")
-                product.value = null
-            }
-        })
-    }
-
 
 }

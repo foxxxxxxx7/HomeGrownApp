@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -33,6 +34,7 @@ class ProductDetailFragment : Fragment() {
     private val fragBinding get() = _fragBinding!!
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
+    private val basketViewModel: BasketViewModel by activityViewModels()
     val user = FirebaseAuth.getInstance().currentUser
 
 
@@ -67,6 +69,13 @@ class ProductDetailFragment : Fragment() {
                 user?.uid!!, detailViewModel.observableProduct.value?.pid!!
             )
             findNavController().navigateUp()
+        }
+        fragBinding.addToBasketButton.setOnClickListener {
+            detailViewModel.observableProduct.value?.let { product ->
+                basketViewModel.addToBasket(product)
+                Timber.i("Product added to the basket: ${product.title}")
+                Toast.makeText(requireContext(), "Product added to the basket!", Toast.LENGTH_SHORT).show()
+            }
         }
         return root
     }
