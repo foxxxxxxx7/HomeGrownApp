@@ -15,6 +15,8 @@ data class BasketItemModel(
     var icon: Int = 0,
     var quantity: Int
 ) : Parcelable {
+    constructor() : this("", "", "", "", "", 0.0, 0, 0)
+
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(

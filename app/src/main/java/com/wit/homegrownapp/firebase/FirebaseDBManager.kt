@@ -4,10 +4,7 @@ import android.os.LocaleList
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.wit.homegrownapp.model.ProductModel
-import com.wit.homegrownapp.model.ProductStore
-import com.wit.homegrownapp.model.UserModel
-import com.wit.homegrownapp.model.UserStore
+import com.wit.homegrownapp.model.*
 import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
@@ -224,6 +221,24 @@ object FirebaseDBManager : ProductStore, UserStore {
                     userRole.value = snapshot.getValue(String::class.java)
                 }
             })
+    }
+
+    fun saveBasket(uid: String, basketItems: List<BasketItemModel>) {
+        val basketItemsMap = basketItems.associateBy { it.biid }.mapValues { (_, item) -> item.toMap() }
+        database.child("user-baskets").child(uid).setValue(basketItemsMap)
+    }
+
+    fun getBasket(uid: String, basketItemsLiveData: MutableLiveData<List<BasketItemModel>>) {
+        database.child("user-baskets").child(uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val basketItems = snapshot.children.mapNotNull { it.getValue(BasketItemModel::class.java) }
+                basketItemsLiveData.postValue(basketItems)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Timber.e("Failed to get basket: ${error.message}")
+            }
+        })
     }
 
 
