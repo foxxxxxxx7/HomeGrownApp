@@ -101,5 +101,6 @@
     <string name="action_my_basket">My Basket</string>
     <string name="action_add_to_basket">Add To Basket</string>
 
+    <string name="place_order">Place Order</string>
 
 </resources>
