@@ -24,6 +24,7 @@ import com.wit.homegrownapp.adapters.ProductListener
 import com.wit.homegrownapp.databinding.FragmentProductListBinding
 import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.ProductModel
+import com.wit.homegrownapp.ui.BasketViewModel
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import com.wit.homegrownapp.utils.*
 import timber.log.Timber
@@ -38,6 +39,7 @@ class ProductListFragment : Fragment(), ProductListener {
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
     private val userRole: MutableLiveData<String> = MutableLiveData()
+    private val basketViewModel: BasketViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,6 +108,22 @@ class ProductListFragment : Fragment(), ProductListener {
         }
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
         itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)
+
+        val swipeAddToBasketHandler = object : SwipeToAddToBasketCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Add the product to the basket
+                val product = viewHolder.itemView.tag as ProductModel
+                basketViewModel.addToBasket(product)
+                Toast.makeText(requireContext(), "Product added to the basket!", Toast.LENGTH_SHORT).show()
+
+                // Notify the adapter that the swipe action is completed to reset the swiped item's state
+                fragBinding.recyclerView.adapter?.notifyItemChanged(viewHolder.adapterPosition)
+            }
+        }
+
+        val itemTouchAddToBasketHelper = ItemTouchHelper(swipeAddToBasketHandler)
+        itemTouchAddToBasketHelper.attachToRecyclerView(fragBinding.recyclerView)
+
 
 
         return root

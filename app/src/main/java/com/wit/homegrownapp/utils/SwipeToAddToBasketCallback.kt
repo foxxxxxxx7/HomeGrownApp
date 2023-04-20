@@ -14,7 +14,7 @@ import com.wit.homegrownapp.R
 import com.wit.homegrownapp.adapters.ProductAdapter
 
 abstract class SwipeToAddToBasketCallback(context: Context) :
-    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
     private val addToBasketIcon = ContextCompat.getDrawable(context, R.drawable.baseline_shopping_basket_24)
     private val intrinsicWidth = addToBasketIcon?.intrinsicWidth
