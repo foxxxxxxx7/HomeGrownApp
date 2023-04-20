@@ -75,6 +75,7 @@ class ProductListFragment : Fragment(), ProductListener {
                     render(products as ArrayList<ProductModel>)
                     hideLoader(loader)
                     checkSwipeRefresh()
+                    userRole.value?.let { role -> updateUIVisibility(products, role) }
                 }
             })
 
@@ -122,9 +123,11 @@ class ProductListFragment : Fragment(), ProductListener {
             when (role) {
                 "producer" -> {
                     toggleproducts.isChecked = false
+                    productListViewModel.load()
                 }
                 "user" -> {
                     toggleproducts.isChecked = true
+                    productListViewModel.loadAll()
                 }
                 else -> toggleproducts.isChecked = false
             }
@@ -134,14 +137,12 @@ class ProductListFragment : Fragment(), ProductListener {
                 if (isChecked) productListViewModel.loadAll()
                 else productListViewModel.load()
             }
+
+            // Call updateUIVisibility here
+            productListViewModel.observableProductList.value?.let {
+                updateUIVisibility(it as ArrayList<ProductModel>, role)
+            }
         })
-
-        toggleproducts.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) productListViewModel.loadAll()
-            else productListViewModel.load()
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
 
@@ -157,34 +158,37 @@ class ProductListFragment : Fragment(), ProductListener {
             productList, this, productListViewModel.readOnly.value!!
         )
 
+        userRole.observe(viewLifecycleOwner, Observer { role ->
+        })
+    }
+
+
+    private fun updateUIVisibility(productList: ArrayList<ProductModel>, role: String) {
         if (productList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
             fragBinding.productsNotFound.visibility = View.VISIBLE
             fragBinding.John.visibility = View.VISIBLE
 
-            userRole.observe(viewLifecycleOwner, Observer { role ->
-                if (role == "user") {
-                    fragBinding.BecomeProducerBtn.visibility = View.VISIBLE
-                    fragBinding.backgroundImageView.visibility = View.VISIBLE
-                    fragBinding.recyclerView.visibility = View.GONE
-                    fragBinding.productsNotFound.visibility = View.GONE
-                    fragBinding.John.visibility = View.GONE
-                    fragBinding.fab.visibility = View.GONE
-                } else {
-                    fragBinding.BecomeProducerBtn.visibility = View.GONE
-                    fragBinding.backgroundImageView.visibility = View.GONE
-
-                }
-            })
+            if (role == "user") {
+                fragBinding.BecomeProducerBtn.visibility = View.VISIBLE
+                fragBinding.backgroundImageView.visibility = View.VISIBLE
+                fragBinding.recyclerView.visibility = View.GONE
+                fragBinding.productsNotFound.visibility = View.GONE
+                fragBinding.John.visibility = View.GONE
+                fragBinding.fab.visibility = View.GONE
+            } else {
+                fragBinding.BecomeProducerBtn.visibility = View.GONE
+                fragBinding.backgroundImageView.visibility = View.GONE
+            }
         } else {
             fragBinding.recyclerView.visibility = View.VISIBLE
             fragBinding.productsNotFound.visibility = View.GONE
             fragBinding.John.visibility = View.GONE
             fragBinding.BecomeProducerBtn.visibility = View.GONE
             fragBinding.backgroundImageView.visibility = View.GONE
-
         }
     }
+
 
 
     fun setSwipeRefresh() {
@@ -200,12 +204,6 @@ class ProductListFragment : Fragment(), ProductListener {
 
     private fun checkSwipeRefresh() {
         if (fragBinding.swiperefresh.isRefreshing) fragBinding.swiperefresh.isRefreshing = false
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        productListViewModel.load()
     }
 
     /* A static method that returns a new instance of the fragment. */
