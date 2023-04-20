@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wit.homegrownapp.R
@@ -33,6 +34,7 @@ class BasketFragment : Fragment(), BasketListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeBasketItems()
+        setupPlaceOrderButton()
     }
 
     private fun setupRecyclerView() {
@@ -40,6 +42,13 @@ class BasketFragment : Fragment(), BasketListener {
         binding.basketRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = basketAdapter
+        }
+    }
+
+    private fun setupPlaceOrderButton() {
+        binding.placeOrderButton.setOnClickListener {
+            basketViewModel.placeOrder()
+            Toast.makeText(context, "Order Placed!", Toast.LENGTH_LONG).show()
         }
     }
 

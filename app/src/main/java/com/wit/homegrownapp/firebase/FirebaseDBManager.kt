@@ -83,7 +83,6 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
 
-
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {
         Timber.i("Firebase DB Reference : $database")
 
@@ -224,21 +223,30 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
     fun saveBasket(uid: String, basketItems: List<BasketItemModel>) {
-        val basketItemsMap = basketItems.associateBy { it.biid }.mapValues { (_, item) -> item.toMap() }
+        val basketItemsMap =
+            basketItems.associateBy { it.biid }.mapValues { (_, item) -> item.toMap() }
         database.child("user-baskets").child(uid).setValue(basketItemsMap)
     }
 
     fun getBasket(uid: String, basketItemsLiveData: MutableLiveData<List<BasketItemModel>>) {
-        database.child("user-baskets").child(uid).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val basketItems = snapshot.children.mapNotNull { it.getValue(BasketItemModel::class.java) }
-                basketItemsLiveData.postValue(basketItems)
-            }
+        database.child("user-baskets").child(uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val basketItems =
+                        snapshot.children.mapNotNull { it.getValue(BasketItemModel::class.java) }
+                    basketItemsLiveData.postValue(basketItems)
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                Timber.e("Failed to get basket: ${error.message}")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Failed to get basket: ${error.message}")
+                }
+            })
+    }
+
+    fun saveOrder(order: OrderModel) {
+        val orderValues = order.toMap()
+        database.child("orders").child(order.oid).setValue(orderValues)
+        database.child("user-orders").child(order.uid).child(order.oid).setValue(orderValues)
     }
 
 

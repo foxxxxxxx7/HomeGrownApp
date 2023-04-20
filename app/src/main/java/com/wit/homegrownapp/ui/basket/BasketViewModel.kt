@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.BasketItemModel
+import com.wit.homegrownapp.model.OrderModel
 import com.wit.homegrownapp.model.ProductModel
 import java.util.UUID
 
@@ -54,4 +55,21 @@ class BasketViewModel : ViewModel() {
         _basketItems.value = _basketItems.value?.filter { it.biid != biid }
         user?.let { FirebaseDBManager.saveBasket(it.uid, _basketItems.value ?: emptyList()) }
     }
+
+    fun placeOrder() {
+        val oid = UUID.randomUUID().toString()
+        val uid = user?.uid ?: return
+        val basketItems = _basketItems.value ?: emptyList()
+        val totalPrice = basketItems.sumOf { it.price * it.quantity }
+        val sellerUids = basketItems.map { it.uid }.distinct()
+
+        val order = OrderModel(oid, uid, basketItems, totalPrice, sellerUids)
+
+        FirebaseDBManager.saveOrder(order)
+
+        // Empty the basket
+        _basketItems.value = emptyList()
+        user?.let { FirebaseDBManager.saveBasket(it.uid, emptyList()) }
+    }
+
 }
