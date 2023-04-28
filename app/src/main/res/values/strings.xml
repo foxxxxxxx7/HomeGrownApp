@@ -103,4 +103,9 @@
 
     <string name="place_order">Place Order</string>
 
+    <string name="action_receivedOrders">Orders Received</string>
+    <string name="action_requestedOrders">Orders Requested</string>
+
+    <string name="action_my_orders">My Orders</string>
+
 </resources>

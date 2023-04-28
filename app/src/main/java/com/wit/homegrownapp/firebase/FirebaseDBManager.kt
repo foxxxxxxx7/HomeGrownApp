@@ -249,5 +249,17 @@ object FirebaseDBManager : ProductStore, UserStore {
         database.child("user-orders").child(order.uid).child(order.oid).setValue(orderValues)
     }
 
+    fun findRequestedOrders(uid: String, callback: ValueEventListener) {
+        database.child("user-orders")
+            .orderByChild("uid")
+            .addValueEventListener(callback)
+    }
+
+    fun findReceivedOrders(uid: String, callback: ValueEventListener) {
+        database.child("orders")
+            .addValueEventListener(callback)
+    }
+
+
 
 }
