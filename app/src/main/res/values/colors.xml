@@ -18,4 +18,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <color name="green_tick">#008450</color>
+    <color name="red_cross">#B81D13</color>
+
 </resources>
