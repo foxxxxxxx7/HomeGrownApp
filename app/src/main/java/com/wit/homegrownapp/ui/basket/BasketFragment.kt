@@ -23,6 +23,7 @@ class BasketFragment : Fragment(), BasketListener {
     private val basketViewModel: BasketViewModel by activityViewModels()
     private lateinit var basketAdapter: BasketAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -47,7 +48,9 @@ class BasketFragment : Fragment(), BasketListener {
 
     private fun setupPlaceOrderButton() {
         binding.placeOrderButton.setOnClickListener {
-            basketViewModel.placeOrder()
+            basketViewModel.placeOrder(requireContext())
+
+
             Toast.makeText(context, "Order Placed!", Toast.LENGTH_LONG).show()
         }
     }

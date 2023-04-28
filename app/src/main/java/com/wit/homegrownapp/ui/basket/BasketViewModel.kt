@@ -1,6 +1,7 @@
 // BasketViewModel.kt
 package com.wit.homegrownapp.ui
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -61,7 +62,7 @@ class BasketViewModel : ViewModel() {
         user?.let { FirebaseDBManager.saveBasket(it.uid, _basketItems.value ?: emptyList()) }
     }
 
-    fun placeOrder() {
+    fun placeOrder(context: Context) {
         val oid = UUID.randomUUID().toString()
         val uid = user?.uid ?: return
         val status = "pending"
@@ -71,7 +72,7 @@ class BasketViewModel : ViewModel() {
 
         val order = OrderModel(oid, uid, status, basketItems, totalPrice, sellerUids)
 
-        FirebaseDBManager.saveOrder(order)
+        FirebaseDBManager.saveOrder(context, order)
 
         // Empty the basket
         _basketItems.value = emptyList()

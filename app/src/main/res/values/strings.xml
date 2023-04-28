@@ -112,5 +112,8 @@
     <string name="status_accepted">Accepted</string>
     <string name="status_indicator">Status Indicator</string>
 
+    <string name="channel_name">HomeGrown App Notifications</string>
+    <string name="channel_description">Notification channel for HomeGrown App</string>
+    <string name="channel_id">homegrown_app_channel</string>
 
 </resources>

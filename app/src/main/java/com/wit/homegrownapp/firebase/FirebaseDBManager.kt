@@ -1,10 +1,13 @@
 package com.wit.homegrownapp.firebase
 
-import android.os.LocaleList
+import com.wit.homegrownapp.ui.receiver.NotificationReceiver
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.wit.homegrownapp.model.*
+import com.wit.homegrownapp.ui.home.Home
 import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
@@ -243,11 +246,17 @@ object FirebaseDBManager : ProductStore, UserStore {
             })
     }
 
-    fun saveOrder(order: OrderModel) {
+    // In FirebaseDBManager.kt
+    fun saveOrder(context: Context, order: OrderModel) {
         val orderValues = order.toMap()
         database.child("orders").child(order.oid).setValue(orderValues)
         database.child("user-orders").child(order.uid).child(order.oid).setValue(orderValues)
+
+        // Send push notification to the sellers
+        sendNotification(context, order.sellerUids)
     }
+
+
 
     fun findRequestedOrders(uid: String, callback: ValueEventListener) {
         database.child("user-orders").child(uid)
@@ -259,6 +268,17 @@ object FirebaseDBManager : ProductStore, UserStore {
             .addListenerForSingleValueEvent(callback)
     }
 
+    fun sendNotification(context: Context, sellerUids: List<String>) {
+        for (uid in sellerUids) {
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra("title", "New Order")
+                putExtra("message", "You have received a new order from HomeGrown!")
+            }
+            if (context is Home) {
+                context.sendNotification("New Order", "You have received a new order from HomeGrown!")
+            }
+        }
+    }
 
 
 

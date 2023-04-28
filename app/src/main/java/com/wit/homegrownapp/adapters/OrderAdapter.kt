@@ -37,13 +37,13 @@ class OrderAdapter(private val listener: OrderListener) :
         init {
             binding.tickButton.setOnClickListener {
                 getItem(adapterPosition).status = "accepted"
-                FirebaseDBManager.saveOrder(getItem(adapterPosition))
+                FirebaseDBManager.saveOrder(binding.root.context, getItem(adapterPosition))
                 updateStatusIndicator(getItem(adapterPosition).status)
             }
 
             binding.crossButton.setOnClickListener {
                 getItem(adapterPosition).status = "declined"
-                FirebaseDBManager.saveOrder(getItem(adapterPosition))
+                FirebaseDBManager.saveOrder(binding.root.context, getItem(adapterPosition))
                 updateStatusIndicator(getItem(adapterPosition).status)
             }
         }
