@@ -41,6 +41,7 @@ class OrderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOrderBinding.inflate(inflater, container, false)
+        orderViewModel.loadRequestedOrders()
         return binding.root
     }
 
@@ -67,6 +68,7 @@ class OrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.receivedOrders.visibility = View.GONE
         setupRecyclerView()
         observeOrders()
     }

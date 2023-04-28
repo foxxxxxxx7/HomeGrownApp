@@ -250,15 +250,18 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
     fun findRequestedOrders(uid: String, callback: ValueEventListener) {
-        database.child("user-orders")
-            .orderByChild("uid")
-            .addValueEventListener(callback)
+        database.child("user-orders").child(uid)
+            .addListenerForSingleValueEvent(callback)
     }
 
     fun findReceivedOrders(uid: String, callback: ValueEventListener) {
         database.child("orders")
-            .addValueEventListener(callback)
+            .orderByChild("sellerUids/$uid")
+            .equalTo(true)
+            .addListenerForSingleValueEvent(callback)
     }
+
+
 
 
 

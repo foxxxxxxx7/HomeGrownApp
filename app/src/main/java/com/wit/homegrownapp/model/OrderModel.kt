@@ -6,13 +6,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class OrderModel(
-    val oid: String,
-    val uid: String,
-    val basketItems: List<BasketItemModel>,
-    val totalPrice: Double,
-    val sellerUids: List<String>
+    val oid: String = "",
+    val uid: String = "",
+    val basketItems: List<BasketItemModel> = emptyList(),
+    val totalPrice: Double = 0.0,
+    val sellerUids: List<String> = emptyList()
 ) : Parcelable {
-
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
