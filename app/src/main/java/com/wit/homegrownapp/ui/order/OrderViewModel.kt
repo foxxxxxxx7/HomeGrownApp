@@ -47,28 +47,25 @@ class OrderViewModel : ViewModel() {
 
     fun loadReceivedOrders() {
         try {
-            FirebaseDBManager.findReceivedOrders(
-                user!!.uid, object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val tempList = mutableListOf<OrderModel>()
-                        for (orderSnapshot in snapshot.children) {
-                            val order = orderSnapshot.getValue(OrderModel::class.java)
-                            if (order?.sellerUids?.contains(user.uid) == true) {
-                                order?.let { tempList.add(it) }
-                            }
+            FirebaseDBManager.findReceivedOrders(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val tempList = mutableListOf<OrderModel>()
+                    for (orderSnapshot in snapshot.children) {
+                        val order = orderSnapshot.getValue(OrderModel::class.java)
+                        if (order?.sellerUids?.contains(user!!.uid) == true) {
+                            order?.let { tempList.add(it) }
                         }
-                        orders.value = tempList
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Timber.i("Received orders Load Error : ${error.message}")
-                    }
+                    orders.value = tempList
                 }
-            )
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Received orders Load Error : ${error.message}")
+                }
+            })
         } catch (e: Exception) {
             Timber.i("Received orders Load Error : $e.message")
         }
     }
-
 
 }

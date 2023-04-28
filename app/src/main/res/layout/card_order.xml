@@ -51,7 +51,7 @@
                 android:layout_toEndOf="@+id/buyerImage"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@{String.format(`\u20AC%.2f ea`, order.totalPrice)}"
+                android:text="@{String.format(`\u20AC%.2f`, order.totalPrice)}"
                 android:textSize="14sp" />
 
         </RelativeLayout>
