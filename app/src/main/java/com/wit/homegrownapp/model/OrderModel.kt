@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class OrderModel(
     val oid: String = "",
     val uid: String = "",
+    val status: String = "pending",
     val basketItems: List<BasketItemModel> = emptyList(),
     val totalPrice: Double = 0.0,
     val sellerUids: List<String> = emptyList()
@@ -17,6 +18,7 @@ data class OrderModel(
         return mapOf(
             "oid" to oid,
             "uid" to uid,
+            "status" to status,
             "basketItems" to basketItems.map { it.toMap() },
             "totalPrice" to totalPrice,
             "sellerUids" to sellerUids

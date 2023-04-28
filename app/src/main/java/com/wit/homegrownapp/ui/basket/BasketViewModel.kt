@@ -25,7 +25,6 @@ class BasketViewModel : ViewModel() {
 
     fun addToBasket(product: ProductModel): Boolean {
         if (user?.uid == product.uid) {
-            Timber.i("Your own product cannot be added to the basket")
             return false
         }
         val biid = UUID.randomUUID().toString()
@@ -65,11 +64,12 @@ class BasketViewModel : ViewModel() {
     fun placeOrder() {
         val oid = UUID.randomUUID().toString()
         val uid = user?.uid ?: return
+        val status = "pending"
         val basketItems = _basketItems.value ?: emptyList()
         val totalPrice = basketItems.sumOf { it.price * it.quantity }
         val sellerUids = basketItems.map { it.uid }.distinct()
 
-        val order = OrderModel(oid, uid, basketItems, totalPrice, sellerUids)
+        val order = OrderModel(oid, uid, status, basketItems, totalPrice, sellerUids)
 
         FirebaseDBManager.saveOrder(order)
 
