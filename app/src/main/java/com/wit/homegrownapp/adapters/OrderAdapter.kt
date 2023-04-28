@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.CardOrderBinding
+import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.OrderModel
 
 interface OrderListener {
@@ -19,8 +20,7 @@ class OrderAdapter(private val listener: OrderListener) :
     ListAdapter<OrderModel, OrderAdapter.OrderViewHolder>(OrderModelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val binding =
-            CardOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = CardOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return OrderViewHolder(binding, listener)
     }
 
@@ -28,8 +28,23 @@ class OrderAdapter(private val listener: OrderListener) :
         holder.bind(getItem(position))
     }
 
-    class OrderViewHolder(private val binding: CardOrderBinding, private val listener: OrderListener) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class OrderViewHolder(
+        private val binding: CardOrderBinding, private val listener: OrderListener
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.tickButton.setOnClickListener {
+                getItem(adapterPosition).status = "accepted"
+                FirebaseDBManager.saveOrder(getItem(adapterPosition))
+                updateStatusIndicator(getItem(adapterPosition).status)
+            }
+
+            binding.crossButton.setOnClickListener {
+                getItem(adapterPosition).status = "declined"
+                FirebaseDBManager.saveOrder(getItem(adapterPosition))
+                updateStatusIndicator(getItem(adapterPosition).status)
+            }
+        }
 
         fun bind(item: OrderModel) {
             binding.order = item

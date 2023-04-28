@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class OrderModel(
     val oid: String = "",
     val uid: String = "",
-    val status: String = "pending",
+    var status: String = "pending",
     val basketItems: List<BasketItemModel> = emptyList(),
     val totalPrice: Double = 0.0,
     val sellerUids: List<String> = emptyList()
