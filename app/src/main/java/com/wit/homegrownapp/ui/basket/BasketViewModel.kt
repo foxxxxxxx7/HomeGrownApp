@@ -9,6 +9,7 @@ import com.wit.homegrownapp.firebase.FirebaseDBManager
 import com.wit.homegrownapp.model.BasketItemModel
 import com.wit.homegrownapp.model.OrderModel
 import com.wit.homegrownapp.model.ProductModel
+import timber.log.Timber
 import java.util.UUID
 
 class BasketViewModel : ViewModel() {
@@ -22,7 +23,11 @@ class BasketViewModel : ViewModel() {
         user?.let { FirebaseDBManager.getBasket(it.uid, _basketItems) }
     }
 
-    fun addToBasket(product: ProductModel) {
+    fun addToBasket(product: ProductModel): Boolean {
+        if (user?.uid == product.uid) {
+            Timber.i("Your own product cannot be added to the basket")
+            return false
+        }
         val biid = UUID.randomUUID().toString()
         val basketItem = BasketItemModel(
             biid,
@@ -36,6 +41,7 @@ class BasketViewModel : ViewModel() {
         )
         _basketItems.value = _basketItems.value?.toMutableList()?.apply { add(basketItem) }
         user?.let { FirebaseDBManager.saveBasket(it.uid, _basketItems.value ?: emptyList()) }
+        return true
 
     }
 

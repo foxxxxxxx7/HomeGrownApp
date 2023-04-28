@@ -113,8 +113,13 @@ class ProductListFragment : Fragment(), ProductListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Add the product to the basket
                 val product = viewHolder.itemView.tag as ProductModel
-                basketViewModel.addToBasket(product)
-                Toast.makeText(requireContext(), "Product added to the basket!", Toast.LENGTH_SHORT).show()
+                val isProductAdded = basketViewModel.addToBasket(product)
+
+                if (isProductAdded) {
+                    Toast.makeText(requireContext(), "Product added to the basket!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Cannot add own product to the basket!", Toast.LENGTH_SHORT).show()
+                }
 
                 // Notify the adapter that the swipe action is completed to reset the swiped item's state
                 fragBinding.recyclerView.adapter?.notifyItemChanged(viewHolder.adapterPosition)
