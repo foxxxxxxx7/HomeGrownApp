@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">HomeGrown</string>
-    <string name="enter_details">Please fill ALL fields</string>
+    <string name="nav_header_title">HomeGrown</string>
+    <string name="nav_header_subtitle">Local Food</string>
+    <string name="nav_header_desc">Navigation header</string>
 
+    <string name="enter_details">Please fill ALL fields</string>
     <string name="name">Name</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="phoneNo">Phone No.</string>
@@ -10,19 +13,17 @@
     <string name="update">Update</string>
     <string name="delete">Delete</string>
 
-    <string name="total">Total so Far</string>
-    <string name="totalSoFar">€ Total</string>
     <string name="fNameHint">Please Enter Your First Name:</string>
     <string name="sNameHint">Please Enter Your First Name:</string>
     <string name="phoneHint">Please Enter Your Phone Number:</string>
     <string name="emailHint">Please Enter Your Email Address:</string>
 
+    <string name="total">Total so Far</string>
+    <string name="totalSoFar">€ Total</string>
+
     <string name="action_share">Share</string>
     <string name="action_send">Send</string>
     <string name="group_communicate">Communicate</string>
-    <string name="nav_header_title">HomeGrown</string>
-    <string name="nav_header_subtitle">Local Food</string>
-    <string name="nav_header_desc">Navigation header</string>
 
     <string name="label_emailpassword">Email/Password Authentication</string>
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
@@ -47,7 +48,6 @@
 
     <string name="accessControl">Access Control</string>
 
-
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="title">Title</string>
@@ -65,7 +65,6 @@
 
     <string name="error_product">Error : Couldn\'t Add Product...</string>
     <string name="productsNotFound">No Products Found</string>
-
     <string name="messageLoading">Please Wait while the Products are Loading...</string>
     <string name="select_profile_image">Select Profile Image</string>
 
@@ -84,8 +83,8 @@
     <string name="eircode_empty_error">Eircode cannot be empty</string>
     <string name="category_empty_error">Category cannot be empty</string>
 
-    <string name= "action_become_producer">Become A Producer</string>
-    <string name = "invalid_input_error">Invalid Input</string>
+    <string name="action_become_producer">Become A Producer</string>
+    <string name="invalid_input_error">Invalid Input</string>
 
     <string name="first_name_empty_error">First name cannot be empty</string>
     <string name="surname_empty_error">Surname cannot be empty</string>
@@ -93,6 +92,28 @@
     <string name="phone_number_empty_error">Phone number cannot be empty</string>
     <string name="business_email_invalid_error">Business email is invalid</string>
 
+    <string name="removeFromBasket">Remove From Basket</string>
+    <string name="total_price">Total: €%.2f</string>
+    <string name="item_quantity">Quantity: %1$d</string>
+    <string name="item_price">Price: %1$.2f</string>
 
+    <string name="action_my_basket">My Basket</string>
+    <string name="action_add_to_basket">Add To Basket</string>
+
+    <string name="place_order">Place Order</string>
+
+    <string name="action_receivedOrders">Orders Received</string>
+    <string name="action_requestedOrders">Orders Requested</string>
+
+    <string name="action_my_orders">My Orders</string>
+
+    <string name="status_pending">Pending</string>
+    <string name="status_declined">Declined</string>
+    <string name="status_accepted">Accepted</string>
+    <string name="status_indicator">Status Indicator</string>
+
+    <string name="channel_name">HomeGrown App Notifications</string>
+    <string name="channel_description">Notification channel for HomeGrown App</string>
+    <string name="channel_id">homegrown_app_channel</string>
 
 </resources>

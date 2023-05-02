@@ -1,9 +1,15 @@
 package com.wit.homegrownapp.ui.home
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +18,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +36,7 @@ import com.wit.homegrownapp.R
 import com.wit.homegrownapp.databinding.HomeBinding
 import com.wit.homegrownapp.databinding.NavHeaderBinding
 import com.wit.homegrownapp.firebase.FirebaseImageManager
+import com.wit.homegrownapp.ui.BasketViewModel
 import com.wit.homegrownapp.ui.auth.Login
 import com.wit.homegrownapp.ui.auth.LoggedInViewModel
 import com.wit.homegrownapp.ui.map.MapsViewModel
@@ -46,6 +56,7 @@ class Home : AppCompatActivity() {
     private lateinit var headerView: View
     private lateinit var intentLauncher: ActivityResultLauncher<Intent>
     private val mapsViewModel: MapsViewModel by viewModels()
+    private val basketViewModel: BasketViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +70,6 @@ class Home : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -77,6 +85,7 @@ class Home : AppCompatActivity() {
         if (checkLocationPermissions(this)) {
             mapsViewModel.updateCurrentLocation()
         }
+        createNotificationChannel()
     }
 
     @SuppressLint("MissingPermission")
@@ -196,5 +205,42 @@ class Home : AppCompatActivity() {
                 }
             }
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(getString(R.string.channel_id), name, importance).apply {
+                description = descriptionText
+            }
+
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    fun sendNotification(title: String, message: String) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            val notificationId = 1
+            val channelId = getString(R.string.channel_id)
+
+            val builder = NotificationCompat.Builder(this, channelId).apply {
+                setSmallIcon(R.drawable.ic_launcher_foreground)
+                setContentTitle(title)
+                setContentText(message)
+                setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                setAutoCancel(true)
+            }
+
+            val notificationManager = NotificationManagerCompat.from(this)
+            notificationManager.notify(notificationId, builder.build())
+        } else {
+            // Handle the case where the permission is not granted
+        }
+    }
+
+
+
 }
 

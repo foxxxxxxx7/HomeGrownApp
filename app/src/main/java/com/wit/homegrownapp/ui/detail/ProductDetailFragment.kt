@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -33,20 +34,14 @@ class ProductDetailFragment : Fragment() {
     private val fragBinding get() = _fragBinding!!
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val productListViewModel: ProductListViewModel by activityViewModels()
+    private val basketViewModel: BasketViewModel by activityViewModels()
     val user = FirebaseAuth.getInstance().currentUser
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        //return inflater.inflate(R.layout.product_detail_fragment, container, false)
-//        val view = inflater.inflate(R.layout.product_detail_fragment, container, false)
-//
-//        Toast.makeText(context,"Product ID: ${args.productid}",Toast.LENGTH_LONG).show()
-//
-//        return view
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         _fragBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         activity?.title = getString(R.string.action_details)
@@ -64,38 +59,61 @@ class ProductDetailFragment : Fragment() {
                 fragBinding.productvm?.observableProduct!!.value!!
             )
 
-//            (viewHolder.itemView.tag as ProductModel).uid!!)
-
-            //Force Reload of list to guarantee refresh
             productListViewModel.load()
             findNavController().navigateUp()
-            //findNavController().popBackStack()
 
         }
 
         fragBinding.deleteProductButton.setOnClickListener {
             productListViewModel.delete(
-                user?.uid!!,
-                detailViewModel.observableProduct.value?.pid!!
+                user?.uid!!, detailViewModel.observableProduct.value?.pid!!
             )
             findNavController().navigateUp()
+        }
+        fragBinding.addToBasketButton.setOnClickListener {
+            detailViewModel.observableProduct.value?.let { product ->
+                basketViewModel.addToBasket(product)
+                Timber.i("Product added to the basket: ${product.title}")
+                Toast.makeText(requireContext(), "Product added to the basket!", Toast.LENGTH_SHORT).show()
+            }
         }
         return root
     }
 
     private fun render() {
         fragBinding.productvm = detailViewModel
-        Timber.i("Retrofit fragBinding.productvm == $fragBinding.productvm")
         fragBinding.typeIcon.setImageResource(detailViewModel.observableProduct.value?.icon ?: 0)
+
+        val productUid = detailViewModel.observableProduct.value?.uid
+        val isEditable = productUid != null && productUid == user?.uid
+
+        fragBinding.editTitle.isEnabled = isEditable
+        fragBinding.editPrice.isEnabled = isEditable
+        fragBinding.editAvgWeight.isEnabled = isEditable
+        fragBinding.editDescription.isEnabled = isEditable
+        fragBinding.editEirCode.isEnabled = isEditable
+
+        fragBinding.editProductButton.visibility = if (isEditable) View.VISIBLE else View.GONE
+        fragBinding.deleteProductButton.visibility = if (isEditable) View.VISIBLE else View.GONE
+        fragBinding.addToBasketButton.visibility = if (isEditable) View.GONE else View.VISIBLE
     }
+
 
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getProduct(
-            user?.uid!!,
-            args.productid
-        )
+        val pid = args.productid
+        Timber.i("ProductDetailFragment: Received productid: $pid")
+
+        // Remove the user?.uid!! parameter when calling getProduct
+        detailViewModel.getProduct(pid)
+        detailViewModel.observableProduct.observe(viewLifecycleOwner, Observer { fetchedProduct ->
+            if (fetchedProduct != null) {
+                Timber.i("ProductDetailFragment: Fetched product: $fetchedProduct")
+            } else {
+                Timber.i("ProductDetailFragment: No product found with productid: $pid")
+            }
+        })
     }
 
 
@@ -103,11 +121,5 @@ class ProductDetailFragment : Fragment() {
         super.onDestroyView()
         _fragBinding = null
     }
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        detailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
 
 }

@@ -1,7 +1,11 @@
 package com.wit.homegrownapp.utils
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -9,25 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wit.homegrownapp.R
 import com.wit.homegrownapp.adapters.ProductAdapter
 
-/* This is a class that extends the ItemTouchHelper.SimpleCallback class. It is used to implement the
-swipe to edit functionality. */
-abstract class SwipeToEditCallback(context: Context) :
+abstract class SwipeToAddToBasketCallback(context: Context) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
-    private val editIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_edit)
-    private val intrinsicWidth = editIcon?.intrinsicWidth
-    private val intrinsicHeight = editIcon?.intrinsicHeight
+    private val addToBasketIcon =
+        ContextCompat.getDrawable(context, R.drawable.baseline_shopping_basket_24)
+    private val intrinsicWidth = addToBasketIcon?.intrinsicWidth
+    private val intrinsicHeight = addToBasketIcon?.intrinsicHeight
     private val background = ColorDrawable()
-    private val backgroundColor = Color.parseColor("#2196F3")
+    private val backgroundColor = Color.parseColor("#4CAF50")
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
-
     override fun getMovementFlags(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
+        recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder
     ): Int {
-
-        if ((viewHolder as ProductAdapter.MainHolder).readOnlyRow) return 0
+        if (!(viewHolder as ProductAdapter.MainHolder).readOnlyRow) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -40,8 +40,13 @@ abstract class SwipeToEditCallback(context: Context) :
     }
 
     override fun onChildDraw(
-        c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-        dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
     ) {
 
         val itemView = viewHolder.itemView
@@ -63,10 +68,7 @@ abstract class SwipeToEditCallback(context: Context) :
         // Draw the blue edit background
         background.color = backgroundColor
         background.setBounds(
-            itemView.left + dX.toInt(),
-            itemView.top,
-            itemView.left,
-            itemView.bottom
+            itemView.left + dX.toInt(), itemView.top, itemView.left, itemView.bottom
         )
         background.draw(c)
 
@@ -78,8 +80,8 @@ abstract class SwipeToEditCallback(context: Context) :
         val editIconBottom = editIconTop + intrinsicHeight
 
         // Draw the edit icon
-        editIcon?.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
-        editIcon?.draw(c)
+        addToBasketIcon?.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
+        addToBasketIcon?.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }

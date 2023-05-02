@@ -49,15 +49,26 @@ object ProductManager : ProductStore {
             })
     }
 
-
     override fun findById(
-        userid: String,
-        productid: String,
-        product: MutableLiveData<ProductModel>
+        productid: String, product: MutableLiveData<ProductModel>
     ) {
-        val foundProduct: ProductModel? = products.find { it.uid == userid }
-        product.value = foundProduct
+        Timber.i("ProductManager.findById() called with productid: $productid")
+
+        database.child("products").child(productid).get().addOnSuccessListener {
+            val fetchedProduct = it.getValue(ProductModel::class.java)
+            if (fetchedProduct != null) {
+                product.postValue(fetchedProduct)
+                Timber.i("firebase Got value ${it.value}")
+            } else {
+                product.postValue(null)
+                Timber.i("firebase Product not found")
+            }
+        }.addOnFailureListener {
+            Timber.e("firebase Error getting data $it")
+            product.postValue(null)
+        }
     }
+
 
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, product: ProductModel) {

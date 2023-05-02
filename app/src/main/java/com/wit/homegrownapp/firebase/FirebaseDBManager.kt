@@ -1,19 +1,18 @@
 package com.wit.homegrownapp.firebase
 
-import android.os.LocaleList
+import com.wit.homegrownapp.ui.receiver.NotificationReceiver
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.wit.homegrownapp.model.ProductModel
-import com.wit.homegrownapp.model.ProductStore
-import com.wit.homegrownapp.model.UserModel
-import com.wit.homegrownapp.model.UserStore
+import com.wit.homegrownapp.model.*
+import com.wit.homegrownapp.ui.home.Home
 import timber.log.Timber
 
 /* This is the database reference to the Firebase Realtime Database. */
 var database: DatabaseReference =
-    FirebaseDatabase.getInstance("https://homegrown-c0ca9-default-rtdb.firebaseio.com/")
-        .reference
+    FirebaseDatabase.getInstance("https://homegrown-c0ca9-default-rtdb.firebaseio.com/").reference
 
 
 object FirebaseDBManager : ProductStore, UserStore {
@@ -67,15 +66,22 @@ object FirebaseDBManager : ProductStore, UserStore {
     }
 
     override fun findById(
-        userid: String, productid: String, product: MutableLiveData<ProductModel>
+        productid: String, product: MutableLiveData<ProductModel>
     ) {
-        Timber.i("FirebaseDBManager.findById() called with userid: $userid and productid: $productid")
+        Timber.i("FirebaseDBManager.findById() called with productid: $productid")
 
-        database.child("user-products").child(userid).child(productid).get().addOnSuccessListener {
-            product.value = it.getValue(ProductModel::class.java)
-            Timber.i("firebase Got value ${it.value}")
+        database.child("products").child(productid).get().addOnSuccessListener {
+            val fetchedProduct = it.getValue(ProductModel::class.java)
+            if (fetchedProduct != null) {
+                product.postValue(fetchedProduct)
+                Timber.i("firebase Got value ${it.value}")
+            } else {
+                product.postValue(null)
+                Timber.i("firebase Product not found")
+            }
         }.addOnFailureListener {
             Timber.e("firebase Error getting data $it")
+            product.postValue(null)
         }
     }
 
@@ -197,7 +203,9 @@ object FirebaseDBManager : ProductStore, UserStore {
             if (it.isSuccessful) {
                 Timber.i("User updated successfully")
                 val imageURL = FirebaseImageManager.imageUri.value.toString()
-                saveProducerImageToUser(uid, imageURL) // Update the producer image in the user collection
+                saveProducerImageToUser(
+                    uid, imageURL
+                ) // Update the producer image in the user collection
             } else {
                 Timber.e("Failed to update user: ${it.exception}")
             }
@@ -216,5 +224,63 @@ object FirebaseDBManager : ProductStore, UserStore {
                 }
             })
     }
+
+    fun saveBasket(uid: String, basketItems: List<BasketItemModel>) {
+        val basketItemsMap =
+            basketItems.associateBy { it.biid }.mapValues { (_, item) -> item.toMap() }
+        database.child("user-baskets").child(uid).setValue(basketItemsMap)
+    }
+
+    fun getBasket(uid: String, basketItemsLiveData: MutableLiveData<List<BasketItemModel>>) {
+        database.child("user-baskets").child(uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val basketItems =
+                        snapshot.children.mapNotNull { it.getValue(BasketItemModel::class.java) }
+                    basketItemsLiveData.postValue(basketItems)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Failed to get basket: ${error.message}")
+                }
+            })
+    }
+
+    // In FirebaseDBManager.kt
+    fun saveOrder(context: Context, order: OrderModel) {
+        val orderValues = order.toMap()
+        database.child("orders").child(order.oid).setValue(orderValues)
+        database.child("user-orders").child(order.uid).child(order.oid).setValue(orderValues)
+
+        // Send push notification to the sellers
+        sendNotification(context, order.sellerUids)
+    }
+
+
+
+    fun findRequestedOrders(uid: String, callback: ValueEventListener) {
+        database.child("user-orders").child(uid)
+            .addListenerForSingleValueEvent(callback)
+    }
+
+    fun findReceivedOrders(callback: ValueEventListener) {
+        database.child("orders")
+            .addListenerForSingleValueEvent(callback)
+    }
+
+    fun sendNotification(context: Context, sellerUids: List<String>) {
+        for (uid in sellerUids) {
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra("title", "New Order")
+                putExtra("message", "You have received a new order from HomeGrown!")
+            }
+            if (context is Home) {
+                context.sendNotification("New Order", "You have received a new order from HomeGrown!")
+            }
+        }
+    }
+
+
+
 
 }
